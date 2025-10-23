@@ -1,4 +1,4 @@
-import MovieDetailData from "../Data/movieDetailData.json";
+import MovieDetailData from "../data/movieDetailData.json";
 
 export default function MovieDetail() {
   console.log(MovieDetailData);

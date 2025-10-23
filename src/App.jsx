@@ -1,9 +1,8 @@
-import "./App.css";
-import MovieCard from "./Components/MovieCard";
-import movieListData from "./Data/movieListData.json";
+import "./styles/App.css";
+import MovieCard from "./components/MovieCard";
+import movieListData from "./data/movieListData.json";
 
-function App() {
-  // console.log(movieListDatas.results);
+export default function App() {
   return (
     <>
       {movieListData.results.map((data) => (
@@ -12,5 +11,3 @@ function App() {
     </>
   );
 }
-
-export default App;
