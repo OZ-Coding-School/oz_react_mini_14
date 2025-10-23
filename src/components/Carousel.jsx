@@ -24,13 +24,13 @@ function Carousel({ movieList }) {
         ))}
       </div>
       <button
-        className="button absolute top-[50%] left-2 px-2 pb-2 text-5xl"
+        className="button absolute top-[50%] left-2 -translate-y-[50%] px-2 py-9 text-5xl text-stone-50 opacity-90"
         onClick={handleLeftClick}
       >
         &lt;
       </button>
       <button
-        className="button absolute top-[50%] right-2 px-2 pb-2 text-5xl"
+        className="button absolute top-[50%] right-2 -translate-y-[50%] px-2 py-9 text-5xl text-stone-50 opacity-90"
         onClick={handleRightClick}
       >
         &gt;
