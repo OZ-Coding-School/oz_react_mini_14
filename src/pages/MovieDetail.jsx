@@ -12,7 +12,7 @@ function MovieDetail() {
         />
         <div className="absolute inset-0 size-full bg-linear-to-b from-stone-800 to-black opacity-70"></div>
       </div>
-      <div className="absolute inset-0 grid grid-cols-[3fr_2fr_100px] grid-rows-[100px_60px_2fr] gap-10 px-10 py-8 text-white">
+      <div className="absolute inset-0 grid grid-cols-[3fr_2fr_100px] grid-rows-[100px_60px_2fr] gap-10 px-10 py-8 text-stone-50">
         <img
           src={`${IMAGE_BASE_URL}${movie.poster_path}`}
           alt={movie.title}

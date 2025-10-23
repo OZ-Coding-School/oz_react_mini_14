@@ -1,5 +1,5 @@
 import data from '@/mocks/movieListData.json';
-import MovieCard from './components/MovieCard';
+import MovieCard from '../components/MovieCard';
 
 function App() {
   const movieList = data.results;
