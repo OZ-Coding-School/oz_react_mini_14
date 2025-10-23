@@ -1,1 +1,14 @@
 @import 'tailwindcss';
+
+@layer base {
+  html,
+  body {
+    scrollbar-width: none;
+    @apply w-full;
+  }
+
+  a,
+  button {
+    cursor: pointer;
+  }
+}

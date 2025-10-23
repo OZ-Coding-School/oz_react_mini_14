@@ -1,12 +1,15 @@
-import Text from '@/components/Text';
+import data from '@/mocks/movieListData.json';
+import MovieCard from './components/MovieCard';
 
 function App() {
+  const movieList = data.results;
+
   return (
-    <>
-      <Text />
-      <A />
-      <p>Click on the Vite and React logos to learn more</p>
-    </>
+    <section className="flex flex-wrap justify-center gap-3 py-8">
+      {movieList.map((movie) => (
+        <MovieCard key={movie.id} movie={movie} />
+      ))}
+    </section>
   );
 }
 
