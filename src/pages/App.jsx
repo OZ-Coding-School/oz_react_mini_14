@@ -1,15 +1,26 @@
+import { useState } from 'react';
+import MovieList from '@/components/MovieList';
+import Carousel from '@/components/Carousel';
 import data from '@/mocks/movieListData.json';
-import MovieCard from '../components/MovieCard';
 
 function App() {
+  const [isCarousel, setIsCarousel] = useState(false);
   const movieList = data.results;
 
   return (
-    <section className="flex flex-wrap justify-center gap-3 py-8">
-      {movieList.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} />
-      ))}
-    </section>
+    <>
+      <button
+        className="button mt-10 ml-22 w-44 px-4 py-2 text-stone-50"
+        onClick={() => setIsCarousel((prev) => !prev)}
+      >
+        {isCarousel ? 'View List' : 'View Carousel'}
+      </button>
+      {isCarousel ? (
+        <Carousel movieList={movieList} />
+      ) : (
+        <MovieList movieList={movieList} />
+      )}
+    </>
   );
 }
 

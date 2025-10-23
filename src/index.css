@@ -28,3 +28,9 @@
     @apply rounded-md bg-stone-500 font-bold;
   }
 }
+
+@layer utilities {
+  .scroll-none {
+    scrollbar-width: none;
+  }
+}
