@@ -2,7 +2,8 @@
 
 @layer base {
   html,
-  body {
+  body,
+  #root {
     scrollbar-width: none;
     @apply w-full;
   }
@@ -10,5 +11,11 @@
   a,
   button {
     cursor: pointer;
+  }
+}
+
+@layer components {
+  .flex-center {
+    @apply flex items-center justify-center;
   }
 }
