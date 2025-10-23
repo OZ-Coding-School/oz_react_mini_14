@@ -16,7 +16,7 @@ const router = createBrowserRouter([
         element: <App />,
       },
       {
-        path: "/details",
+        path: "/details/:id", // :id 추가 - 동적 파라미터
         element: <MovieDetail />,
       },
     ],
