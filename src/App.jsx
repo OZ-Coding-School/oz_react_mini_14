@@ -1,4 +1,3 @@
-// import "./styles/App.css";
 import styled from "styled-components";
 import MovieCard from "./MovieCard";
 import movieListData from "./data/movieListData.json";
@@ -7,17 +6,16 @@ export default function App() {
   const movies = movieListData.results;
 
   return (
-    <div className="MovieList">
+    <MovieList>
       {movies.map((movie) => (
         <MovieCard key={movie.id} movie={movie} />
       ))}
-    </div>
+    </MovieList>
   );
 }
 
 const MovieList = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: inline-block;
   gap: 16px;
   padding: 20px;
   overflow-x: auto;

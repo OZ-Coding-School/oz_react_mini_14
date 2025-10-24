@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import "../style/index.css";
 
-export default function NavBar() {
+function NavBar() {
   return (
     <Nav>
       <Logo>🎬 OZ무비</Logo>
@@ -15,10 +16,12 @@ export default function NavBar() {
   );
 }
 
+export default NavBar;
+
 const Nav = styled.nav`
   width: 100%;
   height: 60px;
-  background-color: #141414;
+  background-color: #262432;
   color: white;
   display: flex;
   align-items: center;
@@ -47,6 +50,7 @@ const SearchBox = styled.div`
     border: none;
     padding: 0 15px;
     font-size: 16px;
+    background-color: #bafd00;
   }
 `;
 

@@ -2,9 +2,13 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export default function MovieCard({ movie }) {
+  if (!movie) {
+    return null;
+  }
+
   return (
     <Card>
-      <Link to="/MovieDetail">
+      <Link to={`/details`}>
         <Poster
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
@@ -19,7 +23,9 @@ export default function MovieCard({ movie }) {
 }
 
 const Card = styled.div`
+  display: inline-block;
   width: 200px;
+  /* height: 350px; */
   margin: 10px;
   border-radius: 10px;
   overflow: hidden;
@@ -30,7 +36,9 @@ const Card = styled.div`
 
 const Poster = styled.img`
   width: 100%;
-  height: auto;
+  height: 300px;
+  object-fit: cover;
+  cursor: pointer;
 `;
 
 const Info = styled.div`
@@ -40,6 +48,13 @@ const Info = styled.div`
 const Title = styled.h3`
   font-size: 18px;
   margin: 0;
+
+  // 텍스트가 길 경우 생략 부호(...) 처리
+  // 두가지 속성 모두 필요
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
 `;
 
 const Rating = styled.p`
