@@ -71,3 +71,15 @@ body {
   color: #facc15;
   margin: 0;
 }
+
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.movie-link {
+  text-decoration: none;
+  color: inherit;
+}
