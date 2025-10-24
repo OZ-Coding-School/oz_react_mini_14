@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import MovieCard from './MovieCard';
+import MovieDetail from './MovieDetail';
+import movieListData from './movieListData.json';
+import movieDetailData from './movieDetailData.json';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [movies, setMovies] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setMovies(movieListData.results);
+  }, []);
+
+  const handleMovieClick = (movie) => {
+    if (movie.id === movieDetailData.id) {
+      navigate('/details');
+    }
+  };
+
+  const MovieList = () => (
+    <div className="movie-list-wrapper">
+      {movies.map((movie) => (
+        <MovieCard
+          key={movie.id}
+          posterPath={movie.poster_path}
+          title={movie.title}
+          voteAverage={movie.vote_average}
+          onClick={() => handleMovieClick(movie)}
+        />
+      ))}
+    </div>
+  );
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
+    <div className="app-container">
+      <nav className="navbar">
+        <div className="navbar-brand">OZ무비</div>
+        <div className="navbar-search">
+          <input type="text" placeholder="검색" />
+        </div>
+        <div className="navbar-buttons">
+          <button className="login-btn">로그인</button>
+          <button className="signup-btn">회원가입</button>
+        </div>
+      </nav>
+      <Routes>
+        <Route path="/" element={<MovieList />} />
+        <Route path="/details" element={<MovieDetail />} />
+      </Routes>
+    </div>
+  );
+};
