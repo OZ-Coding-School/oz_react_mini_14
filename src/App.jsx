@@ -2,6 +2,7 @@ import "./App.css";
 import React, { useState } from "react";
 import MovieCard from "./component/MovieCard";
 import movieListData from "./data/movieListData.json";
+import MovieDetail from "./component/MovieDetail";
 
 function App() {
   const [movies] = useState(movieListData.results);
@@ -20,6 +21,7 @@ function App() {
           ))}
         </div>
       </div>
+      <MovieDetail />
     </>
   );
 }
