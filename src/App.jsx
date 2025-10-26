@@ -1,27 +1,19 @@
-import styled from "styled-components";
-import MovieCard from "./MovieCard";
-import movieListData from "./data/movieListData.json";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./Layout.jsx";
+import MovieDetail from "./details/MovieDetail.jsx";
+import MovieMain from "./MovieMain.jsx";
 
-export default function App() {
-  const movies = movieListData.results;
-
+function App() {
   return (
-    <MovieList>
-      {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} />
-      ))}
-    </MovieList>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<MovieMain />} />
+          <Route path="/details" element={<MovieDetail />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-const MovieList = styled.div`
-  display: inline-block;
-  gap: 16px;
-  padding: 20px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  /* white-space: nowrap; */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
+export default App;

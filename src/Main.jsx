@@ -1,16 +1,5 @@
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
-import Layout from "./Layout.jsx";
-import MovieDetail from "./details/MovieDetail.jsx";
+import "./style/index.css";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" index element={<App />} />
-        <Route path="/details" element={<MovieDetail />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>
-);
+createRoot(document.getElementById("root")).render(<App />);

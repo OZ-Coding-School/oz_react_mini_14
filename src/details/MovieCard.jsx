@@ -2,10 +2,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export default function MovieCard({ movie }) {
-  if (!movie) {
-    return null;
-  }
-
   return (
     <Card>
       <Link to={`/details`}>
@@ -23,10 +19,11 @@ export default function MovieCard({ movie }) {
 }
 
 const Card = styled.div`
-  display: inline-block;
-  width: 200px;
-  /* height: 350px; */
-  margin: 10px;
+  width: 18vw;
+  max-width: 200px;
+  min-width: 150px;
+  aspect-ratio: 1/2;
+  margin: 10px auto;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -36,7 +33,7 @@ const Card = styled.div`
 
 const Poster = styled.img`
   width: 100%;
-  height: 300px;
+  height: 75%;
   object-fit: cover;
   cursor: pointer;
 `;
