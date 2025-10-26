@@ -8,7 +8,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<App />} />
+        <Route path="/" index element={<App />} />
         <Route path="/details" element={<MovieDetail />} />
       </Route>
     </Routes>

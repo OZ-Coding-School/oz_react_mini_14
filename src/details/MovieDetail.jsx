@@ -30,7 +30,7 @@ const Detail = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  color: #333;
+  color: #444444;
 `;
 
 const Poster = styled.img`
@@ -51,6 +51,7 @@ const TitleRating = styled.div`
   display: flex;
   gap: 20px;
   margin-bottom: 10px;
+  color: #bafd00;
 `;
 
 const Title = styled.h2`

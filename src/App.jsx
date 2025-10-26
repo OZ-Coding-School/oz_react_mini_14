@@ -20,7 +20,7 @@ const MovieList = styled.div`
   padding: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   &::-webkit-scrollbar {
     display: none;
   }

@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import "../style/index.css";
+import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
     <Nav>
-      <Logo>🎬 OZ무비</Logo>
+      <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+        <Logo>🎬 OZ무비</Logo>
+      </Link>
       <SearchBox>
         <input type="text" placeholder="영화를 검색해보세요!" />
       </SearchBox>
@@ -21,7 +24,7 @@ export default NavBar;
 const Nav = styled.nav`
   width: 100%;
   height: 60px;
-  background-color: #262432;
+  background-color: #333;
   color: white;
   display: flex;
   align-items: center;
