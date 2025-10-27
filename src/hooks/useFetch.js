@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-function useFetch({ api }) {
+function useFetch({ api, options = {} }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -8,7 +8,7 @@ function useFetch({ api }) {
   const refetch = useCallback(async () => {
     try {
       setLoading(true);
-      const newData = await api();
+      const newData = await api({ params: options?.params });
       setData(newData);
     } catch (err) {
       const message =
@@ -18,7 +18,7 @@ function useFetch({ api }) {
     } finally {
       setLoading(false);
     }
-  }, [api]);
+  }, [api, options?.params]);
 
   useEffect(() => {
     refetch();
