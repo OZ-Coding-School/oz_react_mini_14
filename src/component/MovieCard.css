@@ -1,0 +1,58 @@
+/* MovieCard.css */
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 200px));  /* 최대 200px로 제한 */
+  gap: 20px;
+  padding: 20px;
+  justify-content: start;  /* 왼쪽 정렬 */
+}
+
+.movieCard-container {
+  cursor: pointer;
+  transition: transform 0.3s;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #1a1a1a;
+  width: 100%;
+  max-width: 200px;  /* 카드 최대 너비 제한 */
+}
+
+.movieCard-container:hover {
+  transform: scale(1.05);
+}
+
+.movieCard-container > p {
+  margin: 0;
+  padding: 0;
+}
+
+.movieCard-container img {
+  width: 100%;
+  height: 270px;  /* 세로 비율 유지 */
+  object-fit: cover;
+  display: block;
+}
+
+.movieCard-container > div {
+  padding: 10px;
+  background-color: #1a1a1a;
+}
+
+.movieCard-container > div p {
+  margin: 5px 0;
+  color: #fff;
+  font-size: 13px;
+}
+
+.movieCard-container > div p:first-child {
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movieCard-container > div p:last-child {
+  color: #ffd700;
+  font-size: 12px;
+}
