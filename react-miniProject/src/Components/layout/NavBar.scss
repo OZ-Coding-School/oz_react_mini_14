@@ -1,0 +1,59 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #0f2027; /* 어두운 톤 배경 */
+  background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  color: white;
+
+  .logo {
+    //460px 보다 작아지면 영화임티로 변경
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #00bcd4;
+    cursor: pointer;
+
+    &:hover {
+      color: #80deea;
+      transform: scale(1.05);
+    }
+  }
+
+  input {
+    width: 300px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background-color: #1b2a33;
+    color: white;
+
+    &:focus {
+      background-color: #253743;
+      box-shadow: 0 0 5px #00bcd4;
+    }
+  }
+  .btn {
+    display: flex;
+    gap: 10px;
+
+    button {
+      background-color: transparent; //투명한 색상
+      border: 1px solid #00bcd4;
+      color: #00bcd4;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: #00bcd4;
+        color: #fff;
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
