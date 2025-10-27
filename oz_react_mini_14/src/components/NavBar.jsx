@@ -7,12 +7,18 @@ export default function NavBar() {
         <h1 className="text-2xl font-bold">
           <Link to="/">MovieApp</Link>
         </h1>
-        <div className="space-x-4">
-          <Link to="/" className="hover:text-yellow-400">
-            홈
+        <input
+          type="text"
+          name="search"
+          placeholder="영화 검색"
+          className="px-4 py-2 text-gray-700 focus:outline-none w-80 bg-white rounded-xl"
+        />
+        <div className="flex items-center space-x-4">
+          <Link to="/login" className="hover:text-yellow-400">
+            로그인
           </Link>
-          <Link to="/details" className="hover:text-yellow-400">
-            정보
+          <Link to="/signup" className="hover:text-yellow-400">
+            회원가입
           </Link>
         </div>
       </div>
