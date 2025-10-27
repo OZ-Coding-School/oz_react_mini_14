@@ -1,4 +1,4 @@
-// 무비카드임
+// 무비카드 입니다
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
