@@ -2,7 +2,7 @@ import { IMAGE_BASE_URL } from '@/constants/url';
 
 function MovieCard({ movie }) {
   return (
-    <article className="w-50 shrink-0 grow-0 overflow-hidden rounded-md border border-stone-300 bg-stone-50 shadow-sm">
+    <article className="shrink-0 grow-0 overflow-hidden rounded-md border border-stone-300 bg-stone-50 shadow-sm">
       <img
         src={`${IMAGE_BASE_URL}${movie.poster_path}`}
         alt={movie.title}
