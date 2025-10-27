@@ -1,0 +1,51 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #111;
+  color: white;
+  padding: 15px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.logo .oz {
+  color: #a259ff;
+}
+
+.search-bar {
+  width: 400px;
+  height: 36px;
+  border-radius: 18px;
+  border: none;
+  outline: none;
+  padding: 0 15px;
+  font-size: 1rem;
+  background-color: #333;
+  color: white;
+}
+
+.btn {
+  background-color: #a259ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn:hover {
+  background-color: #8a3fd1;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}

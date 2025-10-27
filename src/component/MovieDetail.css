@@ -1,0 +1,81 @@
+.movie-detail {
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+/* 배경 이미지 영역 */
+.backdrop {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.overlay .movie-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.overlay .movie-tagline {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-top: 8px;
+}
+
+/* 상세 내용 영역 */
+.detail-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px;
+  background-color: #111;
+  flex-wrap: wrap; /* ✅ 반응형 정렬 */
+}
+
+.poster-box img {
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.info-box {
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.rating {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.genres {
+  color: #f1c40f;
+  margin-bottom: 10px;
+}
+
+.overview {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+.release,
+.runtime {
+  font-size: 0.95rem;
+  color: #aaa;
+  margin-top: 10px;
+}
