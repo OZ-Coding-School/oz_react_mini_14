@@ -1,0 +1,40 @@
+@import 'tailwindcss';
+
+@layer base {
+  html,
+  body,
+  #root {
+    scrollbar-width: none;
+
+    @apply w-full bg-stone-100 text-stone-950 accent-stone-900;
+
+    &::selection {
+      @apply bg-stone-900 text-stone-50;
+    }
+  }
+
+  a,
+  button {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .button {
+    @apply rounded-md border border-transparent bg-stone-500 font-bold transition-all;
+
+    &:hover {
+      @apply border-stone-50 bg-stone-900;
+    }
+  }
+}
+
+@layer utilities {
+  .scroll-none {
+    scrollbar-width: none;
+  }
+}
