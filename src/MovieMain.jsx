@@ -9,8 +9,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+// import { useEffect, useState } from "react";
+
 export default function MovieMain() {
-  const movies = movieListData.results;
+  const OZmovies = movieListData.results;
+  // const [tmdbMovies,setTmdbMovies] = useState([]);
   return (
     <>
       <Container>
@@ -23,7 +26,7 @@ export default function MovieMain() {
           loop
           className="mySwiper"
         >
-          {movies.slice(0, 10).map((movie) => (
+          {OZmovies.slice(0, 10).map((movie) => (
             <SwiperSlide key={movie.id}>
               <MovieCard movie={movie} />
             </SwiperSlide>
@@ -31,7 +34,7 @@ export default function MovieMain() {
         </Swiper>
 
         <MovieList>
-          {movies.map((movie) => (
+          {OZmovies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </MovieList>
@@ -39,6 +42,8 @@ export default function MovieMain() {
     </>
   );
 }
+
+// <--------------- styled-components --------------->
 
 const MovieList = styled.div`
   display: flex;
