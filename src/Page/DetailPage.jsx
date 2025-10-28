@@ -1,28 +1,37 @@
 import styled from "styled-components";
-import movieDetailData from "../data/movieDetailData.json";
 
-function MovieDetail() {
-  const movie = movieDetailData;
+import { useParams } from "react-router-dom";
+
+import DetailApi from "../Api/DetailApi";
+
+// <-------------------- function -------------------->
+
+export default function DetailPage() {
+  const { id } = useParams();
+
+  const detailApi = DetailApi(id);
+
+  // <-------------------- return -------------------->
 
   return (
     <Detail>
       <Poster
         className="poster"
-        src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-        alt={movie.title}
+        src={`https://image.tmdb.org/t/p/w500${detailApi.backdrop_path}`}
+        alt={detailApi.title}
       />
       <Info>
         <TitleRating>
-          <Title>{movie.title}</Title>
-          <Rating>{movie.vote_average}</Rating>
+          <Title>{detailApi.title}</Title>
+          <Rating>{detailApi.vote_average}</Rating>
         </TitleRating>
-        <Overview>{movie.overview}</Overview>
+        <Overview>{detailApi.overview}</Overview>
       </Info>
     </Detail>
   );
 }
 
-export default MovieDetail;
+// <-------------------- styled-components -------------------->
 
 const Detail = styled.div`
   display: flex;

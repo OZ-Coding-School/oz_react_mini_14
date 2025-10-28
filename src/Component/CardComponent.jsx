@@ -1,11 +1,12 @@
-// 무비카드 입니다
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export default function MovieCard({ movie }) {
+// <-------------------- function, return -------------------->
+
+export default function CardComponent({ movie }) {
   return (
     <Card>
-      <Link to={`/details`}>
+      <Link to={`/details/${movie.id}`}>
         <Poster
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
@@ -18,6 +19,8 @@ export default function MovieCard({ movie }) {
     </Card>
   );
 }
+
+// <-------------------- styled-components -------------------->
 
 const Card = styled.div`
   width: 18vw;
@@ -46,13 +49,11 @@ const Info = styled.div`
 const Title = styled.h3`
   font-size: 18px;
   margin: 0;
+  white-space: nowrap;
 
-  // 텍스트가 길 경우 생략 부호(...) 처리
-  // 두가지 속성 모두 필요
+  // 텍스트가 길 경우 생략 부호(...) 처리 ( 두가지 속성 모두 필요 )
   overflow: hidden;
   text-overflow: ellipsis;
-
-  white-space: nowrap;
 `;
 
 const Rating = styled.p`

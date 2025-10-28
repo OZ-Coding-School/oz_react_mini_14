@@ -1,30 +1,27 @@
 import styled from "styled-components";
-import "../style/index.css";
 import { Link } from "react-router-dom";
 
-function NavBar() {
+export default function NavigationBar() {
   return (
-    <Nav>
+    <Navigationbar>
       <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-        <Logo>🎬 OZ무비</Logo>
+        <Logo>🎬 • WISH MOVIE</Logo>
       </Link>
       <SearchBox>
-        <input type="text" placeholder="영화를 검색해보세요!" />
+        <input type="text" placeholder="tell me your wish 🧞‍♂️" />
       </SearchBox>
       <Buttons>
         <LoginBtn>로그인</LoginBtn>
         <SignupBtn>회원가입</SignupBtn>
       </Buttons>
-    </Nav>
+    </Navigationbar>
   );
 }
 
-export default NavBar;
-
-const Nav = styled.nav`
+const Navigationbar = styled.nav`
   width: 100%;
   height: 60px;
-  background-color: #333;
+  background-color: #1a1a1a;
   color: white;
   display: flex;
   align-items: center;
@@ -40,6 +37,7 @@ const Logo = styled.h1`
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  color: #757575;
 `;
 
 const SearchBox = styled.div`
