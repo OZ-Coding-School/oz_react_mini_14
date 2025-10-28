@@ -1,7 +1,22 @@
+import { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import useFetch from '@/hooks/useFetch';
+import getMovieDetails from '@/apis/getMovieDetails';
+import Indicator from '@/components/Indicator';
+import Error from '@/components/Error';
 import { IMAGE_BASE_URL } from '@/constants/url';
-import movie from '@/mocks/movieDetailData.json';
 
 function MovieDetail() {
+  const { id } = useParams();
+  const fetchOptions = useMemo(() => ({ params: { id } }), [id]);
+  const {
+    data: movie,
+    loading,
+    error,
+  } = useFetch({ api: getMovieDetails, options: fetchOptions });
+
+  if (loading || !movie) return <Indicator />;
+  if (error) return <Error message={error.message} />;
   return (
     <section className="relative h-screen w-full">
       <div className="relative size-full overflow-hidden" aria-hidden>
@@ -25,7 +40,7 @@ function MovieDetail() {
           평점: {movie.vote_average}
         </p>
         <p className="col-span-2 font-bold">
-          장르: {movie.genres.map((genre) => genre.name).join(', ')}
+          장르: {movie.genres?.map((genre) => genre.name).join(', ')}
         </p>
         <p className="col-span-2 whitespace-pre-wrap">{movie.overview}</p>
       </div>

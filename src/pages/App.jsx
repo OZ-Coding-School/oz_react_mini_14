@@ -1,12 +1,18 @@
 import { useState } from 'react';
+import useFetch from '@/hooks/useFetch';
+import getMovieList from '@/apis/getMovieList';
+import Indicator from '@/components/Indicator';
+import Error from '@/components/Error';
 import MovieList from '@/components/MovieList';
 import Carousel from '@/components/Carousel';
-import data from '@/mocks/movieListData.json';
 
 function App() {
   const [isCarousel, setIsCarousel] = useState(false);
-  const movieList = data.results;
+  const { data: movieList, loading, error } = useFetch({ api: getMovieList });
+  const filteredMovieList = movieList.filter((item) => !item.adult);
 
+  if (loading || !movieList) return <Indicator />;
+  if (error) return <Error message={error.message} />;
   return (
     <>
       <button
@@ -16,9 +22,9 @@ function App() {
         {isCarousel ? 'View List' : 'View Carousel'}
       </button>
       {isCarousel ? (
-        <Carousel movieList={movieList} />
+        <Carousel movieList={filteredMovieList} />
       ) : (
-        <MovieList movieList={movieList} />
+        <MovieList movieList={filteredMovieList} />
       )}
     </>
   );
