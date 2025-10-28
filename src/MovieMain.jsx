@@ -9,16 +9,16 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // <-------------------- function -------------------->
 
 export default function MovieMain() {
   const OZmovies = movieListData.results;
+  const [movies, setMovies] = useState([OZmovies]);
 
   useEffect(() => {
     const TmdbToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
-
     const options = {
       method: "GET",
       headers: {
@@ -37,7 +37,8 @@ export default function MovieMain() {
         const filteredTmdbMovies = data.results.filter(
           (tmdbMovie) => tmdbMovie.adult === false
         );
-        console.log("✅ TMDB 응답 데이터:", filteredTmdbMovies);
+        // console.log("✅ TMDB 응답 데이터:", filteredTmdbMovies);
+        setMovies(filteredTmdbMovies);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -56,7 +57,7 @@ export default function MovieMain() {
           loop
           className="mySwiper"
         >
-          {OZmovies.slice(0, 10).map((movie) => (
+          {movies.slice(0, 10).map((movie) => (
             <SwiperSlide key={movie.id}>
               <MovieCard movie={movie} />
             </SwiperSlide>
@@ -64,7 +65,7 @@ export default function MovieMain() {
         </Swiper>
 
         <MovieList>
-          {OZmovies.map((movie) => (
+          {movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </MovieList>
