@@ -1,9 +1,9 @@
 import { API_BASE_URL, API_END_POINTS } from '@/constants/url';
 
-async function getMovieDetails({ params }) {
-  const { id } = params;
+async function getMovieListByKeyword({ params }) {
+  const { keyword } = params;
   const response = await fetch(
-    `${API_BASE_URL}${API_END_POINTS.DETAIL}/${id}?language=ko-KR`,
+    `${API_BASE_URL}${API_END_POINTS.SEARCH}?query=${keyword}&language=ko-KR&page=1`,
     {
       method: 'GET',
       headers: {
@@ -19,7 +19,8 @@ async function getMovieDetails({ params }) {
     );
   }
 
-  return await response.json();
+  const data = await response.json();
+  return data.results;
 }
 
-export default getMovieDetails;
+export default getMovieListByKeyword;
