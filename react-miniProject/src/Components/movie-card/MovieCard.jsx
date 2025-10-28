@@ -1,18 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import "./MovieCard.scss";
 
+const BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
+
 function MovieCard({ data }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/detail");
+    navigate(`/detail/${data.id}`);
   };
-
+  console.log(data.id);
   return (
     <div className="MovieCard-Container">
       <p className="MovieCard-Image">
         <img
-          src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`}
+          src={`${BASE_URL}${data.poster_path}`}
           alt={`${data.title}`}
           onClick={handleClick}
         />

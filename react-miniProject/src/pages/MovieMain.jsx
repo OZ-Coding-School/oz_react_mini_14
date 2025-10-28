@@ -1,11 +1,13 @@
 import MovieCard from "../Components/movie-card";
 import MovieSwuper from "../Components/movie-swiper/MovieSwiper";
 import MovieCardData from "../lib/MovieCardData";
+import MovieTopRatedData from "../lib/MovieTopRatedData";
 import "./MovieMain.scss";
 
 function MovieMain() {
-  const movieData = MovieCardData();
-  console.log(movieData);
+  const movieData = MovieCardData(); //인기있는 영화데이터 가져오기
+  const movieTopRatedData = MovieTopRatedData(); //평점이 제일 좋은 영화데이터 가져오기
+  // console.log(movieData);
 
   //맨처음 und -> falsy
   //0 === und => return null
@@ -15,7 +17,7 @@ function MovieMain() {
 
   return (
     <>
-      <MovieSwuper movieData={movieData} />
+      <MovieSwuper movieData={movieTopRatedData} />
       <div className="movieMain-Container">
         {movieData?.map((data) => (
           <MovieCard key={data.id} data={data} />

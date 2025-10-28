@@ -11,7 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MovieMain />} />
-          <Route path="/detail" element={<MovieDetail />} />
+          <Route path="/detail/:movieId" element={<MovieDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>
