@@ -1,11 +1,38 @@
 import React, { useState } from "react";
-import movieDetailData from "../data/movieDetailData.json";
 import "./MovieDetail.css";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const baseUrl = "https://image.tmdb.org/t/p/w500";
 
 function MovieDetail() {
-  const [movie] = useState(movieDetailData);
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
+
+  useEffect(() => {
+    const fetchMovieDetail = async () => {
+      try {
+        const options = {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_TMDB_ACCESS_TOKEN}`, // ✅ 2. .env 파일의 토큰 사용
+          },
+        };
+
+        const res = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`,
+          options
+        );
+        const data = await res.json();
+        setMovie(data);
+      } catch (error) {
+        console.error("영화 상세정보 불러오기 실패:", error);
+      }
+    };
+    fetchMovieDetail();
+  }, [id]);
+  if (!movie) return <p>영화 정보를 불러오는 중입니다</p>;
 
   return (
     <div className="movie-detail">

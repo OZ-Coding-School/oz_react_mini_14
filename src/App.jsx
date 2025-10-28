@@ -14,17 +14,17 @@ function App() {
           method: "GET",
           headers: {
             accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNjViNzU1ZmYwYzU5MzAwZWU4OWMxYmJlZDViZjlhNyIsIm5iZiI6MTc2MTU1MjA2MC44NCwic3ViIjoiNjhmZjI2YmNjMDlmZTA2NjhiOWZiMzdiIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Dl3wSeGEGqLG42l9e_eRywcmejdzLOwU8JDyeN8YoJI",
+            Authorization: `Bearer ${import.meta.env.VITE_TMDB_ACCESS_TOKEN}`,
           },
         };
 
-        fetch("https://api.themoviedb.org/3/authentication", options)
-          .then((res) => res.json())
-          .then((res) => console.log(res))
-          .catch((err) => console.error(err));
+        const response = await fetch(
+          "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
+          options
+        );
 
         const data = await response.json();
+
         const filteredMovies = data.results.filter(
           (movie) => movie.adult === false
         );
@@ -32,10 +32,9 @@ function App() {
         setMovies(filteredMovies);
       } catch (error) {
         console.error("데이터 불러오는 중 오류가 발생했습니다", error);
-
-        fetchMovies();
       }
     };
+    fetchMovies();
   }, []);
 
   return (
@@ -44,7 +43,11 @@ function App() {
         <h1 className="page-title">MovieCard</h1>
         <div className="movie-list">
           {movies.map((movie) => (
-            <Link to="/details" key={movie.id} className="movie-link">
+            <Link
+              to={`/details/${movie.id}`}
+              key={movie.id}
+              className="movie-link"
+            >
               <MovieCard
                 title={movie.title}
                 posterPath={movie.poster_path}
