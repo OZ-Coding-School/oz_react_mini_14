@@ -1,0 +1,108 @@
+.detail-container {
+  position: relative;
+  min-height: 100vh;
+  color: white;
+}
+
+.detail-backdrop {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.detail-backdrop-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-backdrop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.9)
+  );
+}
+
+.detail-content {
+  display: flex;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: -200px auto 0;
+  padding: 0 2rem 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.detail-poster {
+  flex-shrink: 0;
+  width: 300px;
+}
+
+.detail-poster img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.detail-info {
+  flex: 1;
+}
+
+.detail-title {
+  font-size: 3rem;
+  margin: 0 0 1rem 0;
+}
+
+.detail-rating {
+  font-size: 1.5rem;
+  color: #ffd700;
+  margin-bottom: 1rem;
+}
+
+.detail-genres {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.genre-tag {
+  background-color: #e50914;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.detail-overview h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.detail-overview p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .detail-content {
+    flex-direction: column;
+    margin-top: -100px;
+  }
+
+  .detail-poster {
+    width: 200px;
+    margin: 0 auto;
+  }
+
+  .detail-title {
+    font-size: 2rem;
+  }
+}
