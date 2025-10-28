@@ -1,4 +1,4 @@
-// import React from "react";
+import React from "react";
 import styled from "styled-components";
 import movieListData from "./data/movieListData.json";
 import MovieCard from "./details/MovieCard";
@@ -9,11 +9,41 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+// <-------------------- function -------------------->
 
 export default function MovieMain() {
   const OZmovies = movieListData.results;
-  // const [tmdbMovies,setTmdbMovies] = useState([]);
+
+  useEffect(() => {
+    const TmdbToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${TmdbToken}`,
+      },
+    };
+
+    // TMDB API 호출
+    fetch(
+      "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&sort_by=popularity.desc",
+      options
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const filteredTmdbMovies = data.results.filter(
+          (tmdbMovie) => tmdbMovie.adult === false
+        );
+        console.log("✅ TMDB 응답 데이터:", filteredTmdbMovies);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  // <-------------------- return -------------------->
+
   return (
     <>
       <Container>
@@ -43,7 +73,7 @@ export default function MovieMain() {
   );
 }
 
-// <--------------- styled-components --------------->
+// <-------------------- styled-components -------------------->
 
 const MovieList = styled.div`
   display: flex;
