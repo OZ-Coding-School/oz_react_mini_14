@@ -1,0 +1,155 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-container {
+  padding: 20px;
+  max-width: 1200px; 
+  margin: 0 auto;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  background-color: #242323;
+  color: #fff;
+  padding: 10px 20px;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar-search input {
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  width: 300px;
+}
+
+.navbar-buttons button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.navbar-buttons .login-btn {
+  background-color: rgb(90, 230, 164);
+}
+
+.navbar-buttons .signup-btn {
+  background-color: rgb(90, 230, 164);
+}
+
+.movie-list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.back-button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #e9e9e9;
+}
+
+.movie-card {
+  padding: 10px;
+  margin: 10px;
+  width: 150px;
+  cursor: pointer;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+  text-align: center;
+}
+
+.movie-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.movie-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  margin-bottom: 5px;
+}
+
+.detail-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: row; 
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .detail-content {
+    flex-direction: column;
+  }
+}
+
+.detail-image-area {
+  flex: 2;
+  margin-right: 20px;
+}
+
+@media (max-width: 768px) {
+  .detail-image-area {
+    margin-right: 0;
+  }
+}
+
+.detail-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.detail-info-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-genres {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.detail-genres li {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9em;
+}
