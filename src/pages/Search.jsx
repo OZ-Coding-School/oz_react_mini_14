@@ -22,6 +22,12 @@ function Search() {
 
   if (loading || !movieList) return <Indicator />;
   if (error) return <Error message={error.message} />;
+  if (movieList.length === 0)
+    return (
+      <p className="flex-center mt-40 text-xl font-bold">
+        ⚠️ 검색 결과가 없습니다.
+      </p>
+    );
   return <MovieList movieList={filteredMovieList} />;
 }
 
