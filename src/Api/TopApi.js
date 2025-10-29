@@ -5,7 +5,7 @@ const apiToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 
 // <-------------------- function -------------------->
 
-export default function TopApi() {
+export default function useTopApi() {
   const [topApi, setTopApi] = useState([]);
 
   // <-------------------- API : Top

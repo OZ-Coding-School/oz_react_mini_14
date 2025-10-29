@@ -5,7 +5,7 @@ const apiToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 
 // <-------------------- function -------------------->
 
-export default function DetailApi(id) {
+export default function useDetailApi(id) {
   const [detailApi, setDetailApi] = useState([]);
   // console.log(movieId);
 

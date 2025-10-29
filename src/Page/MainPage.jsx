@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 import CardComponent from "../Component/CardComponent.jsx";
-import TopApi from "../Api/TopApi.js";
-import MainApi from "../Api/MainApi";
+import useTopApi from "../Api/TopApi.js";
+import useMainApi from "../Api/MainApi";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -13,8 +13,8 @@ import "swiper/css/pagination";
 // <-------------------- function -------------------->
 
 export default function MainPage() {
-  const topApi = TopApi();
-  const mainApi = MainApi();
+  const topApi = useTopApi();
+  const mainApi = useMainApi();
 
   // <-------------------- return -------------------->
 

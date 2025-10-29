@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 import { useParams } from "react-router-dom";
 
-import DetailApi from "../Api/DetailApi";
+import useDetailApi from "../Api/DetailApi";
 
 // <-------------------- function -------------------->
 
 export default function DetailPage() {
   const { id } = useParams();
 
-  const detailApi = DetailApi(id);
+  const detailApi = useDetailApi(id);
 
   // <-------------------- return -------------------->
 

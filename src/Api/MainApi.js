@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 // <-------------------- function -------------------->
 
-export default function MainApi() {
+export default function useMainApi() {
   const [mainApi, setMainApi] = useState([]);
 
   // <-------------------- API : popular
