@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 // <-------------------- function -------------------->
 
-export default function useMainApi() {
-  const [mainApi, setMainApi] = useState([]);
+export default function useTmdbMainData() {
+  const [tmdbMainData, setTmdbMainData] = useState([]);
 
   // <-------------------- API : popular
 
@@ -27,12 +27,12 @@ export default function useMainApi() {
           (resData) => resData.adult === false
         );
         // console.log("✅ TMDB 응답 데이터:", filteredTmdbMovies);
-        setMainApi(noAdultResData);
+        setTmdbMainData(noAdultResData);
       })
       .catch((err) => console.error(err));
   }, []);
 
   // <-------------------- return -------------------->
 
-  return mainApi;
+  return tmdbMainData;
 }

@@ -5,8 +5,8 @@ const apiToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 
 // <-------------------- function -------------------->
 
-export default function useTopApi() {
-  const [topApi, setTopApi] = useState([]);
+export default function useTmdbTopData() {
+  const [tmdbTopData, setTmdbTopData] = useState([]);
 
   // <-------------------- API : Top
 
@@ -24,12 +24,12 @@ export default function useTopApi() {
     axios
       .request(options)
       .then((res) => {
-        setTopApi(res.data.results);
+        setTmdbTopData(res.data.results);
       })
       .catch((err) => console.error(err));
   });
 
   // <-------------------- return -------------------->
 
-  return topApi;
+  return tmdbTopData;
 }

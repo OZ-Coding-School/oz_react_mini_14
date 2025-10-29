@@ -5,9 +5,8 @@ const apiToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 
 // <-------------------- function -------------------->
 
-export default function useDetailApi(id) {
-  const [detailApi, setDetailApi] = useState([]);
-  // console.log(movieId);
+export default function useTmdbDetailData(id) {
+  const [tmdbDetailData, setTmdbDetailData] = useState([]);
 
   // <-------------------- API : Details
 
@@ -25,12 +24,12 @@ export default function useDetailApi(id) {
     axios
       .request(options)
       .then((res) => {
-        setDetailApi(res.data);
+        setTmdbDetailData(res.data);
       })
       .catch((err) => console.error(err));
   }, []);
 
   // <-------------------- return -------------------->
 
-  return detailApi;
+  return tmdbDetailData;
 }

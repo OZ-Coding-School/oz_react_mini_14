@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
-import CardComponent from "../Component/CardComponent.jsx";
-import useTopApi from "../Api/TopApi.js";
-import useMainApi from "../Api/MainApi";
+import Card from "../components/Card.jsx";
+import useTmdbTopData from "../data/hooks/useTmdbTopData.js";
+import useTmdbMainData from "../data/hooks/useTmdbMainData.js";
+
+import NavigationBar from "../components/NavigationBar.jsx";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -13,13 +15,14 @@ import "swiper/css/pagination";
 // <-------------------- function -------------------->
 
 export default function MainPage() {
-  const topApi = useTopApi();
-  const mainApi = useMainApi();
+  const tmdbTop = useTmdbTopData();
+  const tmdbMain = useTmdbMainData();
 
   // <-------------------- return -------------------->
 
   return (
     <>
+      <NavigationBar />
       <Container>
         <Top10>TOP 10 🏆</Top10>
         <Swiper
@@ -33,17 +36,17 @@ export default function MainPage() {
           speed={600}
           className="topSwiper"
         >
-          {topApi.slice(0, 10).map((api) => (
+          {tmdbTop.slice(0, 10).map((api) => (
             <SwiperSlide>
-              <CardComponent movie={api} key={api.id} />
+              <Card movie={api} key={api.id} />
             </SwiperSlide>
           ))}
         </Swiper>
 
         <Popular>Popular ✨</Popular>
         <Mainapi>
-          {mainApi.map((api) => (
-            <CardComponent movie={api} key={api.id} />
+          {tmdbMain.map((api) => (
+            <Card movie={api} key={api.id} />
           ))}
         </Mainapi>
       </Container>
