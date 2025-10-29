@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import MovieCard from './MovieCard';
 import MovieDetail from './MovieDetail';
-import movieListData from './movieListData.json';
-import movieDetailData from './movieDetailData.json';
 import './App.css';
 
 export default function App() {
@@ -11,13 +9,37 @@ export default function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setMovies(movieListData.results);
+    const fetchMovies = async () => {
+      const apiKey = import.meta.env.VITE_API_KEY;
+      const url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=ko-KR&page=1`;
+
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            accept: 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`API 요청 실패: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        const filteredMovies = data.results.filter(movie => !movie.adult);
+        setMovies(filteredMovies);
+        
+      } catch (error) {
+        console.error('영화 목록 불러오기 실패:', error);
+      }
+    };
+
+    fetchMovies();
   }, []);
 
   const handleMovieClick = (movie) => {
-    if (movie.id === movieDetailData.id) {
-      navigate('/details');
-    }
+    navigate(`/details/${movie.id}`);
   };
 
   const MovieList = () => (
@@ -48,8 +70,8 @@ export default function App() {
       </nav>
       <Routes>
         <Route path="/" element={<MovieList />} />
-        <Route path="/details" element={<MovieDetail />} />
+        <Route path="/details/:id" element={<MovieDetail />} />
       </Routes>
     </div>
   );
-};
+}
