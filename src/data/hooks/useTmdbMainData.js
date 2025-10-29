@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 
 // <-------------------- function -------------------->
 
-export default function useTmdbMainData() {
+export default function useTmdbMainData(keyword) {
   const [tmdbMainData, setTmdbMainData] = useState([]);
 
   // <-------------------- API : popular
 
   useEffect(() => {
-    const apiToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+    const apiToken = import.meta.env.VITE_TMDB_API_KEY;
     const options = {
       method: "GET",
       headers: {
@@ -30,7 +30,7 @@ export default function useTmdbMainData() {
         setTmdbMainData(noAdultResData);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [keyword]);
 
   // <-------------------- return -------------------->
 

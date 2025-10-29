@@ -43,14 +43,6 @@ export default function NavigationBar() {
 
       {/* <-------------------- 검색 결과 표시 */}
 
-      {searchKeyword && searchKeyword.length > 0 && (
-        <searchKeyword>
-          {searchKeyword.map((movie) => (
-            <p key={movie.id}>{movie.title}</p>
-          ))}
-        </searchKeyword>
-      )}
-
       <Buttons>
         <LoginBtn>로그인</LoginBtn>
         <SignupBtn>회원가입</SignupBtn>
