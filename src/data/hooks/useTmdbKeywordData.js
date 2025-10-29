@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const apiToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+const apiToken = import.meta.env.VITE_TMDB_API_KEY;
 
 export default function useTmdbKeywordData(keyword) {
   const [search, setSearch] = useState([]);
 
   useEffect(() => {
+    console.log(keyword);
+
     if (!keyword) return;
 
     const options = {

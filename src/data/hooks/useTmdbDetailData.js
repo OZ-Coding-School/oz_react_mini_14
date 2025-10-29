@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const apiToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+const apiToken = import.meta.env.VITE_TMDB_API_KEY;
 
 // <-------------------- function -------------------->
 

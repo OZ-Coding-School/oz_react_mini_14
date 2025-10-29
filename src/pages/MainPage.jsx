@@ -1,28 +1,31 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import Card from "../components/Card.jsx";
-import useTmdbTopData from "../data/hooks/useTmdbTopData.js";
-import useTmdbMainData from "../data/hooks/useTmdbMainData.js";
+import Card from '../components/Card.jsx';
+import useTmdbTopData from '../data/hooks/useTmdbTopData.js';
+import useTmdbMainData from '../data/hooks/useTmdbMainData.js';
+import useTmdbKeywordData from '../data/hooks/useTmdbKeywordData.js';
 
-import NavigationBar from "../components/NavigationBar.jsx";
+import NavigationBar from '../components/NavigationBar.jsx';
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { useSearchParams } from 'react-router-dom';
 
 // <-------------------- function -------------------->
 
 export default function MainPage() {
+  const [keyword, setKeyword] = useSearchParams();
   const tmdbTop = useTmdbTopData();
-  const tmdbMain = useTmdbMainData();
+  const query = keyword.get("keyword")?.trim();
+  const tmdbMain = query ? useTmdbKeywordData(query) : useTmdbMainData(query);
 
   // <-------------------- return -------------------->
 
   return (
     <>
-      <NavigationBar />
       <Container>
         <Top10>TOP 10 🏆</Top10>
         <Swiper
