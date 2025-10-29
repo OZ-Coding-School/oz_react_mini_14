@@ -41,3 +41,21 @@ export const getMovieDetail = async (movieId) => {
     throw error;
   }
 };
+// 영화 검색 API (3단계 새 기능!)
+export const searchMovies = async (query) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/search/movie?query=${encodeURIComponent(
+        query
+      )}&language=ko-KR`,
+      options
+    );
+    const data = await response.json();
+
+    // adult 값이 false인 영화만 필터링
+    return data.results.filter((movie) => !movie.adult);
+  } catch (error) {
+    console.error("영화 검색 실패:", error);
+    throw error;
+  }
+};
