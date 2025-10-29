@@ -1,20 +1,36 @@
-import React, { useState } from "react";
-import movieDetailData from "../data/movieDetailData.json";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { fetchMovieDetails } from "../api/tmdb";
 
-export default function MovieDetail() {
-  const [movie] = useState(movieDetailData);
-  const baseUrl = "https://image.tmdb.org/t/p/w500";
+const baseUrl = "https://image.tmdb.org/t/p/original";
+
+export default function Details() {
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
+
+  useEffect(() => {
+    fetchMovieDetails(id).then((data) => setMovie(data));
+  }, [id]);
+
+  if (!movie)
+    return (
+      <div className="min-h-screen flex items-center justify-center text-black">
+        Loading...
+      </div>
+    );
 
   return (
     <main className="min-h-screen bg-gray-900 text-white">
       <header
-        className="h-96 bg-cover bg-center"
+        className="h-96 bg-cover bg-center relative"
         style={{
           backgroundImage: `url(${baseUrl}${
             movie.backdrop_path || movie.poster_path
           })`,
         }}
-      ></header>
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
+      </header>
 
       <section className="max-w-5xl mx-auto p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* 포스터 */}
@@ -22,7 +38,7 @@ export default function MovieDetail() {
           <img
             src={`${baseUrl}${movie.poster_path}`}
             alt={movie.title}
-            className="w-full rounded-lg shadow-lg"
+            className="w-full h-full object-cover rounded-lg shadow-lg"
           />
         </div>
         {/* 영화정보 */}
