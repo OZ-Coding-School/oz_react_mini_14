@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function MovieCard({ movie }) {
   return (
     <Link to={`/details/${movie.id}`}>
-      <article className="mx-auto w-40 shrink-0 grow-0 overflow-hidden rounded-md border border-stone-300 bg-stone-50 shadow-sm md:w-54 dark:border-stone-500 dark:bg-stone-500">
+      <article className="mx-auto w-40 shrink-0 grow-0 overflow-hidden rounded-md border border-stone-300 bg-stone-50 shadow-sm transition-all hover:scale-[102%] hover:border-stone-950 md:w-54 dark:border-stone-500 dark:bg-stone-500 hover:dark:border-stone-50">
         <img
           src={`${IMAGE_BASE_URL}${movie.poster_path}`}
           alt={movie.title}
