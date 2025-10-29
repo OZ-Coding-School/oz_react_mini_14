@@ -19,7 +19,8 @@ import { useSearchParams } from 'react-router-dom';
 export default function MainPage() {
   const [keyword, setKeyword] = useSearchParams();
   const tmdbTop = useTmdbTopData();
-  const tmdbMain = keyword.get("keyword")?.trim() ? useTmdbKeywordData(keyword) : useTmdbMainData();
+  const query = keyword.get("keyword")?.trim();
+  const tmdbMain = query ? useTmdbKeywordData(query) : useTmdbMainData(query);
 
   // <-------------------- return -------------------->
 

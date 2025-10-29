@@ -7,9 +7,8 @@ export default function useTmdbKeywordData(keyword) {
   const [search, setSearch] = useState([]);
 
   useEffect(() => {
-    if(typeof keyword !== "string") {
-      keyword = keyword.get("keyword") || "";
-    }
+    console.log(keyword);
+
     if (!keyword) return;
 
     const options = {
