@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-export default function MovieCardData() {
+export default function useMovieCardData() {
   const [movieData, setMoiveData] = useState([]); //movieListDatas.results
   // console.log(API_URL + " / " + API_KEY);
 
@@ -14,6 +14,7 @@ export default function MovieCardData() {
         const response = await fetch(endPoint);
         const jsonData = await response.json();
         const data = jsonData.results.filter((movie) => movie.adult === false);
+
         if (data.length === 0) {
           throw new Error("영화 데이터를 찾을 수 없습니다.");
         }

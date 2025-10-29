@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 // import movieDetailDatas from "../data/movieDetailData.json";
 import "./MovieDetail.scss";
-import MovieDetailData from "../lib/MovieDetailData";
+import useMovieDetailData from "../lib/MovieDetailData";
+import LoadingSkeleton from "../Components/skeleton/LoadingSkeleton";
 
 const BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
 
@@ -11,8 +12,13 @@ function Genre({ value }) {
 
 function MovieDetail() {
   const { movieId } = useParams();
-  const movieDetailDatas = MovieDetailData(movieId);
+  const { movieDetailDatas, loading } = useMovieDetailData(movieId);
+  // const movieDetailDatas = useMovieDetailData(movieId);
 
+  // console.log("movieDetailDatas : " + movieDetailDatas);
+  // console.log("loading : " + loading);
+
+  if (loading) return <LoadingSkeleton />;
   if (!movieDetailDatas) return <p>로딩 중....</p>;
 
   return (

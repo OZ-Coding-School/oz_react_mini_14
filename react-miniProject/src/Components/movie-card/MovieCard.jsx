@@ -9,7 +9,7 @@ function MovieCard({ data }) {
   const handleClick = () => {
     navigate(`/detail/${data.id}`);
   };
-  console.log(data.id);
+  // console.log(data.id);
   return (
     <div className="MovieCard-Container">
       <p className="MovieCard-Image">
