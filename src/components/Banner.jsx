@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "./BannerSwiper.css";
@@ -11,6 +11,7 @@ import { fetchData } from "../api/fetch";
 
 const Banner = () => {
   const [movies, setMovies] = useState([]);
+  const swiperRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +29,7 @@ const Banner = () => {
   return (
     <Container>
       <Swiper
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
         modules={[Navigation, Pagination]}
         spaceBetween={30}
         slidesPerView={1.8}
@@ -38,10 +40,12 @@ const Banner = () => {
           clickable: true,
           dynamicBullets: true,
         }}
+        watchSlidesProgress={true}
+        watchSlidesVisibility={true}
         breakpoints={{
           1024: { slidesPerView: 3 },
           786: { slidesPerView: 2 },
-          0: { slidesPerView: 1.6 },
+          0: { slidesPerView: 1.8 },
         }}
       >
         {movies.map((movie) => (
@@ -88,7 +92,7 @@ const Wrap = styled.div`
     top: 0;
     left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     cursor: pointer;
   }
