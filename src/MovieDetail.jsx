@@ -1,39 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import movieDetailData from './movieDetailData.json';
+import { useParams, useNavigate } from 'react-router-dom';
 import './App.css';
 
 export default function MovieDetail() {
-  const [movie, setMovie] = useState({});
+  const { id } = useParams();
   const navigate = useNavigate();
+  const [movie, setMovie] = useState({});
 
   useEffect(() => {
-    setMovie(movieDetailData);
-  }, []);
+    const fetchDetail = async () => {
+      const apiKey = import.meta.env.VITE_API_KEY;
+      const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=ko-KR`;
+
+      try {
+        const res = await fetch(url, { headers: { accept: 'application/json' } });
+        if (!res.ok) throw new Error('상세 정보 요청 실패');
+        const data = await res.json();
+        setMovie(data);
+      } catch (e) {
+        console.error('상세 정보 불러오기 실패:', e);
+      }
+    };
+
+    if (id) fetchDetail();
+  }, [id]);
 
   return (
     <div className="app-container">
       <div className="detail-container">
         <div className="detail-content">
           <div className="detail-image-area">
-            <img 
-              src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} 
-              alt={movie.title} 
-              className="detail-image" 
+            <img
+              src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+              alt={movie.title}
+              className="detail-image"
             />
           </div>
-          
           <div className="detail-info-area">
             <h1>{movie.title}</h1>
-            <p>평균 평점: {movie.vote_average}</p>
+            <p>평균 평점: {movie.vote_average?.toFixed(1)}</p>
             <h3>장르:</h3>
             <ul className="detail-genres">
-              {movie.genres && movie.genres.map((genre) => (
-                <li key={genre.id}>{genre.name}</li>
+              {movie.genres?.map(g => (
+                <li key={g.id}>{g.name}</li>
               ))}
             </ul>
             <h3>줄거리:</h3>
-            <p>{movie.overview}</p>
+            <p>{movie.overview || '줄거리 정보가 없습니다.'}</p>
           </div>
         </div>
         <button onClick={() => navigate('/')} className="back-button">
@@ -42,4 +55,4 @@ export default function MovieDetail() {
       </div>
     </div>
   );
-};
+}
