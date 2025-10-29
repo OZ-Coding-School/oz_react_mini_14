@@ -28,7 +28,3 @@ dist-ssr
 .env.local
 .env.development
 .env.production
-
-accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NDBjNWFmNWJlYTY1Yzg3M2IzNGMyZWRiOGY0MzgzMCIsIm5iZiI6MTc2MTU1MTIzMy4zMTksInN1YiI6IjY4ZmYyMzgxNzFkNTcwZjJiMjNiZmM5NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qVIM2hNsc2pDnTi1RzEWr7P4mXLu2zUg-8eU_iKHotg"
-
-ApiKey = 940c5af5bea65c873b34c2edb8f43830
