@@ -41,3 +41,21 @@ export async function fetchMovieDetails(id) {
   });
   return await res.json();
 }
+export async function searchMovies(query) {
+  if (!query) return [];
+
+  const res = await fetch(
+    `${BASE_URL}/search/movie?query=${encodeURIComponent(
+      query
+    )}&include_adult=false&language=en-US&page=1`,
+    {
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_TMDB_ACCESS_TOKEN}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+  return data.results || [];
+}
