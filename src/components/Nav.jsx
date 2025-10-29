@@ -54,7 +54,7 @@ export default Nav;
 
 const NavWrap = styled.div`
   width: 100%;
-  height: 50px;
+  height: 70px;
   position: fixed;
   top: 0;
   left: 0;

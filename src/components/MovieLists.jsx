@@ -59,7 +59,7 @@ const PopularMovie = () => {
 export default PopularMovie;
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 80px;
   max-width: 1751;
   margin: 0 auto;
   position: relative;
@@ -70,6 +70,7 @@ const Title = styled.h1`
   margin-bottom: 20px;
   font-size: 24px;
   color: #fff;
+  padding-left: 30px;
 `;
 
 const Grid = styled.ul`
