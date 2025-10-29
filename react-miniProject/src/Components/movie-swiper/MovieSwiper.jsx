@@ -15,7 +15,6 @@ export default function MovieSwuper({ movieData }) {
       spaceBetween={200} //사이 공간 거리
       slidesPerView={4} //화면에 나타내는 view 개수
     >
-      {/* {console.log(typeof movieData)} */}
       {movieData?.map((data) => (
         <SwiperSlide key={data.id}>
           <MovieCard data={data} />
