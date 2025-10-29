@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   @font-face {
     font-family: 'Paperozi';
@@ -78,7 +80,7 @@
   #root {
     scrollbar-width: none;
 
-    @apply flex min-h-screen w-full flex-col bg-stone-100 font-['Paperozi',ui-sans-serif,system-ui,sans-serif] text-stone-950 accent-stone-900;
+    @apply flex min-h-screen w-full flex-col bg-stone-100 font-['Paperozi',ui-sans-serif,system-ui,sans-serif] text-stone-950 accent-stone-900 dark:bg-stone-800;
 
     &::selection {
       @apply bg-stone-900 text-stone-50;

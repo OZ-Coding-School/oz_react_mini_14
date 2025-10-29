@@ -24,7 +24,7 @@ function Search() {
   if (error) return <Error message={error.message} />;
   if (movieList.length === 0)
     return (
-      <p className="flex-center mt-40 text-xl font-bold">
+      <p className="flex-center mt-40 text-xl font-bold dark:text-stone-50">
         ⚠️ 검색 결과가 없습니다.
       </p>
     );

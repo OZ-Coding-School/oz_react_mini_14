@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useDebounce from '@/hooks/useDebounce';
+import { ThemeContext } from '@/contexts/ThemContext';
 
 const DEBOUNCE_DELAY = 500;
 
 function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [keyword, setKeyword] = useState('');
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const debouncedKeyword = useDebounce({
     text: keyword,
@@ -42,6 +44,13 @@ function Header() {
         onClick={() => setIsMobileMenuOpen((prev) => !prev)}
       >
         &equiv;
+      </button>
+      <button
+        className="button font-bol ml-2 size-11 bg-transparent text-3xl md:ml-4"
+        onClick={toggleDarkMode}
+      >
+        {isDarkMode && <p>&#9728;</p>}
+        {!isDarkMode && <p className="text-3xl">&#9790;</p>}
       </button>
       {isMobileMenuOpen && (
         <div className="absolute -bottom-30 left-0 z-1000 flex flex-col">
