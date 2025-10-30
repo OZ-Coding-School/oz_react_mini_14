@@ -3,9 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background-color: #0f2027; /* 어두운 톤 배경 */
   background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
-  color: white;
 
   .logo {
     //460px 보다 작아지면 영화임티로 변경
@@ -35,7 +33,8 @@
       box-shadow: 0 0 5px #00bcd4;
     }
   }
-  .btn {
+
+  .loginBtn {
     display: flex;
     gap: 10px;
 
@@ -50,10 +49,31 @@
       transition: all 0.3s;
 
       &:hover {
-        background-color: #00bcd4;
         color: #fff;
         transform: translateY(-2px);
       }
+    }
+  }
+
+  &.light {
+    background-color: #00bcd4;
+    background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    color: #222;
+    button {
+      background: #00bcd4;
+      color: #222;
+      border: 1px solid #00bcd4;
+    }
+  }
+
+  &.dark {
+    background-color: #222;
+    background: #222;
+    color: #00bcd4;
+    button {
+      background: #333;
+      color: #00bcd4;
+      border: 1px solid #555;
     }
   }
 }

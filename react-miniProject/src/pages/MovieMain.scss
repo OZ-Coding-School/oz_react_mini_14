@@ -1,5 +1,12 @@
 .movieMain-Container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  &.dark {
+    background-color: #222;
+    color: #00bcd4;
+  }
+
+  .movieMain-movieCard {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
