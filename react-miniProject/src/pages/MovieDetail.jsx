@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import useMovieDetailData from "../lib/MovieDetailData";
+import useMovieDetailData from "../hooks/useMovieDetailData";
 import LoadingSkeleton from "../Components/skeleton/LoadingSkeleton";
 import "./MovieDetail.scss";
 

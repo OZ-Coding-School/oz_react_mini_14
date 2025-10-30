@@ -1,15 +1,23 @@
+import { useSelector } from "react-redux";
 import MovieCard from "../Components/movie-card";
 import MovieSwuper from "../Components/movie-swiper/MovieSwiper";
-import useMovieCardData from "../lib/MovieCardData";
-import useMovieTopRatedData from "../lib/MovieTopRatedData";
+import useMovieCardData from "../hooks/useMovieCardData";
+import useMovieTopRatedData from "../hooks/useMovieTopRatedData";
 // import MovieTopRatedData from "../lib/MovieTopRatedData";
 import "./MovieMain.scss";
 
 function MovieMain() {
   const movieData = useMovieCardData(); //인기있는 영화데이터 가져오기
   const movieTopRatedData = useMovieTopRatedData(); //평점이 제일 좋은 영화데이터 가져오기
-  // console.log(movieData);
+  const searchText = useSelector((state) => state.search.text);
 
+  const filteredMovies = movieData.filter((movie) =>
+    movie.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  if (searchText.length !== 0) {
+  }
+  // console.log(movieData);
   //맨처음 und -> falsy
   //0 === und => return null
   if (!movieData.length > 0) {
@@ -17,14 +25,14 @@ function MovieMain() {
   }
 
   return (
-    <>
+    <div style={{ minWidth: "1100px" }}>
       <MovieSwuper movieData={movieTopRatedData} />
       <div className="movieMain-Container">
-        {movieData?.map((data) => (
+        {filteredMovies?.map((data) => (
           <MovieCard key={data.id} data={data} />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
