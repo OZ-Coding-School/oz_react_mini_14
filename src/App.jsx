@@ -3,6 +3,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import Nav from "./components/Nav";
 import MainPage from "./pages/MainPage";
 import DetailPage from "./pages/DetailPage";
+import SearchPage from "./pages/SearchPage";
 
 const Layout = () => {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="/movie/:id" element={<DetailPage />} />
+          <Route path="search" element={<SearchPage />} />
         </Route>
       </Routes>
     </div>
