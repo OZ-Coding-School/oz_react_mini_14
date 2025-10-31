@@ -5,7 +5,6 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function useMovieTopRatedData() {
   const [movieData, setMoiveData] = useState([]); //movieListDatas.results
-  // console.log(API_URL + " / " + API_KEY);
 
   useEffect(() => {
     const fetchMovieInfo = async () => {
@@ -18,7 +17,7 @@ export default function useMovieTopRatedData() {
         if (data.length === 0) {
           throw new Error("영화 데이터를 찾을 수 없습니다.");
         }
-        // console.log(data);
+
         setMoiveData(data);
       } catch (error) {
         console.error("API 요청 에러 : ", error);
