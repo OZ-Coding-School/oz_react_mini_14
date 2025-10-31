@@ -1,12 +1,14 @@
 import React from "react";
-import Banner from "../../components/Banner";
-import MovieLists from "../../components/MovieLists";
+import Banner from "@components/Banner";
+import PopularMovies from "@components/PopularMovies";
+import TopRankedMovie from "@/components/TopRankedMovie";
 
 const MainPage = () => {
   return (
     <div>
       <Banner />
-      <MovieLists />
+      <TopRankedMovie />
+      <PopularMovies />
     </div>
   );
 };
