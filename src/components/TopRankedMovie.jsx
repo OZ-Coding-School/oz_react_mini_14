@@ -53,19 +53,19 @@ const TopRankedMovie = () => {
         <SwiperContainer>
           <Swiper
             modules={[Navigation]}
-            slidesPerView={7}
-            spaceBetween={24}
+            slidesPerView="auto"
+            spaceBetween={12}
             navigation={{
               prevEl: ".custom-prev",
               nextEl: ".custom-next",
             }}
             loop={false}
             breakpoints={{
-              1440: { slidesPerView: 7 },
-              1240: { slidesPerView: 6 },
-              960: { slidesPerView: 4 },
-              768: { slidesPerView: 3 },
-              0: { slidesPerView: 2 },
+              1440: { slidesPerView: 7, spaceBetween: 24 },
+              1240: { slidesPerView: 4, spaceBetween: 20 },
+              960: { slidesPerView: 3, spaceBetween: 16 },
+              768: { slidesPerView: 3, spaceBetween: 16 },
+              0: { slidesPerView: 3, spaceBetween: 16 },
             }}
           >
             {topRated.map((movie, index) => (
@@ -196,7 +196,7 @@ const RankNumber = styled.div`
   @media (max-width: 768px) {
     font-size: 100px;
     bottom: 30px;
-    left: 10%;
+    left: 5%;
     transform: translateX(-10%);
     -webkit-text-stroke: 2px #fff;
   }
@@ -231,9 +231,9 @@ const Poster = styled.img`
   }
 
   @media (max-width: 768px) {
-    left: 60px;
-    width: 100px;
-    height: 150px;
+    left: 40px;
+    width: 120px;
+    height: 180px;
   }
 `;
 
