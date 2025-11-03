@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import useDebounce from "../data/hooks/useDebounce.js";
+import useDebounce from "./hooks/useDebounce.js";
 import useTmdbKeywordData from "../data/hooks/useTmdbKeywordData.js";
 
 // <-------------------- function -------------------->
@@ -12,17 +12,18 @@ export default function NavigationBar() {
   const keywordParam = searchParams.get("keyword") || "";
   const [keyword, setKeyword] = useState(keywordParam);
 
-  const debouncedKeyword = useDebounce(keyword, 500);
-  const searchKeyword = useTmdbKeywordData(debouncedKeyword);
+  const debouncedKeyword = useDebounce(keyword, 100);
+  useTmdbKeywordData(debouncedKeyword);
 
   useEffect(() => {
     if (keyword.trim() === "") {
-      searchParams.delete("keyword");
-      setSearchParams(searchParams);
+      const params = new URLSearchParams(searchParams);
+      params.delete("keyword");
+      setSearchParams(params);
     } else {
       setSearchParams({ keyword });
     }
-  }, [keyword]);
+  }, [keyword, searchParams, setSearchParams]);
 
   // <-------------------- return -------------------->
 
@@ -40,9 +41,6 @@ export default function NavigationBar() {
           onChange={(e) => setKeyword(e.target.value)}
         />
       </SearchBox>
-
-      {/* <-------------------- 검색 결과 표시 */}
-
       <Buttons>
         <LoginBtn>로그인</LoginBtn>
         <SignupBtn>회원가입</SignupBtn>

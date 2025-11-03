@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
+import NavigationBar from "./components/NavigationBar";
+
 import { useParams } from "react-router-dom";
 
-import useTmdbDetailData from "../data/hooks/useTmdbDetailData";
+import useTmdbDetailData from "./data/hooks/useTmdbDetailData";
 
 // <-------------------- function -------------------->
 
@@ -14,20 +16,23 @@ export default function DetailPage() {
   // <-------------------- return -------------------->
 
   return (
-    <Detail>
-      <Poster
-        className="poster"
-        src={`https://image.tmdb.org/t/p/w500${tmdbDetail.backdrop_path}`}
-        alt={tmdbDetail.title}
-      />
-      <Info>
-        <TitleRating>
-          <Title>{tmdbDetail.title}</Title>
-          <Rating>{tmdbDetail.vote_average}</Rating>
-        </TitleRating>
-        <Overview>{tmdbDetail.overview}</Overview>
-      </Info>
-    </Detail>
+    <>
+      <NavigationBar />
+      <Detail>
+        <Poster
+          className="poster"
+          src={`https://image.tmdb.org/t/p/w500${tmdbDetail.backdrop_path}`}
+          alt={tmdbDetail.title}
+        />
+        <Info>
+          <TitleRating>
+            <Title>{tmdbDetail.title}</Title>
+            <Rating>{tmdbDetail.vote_average}</Rating>
+          </TitleRating>
+          <Overview>{tmdbDetail.overview}</Overview>
+        </Info>
+      </Detail>
+    </>
   );
 }
 
