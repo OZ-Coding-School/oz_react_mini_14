@@ -1,0 +1,45 @@
+.login-container {
+  max-width: 400px;
+  min-width: 200px;
+  margin: 6rem auto;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
+
+  .login-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    color: black;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn-container {
+    display: flex;
+    gap: 10px;
+    .login-btn,
+    .signup-btn {
+      width: 100%;
+      max-width: 25rem;
+      background-color: #00bcd4;
+      color: #ffffff;
+      border: none;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #017180;
+        transition: background-color 0.3s;
+      }
+    }
+  }
+}

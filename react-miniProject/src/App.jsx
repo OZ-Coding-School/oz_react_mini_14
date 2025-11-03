@@ -6,6 +6,8 @@ import { lazy, Suspense } from "react";
 import LoadingSkeleton from "./Components/skeleton/LoadingSkeleton.jsx";
 import { store } from "./store/index.js";
 import { Provider } from "react-redux";
+import LoginPage from "./pages/LoginPage.jsx";
+import SignUpPage from "./pages/SignUpPage.jsx";
 
 const MovieDetail = lazy(() => import("./pages/MovieDetail.jsx"));
 
@@ -19,6 +21,8 @@ export default function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<MovieMain />} />
               <Route path="/detail/:movieId" element={<MovieDetail />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
             </Route>
           </Routes>
         </Suspense>

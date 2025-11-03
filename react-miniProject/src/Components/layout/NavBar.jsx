@@ -34,6 +34,14 @@ export default function NavBar() {
     dispatch(themeToggleState());
   }
 
+  function handlePage(param) {
+    if (param === "login") {
+      navigate("/login");
+    } else if (param === "signup") {
+      navigate("/signup");
+    }
+  }
+
   return (
     <nav className={`navbar ${isDarkMode ? "dark" : "light"}`}>
       <div className="logo" onClick={handleClick}>
@@ -49,8 +57,8 @@ export default function NavBar() {
       </div>
       <div className="loginBtn">
         <button onClick={handleDLToggle}>{isDarkMode ? "🌙" : "☀️"}</button>
-        <button>로그인</button>
-        <button>회원가입</button>
+        <button onClick={() => handlePage("login")}>로그인</button>
+        <button onClick={() => handlePage("signup")}>회원가입</button>
       </div>
     </nav>
   );
