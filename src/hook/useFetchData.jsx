@@ -1,28 +1,46 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchData } from "../api/api";
 
-export const useFetchData = (endpoint = {}) => {
+export const useFetchData = (endpoint, params = {}) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!endpoint) {
+      setLoading(false);
+      return;
+    }
+
+    let isMounted = true;
+
     const loadData = async () => {
       try {
         setLoading(true);
-        const result = await fetchData(endpoint);
-        setData(result);
+        setError(null);
+        const result = await fetchData(endpoint, params);
+
+        if (isMounted) {
+          setData(result);
+        }
       } catch (err) {
-        setError(err);
+        if (isMounted) {
+          setError(err);
+          console.error("API 요청 중 오류발생:", err);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
-    if (endpoint) {
-      loadData();
-    }
-  }, [endpoint]);
+    loadData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [endpoint, JSON.stringify(params)]);
 
   return { data, loading, error };
 };

@@ -1,18 +1,9 @@
 import "./App.css";
-import { Routes, Route, Outlet } from "react-router-dom";
-import Nav from "./components/Nav";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./pages/Layout";
 import MainPage from "./pages/MainPage";
 import DetailPage from "./pages/DetailPage";
 import SearchPage from "./pages/SearchPage";
-
-const Layout = () => {
-  return (
-    <div>
-      <Nav />
-      <Outlet />
-    </div>
-  );
-};
 
 function App() {
   return (
