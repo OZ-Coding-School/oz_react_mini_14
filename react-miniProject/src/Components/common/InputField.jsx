@@ -4,7 +4,7 @@ export default function InputField({
   label,
   type,
   name,
-  value,
+  value = "",
   onChange,
   error,
 }) {

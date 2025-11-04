@@ -59,6 +59,13 @@ export default function NavBar() {
         <button onClick={handleDLToggle}>{isDarkMode ? "🌙" : "☀️"}</button>
         <button onClick={() => handlePage("login")}>로그인</button>
         <button onClick={() => handlePage("signup")}>회원가입</button>
+        <button
+          className="hamburgerBtn"
+          // onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
       </div>
     </nav>
   );
