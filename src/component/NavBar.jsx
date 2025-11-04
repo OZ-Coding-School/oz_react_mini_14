@@ -25,7 +25,9 @@ function NavBar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <h1 className="logo">OZ무비</h1>
+        <Link to="/" className="logo-link">
+          <h1 className="logo">🎬 OZ무비</h1>
+        </Link>
       </div>
 
       <div className="navbar-center">

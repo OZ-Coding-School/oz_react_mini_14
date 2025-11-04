@@ -49,3 +49,12 @@
   display: flex;
   align-items: center;
 }
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-link:hover {
+  opacity: 0.8;
+}
