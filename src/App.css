@@ -1,7 +1,7 @@
 body {
   background-color: #e2e8f0;
   margin: 0;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
 }
 
 .App {
@@ -10,7 +10,7 @@ body {
 }
 
 .page-title {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: bold;
   color: #8c02e2;
   margin-bottom: 20px;
@@ -24,29 +24,20 @@ body {
 }
 
 .movie-card {
-  width: 120px;
-  background-color: #308cca;
+  height: auto;
+  width: 150px;
+  background-color: #9c47e7;
   color: white;
-  border-radius: 6px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
   transition: transform 0.2s ease;
 }
 
 .movie-card:hover {
   transform: scale(1.05);
-}
-
-.poster-box {
-  width: 100%;
-  height: 160px;
-  background-color: #1b6ca8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
 }
 
 .poster-box img {

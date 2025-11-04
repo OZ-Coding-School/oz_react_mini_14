@@ -1,0 +1,35 @@
+@media (max-width: 600px) {
+  .movie-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .movie-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .movie-list {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: #1e293b;
+}
+
+@media (max-width: 600px) {
+  .navbar-right {
+    display: flex;
+    gap: 10px;
+  }
+}

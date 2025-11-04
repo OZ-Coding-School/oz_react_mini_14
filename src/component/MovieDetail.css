@@ -37,19 +37,20 @@
 /* 상세 내용 영역 */
 .detail-content {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  gap: 40px;
-  padding: 40px;
   background-color: #111;
-  flex-wrap: wrap; /* ✅ 반응형 정렬 */
+  flex-wrap: wrap;
 }
 
 .poster-box img {
-  width: 300px;
-  height: auto;
+  width: 150px;
+  height: 250px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  margin: 10px;
+  justify-self: start;
+  align-items: flex-start;
 }
 
 .info-box {
