@@ -1,33 +1,38 @@
 import styled from "styled-components";
 
+import NavigationBar from "./components/NavigationBar";
+
 import { useParams } from "react-router-dom";
 
-import useDetailApi from "../Api/DetailApi";
+import useTmdbDetailData from "./data/hooks/useTmdbDetailData";
 
 // <-------------------- function -------------------->
 
 export default function DetailPage() {
   const { id } = useParams();
 
-  const detailApi = useDetailApi(id);
+  const tmdbDetail = useTmdbDetailData(id);
 
   // <-------------------- return -------------------->
 
   return (
-    <Detail>
-      <Poster
-        className="poster"
-        src={`https://image.tmdb.org/t/p/w500${detailApi.backdrop_path}`}
-        alt={detailApi.title}
-      />
-      <Info>
-        <TitleRating>
-          <Title>{detailApi.title}</Title>
-          <Rating>{detailApi.vote_average}</Rating>
-        </TitleRating>
-        <Overview>{detailApi.overview}</Overview>
-      </Info>
-    </Detail>
+    <>
+      <NavigationBar />
+      <Detail>
+        <Poster
+          className="poster"
+          src={`https://image.tmdb.org/t/p/w500${tmdbDetail.backdrop_path}`}
+          alt={tmdbDetail.title}
+        />
+        <Info>
+          <TitleRating>
+            <Title>{tmdbDetail.title}</Title>
+            <Rating>{tmdbDetail.vote_average}</Rating>
+          </TitleRating>
+          <Overview>{tmdbDetail.overview}</Overview>
+        </Info>
+      </Detail>
+    </>
   );
 }
 

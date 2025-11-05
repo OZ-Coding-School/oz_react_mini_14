@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 // <-------------------- function, return -------------------->
 
-export default function CardComponent({ movie }) {
+export default function Card({ movie }) {
   return (
-    <Card>
+    <Container>
       <Link to={`/details/${movie.id}`}>
         <Poster
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -16,13 +16,13 @@ export default function CardComponent({ movie }) {
         <Title>{movie.title}</Title>
         <Rating>{movie.vote_average}</Rating>
       </Info>
-    </Card>
+    </Container>
   );
 }
 
 // <-------------------- styled-components -------------------->
 
-const Card = styled.div`
+const Container = styled.div`
   width: 18vw;
   max-width: 200px;
   min-width: 150px;

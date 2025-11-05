@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from "./Layout.jsx";
-import MainPage from "./page/MainPage.jsx";
-import DetailPage from "./page/DetailPage.jsx";
+import MainPage from "./pages/MainPage.jsx";
+import DetailPage from "./pages/DetailPage.jsx";
 
 import { createGlobalStyle } from "styled-components";
 

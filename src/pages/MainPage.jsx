@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import Card from "./components/Card.jsx";
 
-import CardComponent from "../Component/CardComponent.jsx";
-import useTopApi from "../Api/TopApi.js";
-import useMainApi from "../Api/MainApi";
+import useTmdbTopData from "./data/hooks/useTmdbTopData.js";
+import useTmdbMainData from "./data/hooks/useTmdbMainData.js";
+import useTmdbKeywordData from "./data/hooks/useTmdbKeywordData.js";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -10,18 +11,28 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+import { useSearchParams } from "react-router-dom";
+import NavigationBar from "./components/NavigationBar.jsx";
+
 // <-------------------- function -------------------->
 
 export default function MainPage() {
-  const topApi = useTopApi();
-  const mainApi = useMainApi();
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("keyword")?.trim();
+
+  const tmdbTop = useTmdbTopData();
+  const tmdbMainData = useTmdbMainData();
+  const tmdbKeywordData = useTmdbKeywordData(query);
+
+  const tmdbData = query ? tmdbKeywordData : tmdbMainData;
 
   // <-------------------- return -------------------->
 
   return (
     <>
+      <NavigationBar />
       <Container>
-        <Top10>TOP 10 🏆</Top10>
+        <Top10>🏆 TOP 10</Top10>
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           navigation
@@ -33,19 +44,19 @@ export default function MainPage() {
           speed={600}
           className="topSwiper"
         >
-          {topApi.slice(0, 10).map((api) => (
+          {tmdbTop.slice(0, 10).map((api) => (
             <SwiperSlide>
-              <CardComponent movie={api} key={api.id} />
+              <Card movie={api} key={api.id} />
             </SwiperSlide>
           ))}
         </Swiper>
 
-        <Popular>Popular ✨</Popular>
-        <Mainapi>
-          {mainApi.map((api) => (
-            <CardComponent movie={api} key={api.id} />
+        <Popular>✨ Popular</Popular>
+        <MainList>
+          {tmdbData.map((movie) => (
+            <Card movie={movie} key={movie.id} />
           ))}
-        </Mainapi>
+        </MainList>
       </Container>
     </>
   );
@@ -69,7 +80,7 @@ const Popular = styled.p`
   padding-left: 100px;
 `;
 
-const Mainapi = styled.div`
+const MainList = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

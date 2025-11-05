@@ -1,14 +1,45 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import useDebounce from "./hooks/useDebounce.js";
+import useTmdbKeywordData from "../data/hooks/useTmdbKeywordData.js";
+
+// <-------------------- function -------------------->
 
 export default function NavigationBar() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const keywordParam = searchParams.get("keyword") || "";
+  const [keyword, setKeyword] = useState(keywordParam);
+
+  const debouncedKeyword = useDebounce(keyword, 100);
+  useTmdbKeywordData(debouncedKeyword);
+
+  useEffect(() => {
+    if (keyword.trim() === "") {
+      const params = new URLSearchParams(searchParams);
+      params.delete("keyword");
+      setSearchParams(params);
+    } else {
+      setSearchParams({ keyword });
+    }
+  }, [keyword, searchParams, setSearchParams]);
+
+  // <-------------------- return -------------------->
+
   return (
     <Navigationbar>
       <Link to="/" style={{ textDecoration: "none", color: "white" }}>
         <Logo>🎬 • WISH MOVIE</Logo>
       </Link>
+
       <SearchBox>
-        <input type="text" placeholder="tell me your wish 🧞‍♂️" />
+        <input
+          type="text"
+          placeholder="tell me your wish 🧞‍♂️"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+        />
       </SearchBox>
       <Buttons>
         <LoginBtn>로그인</LoginBtn>
@@ -17,6 +48,8 @@ export default function NavigationBar() {
     </Navigationbar>
   );
 }
+
+// <-------------------- styled-components -------------------->
 
 const Navigationbar = styled.nav`
   width: 100%;
@@ -53,6 +86,18 @@ const SearchBox = styled.div`
     font-size: 16px;
     background-color: #bafd00;
   }
+`;
+
+const SearchResults = styled.div`
+  position: absolute;
+  top: 70px;
+  background-color: #111;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  color: white;
+  border-radius: 8px;
+  padding: 10px;
 `;
 
 const Buttons = styled.div`

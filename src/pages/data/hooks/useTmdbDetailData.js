@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const apiToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+const apiToken = import.meta.env.VITE_TMDB_API_KEY;
 
 // <-------------------- function -------------------->
 
-export default function useTopApi() {
-  const [topApi, setTopApi] = useState([]);
+export default function useTmdbDetailData(id) {
+  const [tmdbDetailData, setTmdbDetailData] = useState([]);
 
-  // <-------------------- API : Top
+  // <-------------------- API : Details
 
   useEffect(() => {
     const options = {
       method: "GET",
-      url: "https://api.themoviedb.org/3/movie/top_rated",
-      params: { language: "ko-KR", page: "1" },
+      url: `https://api.themoviedb.org/3/movie/${id}`,
+      params: { language: "ko-KR" },
       headers: {
         accept: "application/json",
         Authorization: `Bearer ${apiToken}`,
@@ -24,12 +24,12 @@ export default function useTopApi() {
     axios
       .request(options)
       .then((res) => {
-        setTopApi(res.data.results);
+        setTmdbDetailData(res.data);
       })
       .catch((err) => console.error(err));
-  });
+  }, []);
 
   // <-------------------- return -------------------->
 
-  return topApi;
+  return tmdbDetailData;
 }

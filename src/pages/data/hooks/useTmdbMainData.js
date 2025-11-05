@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 
 // <-------------------- function -------------------->
 
-export default function useMainApi() {
-  const [mainApi, setMainApi] = useState([]);
+export default function useTmdbMainData(keyword) {
+  const [tmdbMainData, setTmdbMainData] = useState([]);
 
   // <-------------------- API : popular
 
   useEffect(() => {
-    const apiToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+    const apiToken = import.meta.env.VITE_TMDB_API_KEY;
     const options = {
       method: "GET",
       headers: {
@@ -27,12 +27,12 @@ export default function useMainApi() {
           (resData) => resData.adult === false
         );
         // console.log("✅ TMDB 응답 데이터:", filteredTmdbMovies);
-        setMainApi(noAdultResData);
+        setTmdbMainData(noAdultResData);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [keyword]);
 
   // <-------------------- return -------------------->
 
-  return mainApi;
+  return tmdbMainData;
 }
