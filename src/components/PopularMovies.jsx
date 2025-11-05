@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useFetchData } from "@hooks/useFetchData";
+import { useFetchData } from "@hook/useFetchData";
 import styled from "styled-components";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { PageContainer } from "@components/CommonStyle/ContainerStyle";

@@ -6,6 +6,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   font-size: ${(props) => props.$size || "24px"};
   cursor: ${(props) => (props.onClick ? "pointer" : "default")};
   color: ${(props) => props.$color || "#fff"};
+  transition: transform 0.3s ease;
 
   &.user {
     @media (max-width: 900px) {

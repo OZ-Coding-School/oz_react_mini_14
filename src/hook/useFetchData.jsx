@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import { fetchData } from "../api/api";
+import { useEffect, useState, useMemo } from "react";
+import { fetchData } from "@api/api";
 
 export const useFetchData = (endpoint, params = {}) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const memoizedParams = useMemo(() => params, [JSON.stringify(params)]);
 
   useEffect(() => {
     if (!endpoint) {
@@ -40,7 +42,7 @@ export const useFetchData = (endpoint, params = {}) => {
     return () => {
       isMounted = false;
     };
-  }, [endpoint, JSON.stringify(params)]);
+  }, [endpoint, memoizedParams]);
 
   return { data, loading, error };
 };

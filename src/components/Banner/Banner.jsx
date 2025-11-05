@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Container, Wrap, Overlay, Title, Description } from "./BannerStyle";
 import { useNavigate } from "react-router-dom";
-import { useFetchData } from "@hooks/useFetchData";
+import { useFetchData } from "@hook/useFetchData";
 
 const Banner = () => {
   const { data, loading, error } = useFetchData("/movie/now_playing");

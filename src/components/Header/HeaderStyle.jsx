@@ -111,13 +111,13 @@ export const SearchBar = styled.input`
 export const IconGroup = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   order: 2;
 `;
 
 export const HamburgerBtn = styled.button`
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -126,5 +126,4 @@ export const HamburgerBtn = styled.button`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 6px;
 `;

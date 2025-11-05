@@ -9,10 +9,17 @@ import {
   HamburgerBtn,
   SearchBar,
 } from "./HeaderStyle";
-import debounce from "lodash.debounce";
-import Categories from "../Categories";
-import { faUser, faBell, faBars } from "@fortawesome/free-solid-svg-icons";
+
+import {
+  faUser,
+  faBell,
+  faBars,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import Icon from "@components/CommonStyle/Icon";
+import { debounce } from "lodash";
+import Categories from "@components/Categories";
+import SideMenu from "@components/SideMenu";
 
 const Header = () => {
   const [hasBackdropFilter, setHasBackdropFilter] = useState(false);
@@ -33,29 +40,35 @@ const Header = () => {
     };
   }, []);
 
-  const handleChange = (e) => {
+  const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const handleKeyPress = (e) => {
+  const handleSearchSubmit = (e) => {
     if (e.key === "Enter" && searchValue.trim() !== "") {
       navigate(`/search?q=${searchValue}`);
     }
   };
 
-  const handleClick = () => {
+  const handleLogoClick = () => {
     navigate("/");
   };
 
   const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
+    setIsMenuOpen((prev) => {
+      return !prev;
+    });
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
 
   return (
     <>
       <HeaderArea $hasBackdropFilter={hasBackdropFilter}>
         <StyledTopRow>
-          <StyledLogo onClick={handleClick}>
+          <StyledLogo onClick={handleLogoClick}>
             <img src="/image/keynema_logo.png" alt="keynema_logo" />
           </StyledLogo>
           <Categories />
@@ -63,8 +76,8 @@ const Header = () => {
           <StyledRightSection>
             <SearchBar
               value={searchValue}
-              onChange={handleChange}
-              onKeyDown={handleKeyPress}
+              onChange={handleSearchChange}
+              onKeyDown={handleSearchSubmit}
               type="text"
               placeholder="제목, 사람, 장르"
             />
@@ -78,12 +91,14 @@ const Header = () => {
                 aria-label="메뉴"
                 aria-expanded={isMenuOpen}
               >
-                <Icon icon={faBars} label="메뉴" />
+                <Icon icon={isMenuOpen ? faXmark : faBars} label="메뉴" />
               </HamburgerBtn>
             </IconGroup>
           </StyledRightSection>
         </StyledTopRow>
       </HeaderArea>
+
+      <SideMenu isOpen={isMenuOpen} onClose={closeMenu} />
     </>
   );
 };

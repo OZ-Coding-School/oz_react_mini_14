@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useFetchData } from "@hooks/useFetchData";
-import { useDebounce } from "@hooks/useDebounce";
+import { useFetchData } from "@hook/useFetchData";
+import { useDebounce } from "@/hook/useDebounce";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
