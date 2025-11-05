@@ -77,7 +77,7 @@ export default function LoginPage() {
         {error && <ErrorMessage>{error}</ErrorMessage>}
 
         <Button type="submit" disabled={loading}>
-          {loading ? "로그인 중..." : "로그인"}
+          {loading ? "..." : "로그인"}
         </Button>
       </LoginForm>
 

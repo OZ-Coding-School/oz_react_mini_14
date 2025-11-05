@@ -7,6 +7,7 @@ import LoginPage from "@pages/LoginPage";
 import MainPage from "@pages/MainPage";
 import DetailPage from "@pages/DetailPage";
 import SearchPage from "@pages/SearchPage";
+import SignupPage from "@pages/SignupPage";
 
 function App() {
   return (
@@ -16,8 +17,9 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<MainPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/movie/:id" element={<DetailPage />} />
-            <Route path="search" element={<SearchPage />} />
+            <Route path="/search" element={<SearchPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
