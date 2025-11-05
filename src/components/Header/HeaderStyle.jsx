@@ -127,3 +127,46 @@ export const HamburgerBtn = styled.button`
   justify-content: center;
   align-items: center;
 `;
+
+export const UserMenu = styled.div`
+  position: relative;
+  cursor: pointer;
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: rgba(26, 28, 32, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 8px;
+    padding: 8px;
+    min-width: 150px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+
+    a,
+    button {
+      display: block;
+      padding: 12px 16px;
+      color: white;
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+
+      &:hover {
+        background: rgba(255, 26, 102, 0.1);
+        color: #ff1a66;
+      }
+    }
+  }
+
+  &:hover .dropdown {
+    display: block;
+  }
+`;

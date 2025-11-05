@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const LoginContainer = styled.div`
   max-width: 400px;
-  margin: 100px auto;
+  margin: 300px auto;
   padding: 40px;
   background: rgba(26, 28, 32, 0.9);
   border-radius: 12px;
