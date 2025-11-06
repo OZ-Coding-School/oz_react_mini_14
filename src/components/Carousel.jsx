@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { MovieCard } from '@/components';
+import { Button, MovieCard } from '@/components';
 
 const SCROLL_AMOUNT = 500;
 
@@ -23,22 +23,24 @@ function Carousel({ movieList }) {
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
-      <button
+      <Button
         type="button"
+        variant="carousel"
+        className="left-2"
         aria-label="영화 리스트 왼쪽으로 이동"
-        className="button absolute top-[50%] left-2 -translate-y-[50%] px-2 py-9 text-5xl text-stone-50 opacity-90"
         onClick={handleLeftClick}
       >
         &lt;
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
+        variant="carousel"
+        className="right-2"
         aria-label="영화 리스트 오른쪽으로 이동"
-        className="button absolute top-[50%] right-2 -translate-y-[50%] px-2 py-9 text-5xl text-stone-50 opacity-90"
         onClick={handleRightClick}
       >
         &gt;
-      </button>
+      </Button>
     </section>
   );
 }

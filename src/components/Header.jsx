@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDebounce } from '@/hooks';
 import { ThemeContext } from '@/contexts/ThemContext';
+import { Button } from '@/components';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -35,49 +36,47 @@ function Header() {
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
       />
-      <div className="hidden md:block">
-        <button type="button" className="button mr-1 px-3 py-2">
+      <div className="hidden md:flex">
+        <Button type="button" variant="stone" size="md" className="mr-1">
           로그인
-        </button>
-        <button type="button" className="button px-3 py-2">
+        </Button>
+        <Button type="button" variant="stone" size="md">
           회원가입
-        </button>
+        </Button>
       </div>
-      <button
+      <Button
         type="button"
+        variant="icon"
+        size="sm"
+        className="md:hidden"
         aria-label={
           isMobileMenuOpen
             ? '로그인 및 회원가입 메뉴 닫기'
             : '로그인 및 회원가입 메뉴 열기'
         }
-        className="button bg-transparent px-2 py-1 text-3xl font-bold md:hidden"
         onClick={() => setIsMobileMenuOpen((prev) => !prev)}
       >
         &equiv;
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
+        variant="icon"
+        size="sm"
+        className="md:ml-4"
         aria-label={isDarkMode ? '라이트 모드로 전환' : '다크 모드로 전환'}
-        className="button font-bol ml-2 size-11 bg-transparent text-3xl md:ml-4"
         onClick={toggleDarkMode}
       >
         {isDarkMode && <p>&#9728;</p>}
         {!isDarkMode && <p className="text-3xl">&#9790;</p>}
-      </button>
+      </Button>
       {isMobileMenuOpen && (
         <div className="absolute -bottom-30 left-0 z-1000 flex flex-col">
-          <button
-            type="button"
-            className="button mr-1 h-[60px] w-screen rounded-none"
-          >
+          <Button type="button" variant="stone" size="full">
             로그인
-          </button>
-          <button
-            type="button"
-            className="button h-[60px] w-screen rounded-none"
-          >
+          </Button>
+          <Button type="button" variant="stone" size="full">
             회원가입
-          </button>
+          </Button>
         </div>
       )}
     </header>
