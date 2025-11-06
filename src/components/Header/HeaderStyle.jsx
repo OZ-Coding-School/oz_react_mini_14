@@ -132,10 +132,22 @@ export const UserMenu = styled.div`
   position: relative;
   cursor: pointer;
 
+  .user {
+    color: #ff1a66;
+    transition: transform 0.2s ease;
+
+    @media (max-width: 900px) {
+      display: none;
+    }
+  }
+  &:hover .user {
+    transform: scale(1.1);
+  }
+
   .dropdown {
     display: none;
     position: absolute;
-    top: 40px;
+    top: 100%px;
     right: 0;
     background: rgba(26, 28, 32, 0.95);
     backdrop-filter: blur(20px);
@@ -148,6 +160,7 @@ export const UserMenu = styled.div`
     a,
     button {
       display: block;
+      font-size: 16px;
       padding: 12px 16px;
       color: white;
       text-decoration: none;
@@ -160,7 +173,7 @@ export const UserMenu = styled.div`
       transition: background 0.2s;
 
       &:hover {
-        background: rgba(255, 26, 102, 0.1);
+        background: rgba(26, 28, 32, 0.76);
         color: #ff1a66;
       }
     }

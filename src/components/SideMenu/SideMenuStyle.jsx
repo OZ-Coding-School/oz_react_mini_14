@@ -6,7 +6,10 @@ export const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-height: 677px;
+  background-color: transparent;
+  backdrop-filter: blur(10px);
   opacity: ${(props) => (props.$isOpen ? 1 : 0)};
   visibility: ${(props) => (props.$isOpen ? "visible" : "hidden")};
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -17,15 +20,14 @@ export const MenuContainer = styled.nav`
   position: fixed;
   top: 0;
   right: 0;
-  height: 677px;
+  max-height: 677px;
   width: 100%;
-  max-width: 375px;
-  background-color: rgba(26, 28, 32, 0.76);
+  background-color: rgba(26, 28, 32, 0.2);
   backdrop-filter: blur(25px);
   transform: translateX(${(props) => (props.$isOpen ? "0" : "100%")});
   transition: transform 0.3s ease;
   z-index: 2000;
-  padding: 60px 24px 40px;
+  padding: 250px 98px 40px;
   overflow-y: auto;
 
   @media (max-width: 768px) {
@@ -65,7 +67,7 @@ export const CategoryTab = styled.button`
   background: transparent;
   border: none;
   color: ${(props) => (props.$active ? "#ff1a66" : "rgba(255, 255, 255, 0.6)")};
-  font-size: 16px;
+  font-size: 32px;
   font-weight: ${(props) => (props.$active ? "700" : "400")};
   padding: 12px 0;
   cursor: pointer;
@@ -90,7 +92,7 @@ export const MenuList = styled.ul`
 export const MenuItem = styled.li`
   padding: 16px 12px;
   color: ${(props) => (props.$active ? "#ff1a66" : "white")};
-  font-size: 16px;
+  font-size: 20px;
   font-weight: ${(props) => (props.$active ? "700" : "400")};
   cursor: pointer;
   border-radius: 8px;
