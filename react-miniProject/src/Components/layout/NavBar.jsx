@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./NavBar.scss";
 import _ from "lodash"; //debounce 사용 관련 // 전체 라이브러리 불러오기
 import { useCallback, useState } from "react";
-import { setSearchText, themeToggleState } from "../../store/slice";
+import { logInState, setSearchText, themeToggleState } from "../../store/slice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function NavBar() {
@@ -10,6 +10,7 @@ export default function NavBar() {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
+  const isLogIn = useSelector((state) => state.logIn.isLogIn);
 
   function handleClick() {
     navigate("/");
@@ -39,6 +40,10 @@ export default function NavBar() {
       navigate("/login");
     } else if (param === "signup") {
       navigate("/signup");
+    } else if (param === "logout") {
+      alert("로그아웃 되었습니다.");
+      dispatch(logInState(false));
+      navigate("/");
     }
   }
 
@@ -57,8 +62,18 @@ export default function NavBar() {
       </div>
       <div className="loginBtn">
         <button onClick={handleDLToggle}>{isDarkMode ? "🌙" : "☀️"}</button>
-        <button onClick={() => handlePage("login")}>로그인</button>
-        <button onClick={() => handlePage("signup")}>회원가입</button>
+        {isLogIn ? (
+          <>
+            <button>🧓</button>
+            <button onClick={() => handlePage("logout")}>로그아웃</button>
+          </>
+        ) : (
+          <>
+            <button onClick={() => handlePage("login")}>로그인</button>
+            <button onClick={() => handlePage("signup")}>회원가입</button>
+          </>
+        )}
+
         <button
           className="hamburgerBtn"
           // onClick={toggleMenu}

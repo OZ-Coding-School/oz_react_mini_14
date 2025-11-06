@@ -4,12 +4,15 @@ import MovieSwuper from "../Components/movie-swiper/MovieSwiper";
 import useMovieCardData from "../hooks/useMovieCardData";
 import useMovieTopRatedData from "../hooks/useMovieTopRatedData";
 import "./MovieMain.scss";
+import { useLocation } from "react-router-dom";
 
 function MovieMain() {
-  const movieData = useMovieCardData(); //인기있는 영화데이터 가져오기
+  const { movieData, addMovie } = useMovieCardData(); //인기있는 영화데이터 가져오기
   const movieTopRatedData = useMovieTopRatedData(); //평점이 제일 좋은 영화데이터 가져오기
   const searchText = useSelector((state) => state.search.text);
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
+  const location = useLocation();
+  const isAddMoiveBtn = location.pathname.includes("/detail");
 
   const filteredMovies = movieData.filter((movie) =>
     movie.title.toLowerCase().includes(searchText.toLowerCase())
@@ -30,6 +33,11 @@ function MovieMain() {
         {filteredMovies?.map((data) => (
           <MovieCard key={data.id} data={data} />
         ))}
+      </div>
+      <div className="addMoiveBtn">
+        <button disabled={isAddMoiveBtn} onClick={addMovie}>
+          ▼ 더보기
+        </button>
       </div>
     </div>
   );

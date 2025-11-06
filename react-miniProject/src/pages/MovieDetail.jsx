@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import useMovieDetailData from "../hooks/useMovieDetailData";
 import LoadingSkeleton from "../Components/skeleton/LoadingSkeleton";
 import "./MovieDetail.scss";
+import { useSelector } from "react-redux";
 
 const BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
 
@@ -12,6 +13,8 @@ function Genre({ value }) {
 function MovieDetail() {
   const { movieId } = useParams();
   const { movieDetailDatas, loading } = useMovieDetailData(movieId);
+  const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
+
   // console.log("movieDetailDatas : " + movieDetailDatas);
   // console.log("loading : " + loading);
 
@@ -19,7 +22,7 @@ function MovieDetail() {
   if (!movieDetailDatas) return <p>로딩 중....</p>;
 
   return (
-    <div className="movie">
+    <div className={`movie ${isDarkMode ? "dark" : "light"}`}>
       <div className="detail-poster">
         <img
           src={`${BASE_URL}${movieDetailDatas.poster_path}`}

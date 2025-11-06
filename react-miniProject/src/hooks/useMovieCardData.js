@@ -5,27 +5,53 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function useMovieCardData() {
   const [movieData, setMoiveData] = useState([]); //movieListDatas.results
-  // console.log(API_URL + " / " + API_KEY);
+  const [page, setPage] = useState(1);
+
+  const fetchMovieInfo = async (pageValue) => {
+    try {
+      let endPoint = `${API_URL}/popular?api_key=${API_KEY}&language=ko&page=${pageValue}`;
+      const response = await fetch(endPoint);
+      const jsonData = await response.json();
+      const data = jsonData.results.filter((movie) => movie.adult === false);
+
+      if (data.length === 0) {
+        throw new Error("영화 데이터를 찾을 수 없습니다.");
+      }
+
+      setMoiveData((prev) => [...prev, ...data]);
+    } catch (error) {
+      console.error("API 요청 에러 : ", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchMovieInfo = async () => {
-      try {
-        const endPoint = `${API_URL}/popular?api_key=${API_KEY}&language=ko&page=1`;
-        const response = await fetch(endPoint);
-        const jsonData = await response.json();
-        const data = jsonData.results.filter((movie) => movie.adult === false);
+    fetchMovieInfo(page);
+  }, [page]);
 
-        if (data.length === 0) {
-          throw new Error("영화 데이터를 찾을 수 없습니다.");
-        }
-        // console.log(data);
-        setMoiveData(data);
-      } catch (error) {
-        console.error("API 요청 에러 : ", error);
-      }
-    };
-    fetchMovieInfo();
-  }, []);
+  const addMovie = () => {
+    setPage((prev) => prev + 1);
+  };
 
-  return movieData;
+  return { movieData, addMovie };
 }
+
+// let value = 1;
+
+// useEffect(() => {
+//   const fetchMovieInfo = async () => {
+//     try {
+//       let endPoint = `${API_URL}/popular?api_key=${API_KEY}&language=ko&page=${value}`;
+//       const response = await fetch(endPoint);
+//       const jsonData = await response.json();
+//       const data = jsonData.results.filter((movie) => movie.adult === false);
+
+//       if (data.length === 0) {
+//         throw new Error("영화 데이터를 찾을 수 없습니다.");
+//       }
+//       setMoiveData(data);
+//     } catch (error) {
+//       console.error("API 요청 에러 : ", error);
+//     }
+//   };
+//   fetchMovieInfo();
+// }, []);

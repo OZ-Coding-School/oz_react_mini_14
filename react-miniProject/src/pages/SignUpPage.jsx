@@ -2,9 +2,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputField from "../Components/common/InputField";
 import "./SignUpPage.scss";
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+  validateConfirmPassword,
+} from "../utils/Login-SignupValidation";
 
 export default function SignUpPage() {
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -15,6 +26,24 @@ export default function SignUpPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    const newErrors = {
+      name: validateName(form.name),
+      email: validateEmail(form.email),
+      password: validatePassword(form.password),
+      confirmPassword: validateConfirmPassword(
+        form.password,
+        form.confirmPassword
+      ),
+    };
+
+    setErrors(newErrors);
+
+    const isValid = Object.values(newErrors).every((err) => err === "");
+
+    if (isValid) {
+      alert(`회원가입 성공`);
+    }
   }
 
   function handleSineUpPage() {
@@ -31,7 +60,7 @@ export default function SignUpPage() {
           name="email"
           value={form.email}
           onChange={handleOnChange}
-          error="이메일 에러"
+          error={errors.email}
         />
         <InputField
           label="이름"
@@ -39,7 +68,7 @@ export default function SignUpPage() {
           name="name"
           value={form.name}
           onChange={handleOnChange}
-          error="이름 에러"
+          error={errors.name}
         />
         <InputField
           label="패스워드"
@@ -47,7 +76,7 @@ export default function SignUpPage() {
           name="password"
           value={form.password}
           onChange={handleOnChange}
-          error="패스워드 에러"
+          error={errors.password}
         />
         <InputField
           label="패스워드 확인"
@@ -55,7 +84,7 @@ export default function SignUpPage() {
           name="confirmPassword"
           value={form.confirmPassword}
           onChange={handleOnChange}
-          error="패스워드 확인 에러"
+          error={errors.confirmPassword}
         />
         <button className="sign-btn" onClick={handleSineUpPage}>
           회원가입

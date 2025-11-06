@@ -36,4 +36,12 @@
       transition: background-color 0.3s;
     }
   }
+
+  &.dark {
+    @include theme-dark;
+  }
+
+  &.light {
+    @include theme-light;
+  }
 }

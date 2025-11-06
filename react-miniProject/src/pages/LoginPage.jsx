@@ -2,11 +2,18 @@ import { useState } from "react";
 import InputField from "../Components/common/InputField";
 import "./LoginPage.scss";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  validateEmail,
+  validatePassword,
+} from "../utils/Login-SignupValidation";
+import { logInState } from "../store/slice";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function handleOnChange(e) {
     const { name, value } = e.target;
@@ -15,6 +22,20 @@ export default function LoginPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    const newErrors = {
+      email: validateEmail(form.email),
+      password: validatePassword(form.password),
+    };
+
+    setErrors(newErrors);
+
+    const isValid = Object.values(newErrors).every((err) => err === "");
+    if (isValid) {
+      alert("로그인 성공!");
+      dispatch(logInState(true));
+      navigate("/");
+    }
   }
 
   function handleSineUpPage() {
@@ -31,7 +52,7 @@ export default function LoginPage() {
           name="email"
           value={form.email}
           onChange={handleOnChange}
-          error="이메일 에러"
+          error={errors.email}
         />
         <InputField
           label="패스워드"
@@ -39,7 +60,7 @@ export default function LoginPage() {
           name="password"
           value={form.password}
           onChange={handleOnChange}
-          error="패스워드 에러"
+          error={errors.password}
         />
         <div className="btn-container">
           <button type="submit" className="login-btn">
