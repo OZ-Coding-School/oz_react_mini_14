@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import MovieCard from '@/components/MovieCard';
+import { MovieCard } from '@/components';
 
 const SCROLL_AMOUNT = 500;
 

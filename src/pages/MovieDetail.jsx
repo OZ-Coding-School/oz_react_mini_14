@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import useFetch from '@/hooks/useFetch';
-import getMovieDetails from '@/apis/getMovieDetails';
-import Indicator from '@/components/Indicator';
-import Error from '@/components/Error';
+import { useFetch } from '@/hooks';
+import { getMovieDetails } from '@/apis';
+import { Indicator, Error } from '@/components';
 import { IMAGE_BASE_URL } from '@/constants/url';
 
 function MovieDetail() {

@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import useFetch from '@/hooks/useFetch';
-import getMovieList from '@/apis/getMovieList';
-import Indicator from '@/components/Indicator';
-import Error from '@/components/Error';
-import MovieList from '@/components/MovieList';
-import Carousel from '@/components/Carousel';
+import { useFetch } from '@/hooks';
+import { getMovieList } from '@/apis';
+import { Indicator, Error, MovieList, Carousel } from '@/components';
 
 function App() {
   const [isCarousel, setIsCarousel] = useState(false);

@@ -1,10 +1,8 @@
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import useFetch from '@/hooks/useFetch';
-import getMovieListByKeyword from '@/apis/getMovieListByKeyword';
-import Indicator from '@/components/Indicator';
-import Error from '@/components/Error';
-import MovieList from '@/components/MovieList';
+import { useFetch } from '@/hooks';
+import { getMovieListByKeyword } from '@/apis';
+import { Indicator, Error, MovieList } from '@/components';
 
 function Search() {
   const [searchParams] = useSearchParams();

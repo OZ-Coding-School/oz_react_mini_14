@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useDebounce from '@/hooks/useDebounce';
+import { useDebounce } from '@/hooks';
 import { ThemeContext } from '@/contexts/ThemContext';
 
 const DEBOUNCE_DELAY = 500;
