@@ -13,6 +13,7 @@ function App() {
   return (
     <>
       <button
+        type="button"
         className="button mt-10 ml-22 w-44 px-4 py-2 text-stone-50"
         onClick={() => setIsCarousel((prev) => !prev)}
       >

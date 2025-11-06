@@ -24,12 +24,16 @@ function Carousel({ movieList }) {
         ))}
       </div>
       <button
+        type="button"
+        aria-label="영화 리스트 왼쪽으로 이동"
         className="button absolute top-[50%] left-2 -translate-y-[50%] px-2 py-9 text-5xl text-stone-50 opacity-90"
         onClick={handleLeftClick}
       >
         &lt;
       </button>
       <button
+        type="button"
+        aria-label="영화 리스트 오른쪽으로 이동"
         className="button absolute top-[50%] right-2 -translate-y-[50%] px-2 py-9 text-5xl text-stone-50 opacity-90"
         onClick={handleRightClick}
       >

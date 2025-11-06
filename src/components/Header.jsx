@@ -36,16 +36,28 @@ function Header() {
         onChange={(e) => setKeyword(e.target.value)}
       />
       <div className="hidden md:block">
-        <button className="button mr-1 px-3 py-2">로그인</button>
-        <button className="button px-3 py-2">회원가입</button>
+        <button type="button" className="button mr-1 px-3 py-2">
+          로그인
+        </button>
+        <button type="button" className="button px-3 py-2">
+          회원가입
+        </button>
       </div>
       <button
+        type="button"
+        aria-label={
+          isMobileMenuOpen
+            ? '로그인 및 회원가입 메뉴 닫기'
+            : '로그인 및 회원가입 메뉴 열기'
+        }
         className="button bg-transparent px-2 py-1 text-3xl font-bold md:hidden"
         onClick={() => setIsMobileMenuOpen((prev) => !prev)}
       >
         &equiv;
       </button>
       <button
+        type="button"
+        aria-label={isDarkMode ? '라이트 모드로 전환' : '다크 모드로 전환'}
         className="button font-bol ml-2 size-11 bg-transparent text-3xl md:ml-4"
         onClick={toggleDarkMode}
       >
@@ -54,10 +66,16 @@ function Header() {
       </button>
       {isMobileMenuOpen && (
         <div className="absolute -bottom-30 left-0 z-1000 flex flex-col">
-          <button className="button mr-1 h-[60px] w-screen rounded-none">
+          <button
+            type="button"
+            className="button mr-1 h-[60px] w-screen rounded-none"
+          >
             로그인
           </button>
-          <button className="button h-[60px] w-screen rounded-none">
+          <button
+            type="button"
+            className="button h-[60px] w-screen rounded-none"
+          >
             회원가입
           </button>
         </div>
