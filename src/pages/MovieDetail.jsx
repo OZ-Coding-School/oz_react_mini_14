@@ -36,7 +36,7 @@ function MovieDetail() {
           className="col-span-1 row-span-2 size-full rounded-md bg-stone-950 object-contain xl:row-span-3"
         />
         <div className="col-span-1 row-span-1 flex flex-col justify-end font-bold md:text-lg lg:text-xl">
-          <p className="">평점: ⭐ {movie.vote_average}</p>
+          <p className="">평점: ⭐ {movie.vote_average?.toFixed(2)}</p>
           <p className="">
             장르: {movie.genres?.map((genre) => genre.name).join(', ')}
           </p>
