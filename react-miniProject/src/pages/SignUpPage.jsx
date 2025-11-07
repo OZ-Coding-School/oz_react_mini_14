@@ -8,6 +8,7 @@ import {
   validatePassword,
   validateConfirmPassword,
 } from "../utils/Login-SignupValidation";
+import { useSupabaseAuth } from "../../supabase";
 
 export default function SignUpPage() {
   const [form, setForm] = useState({
@@ -18,13 +19,16 @@ export default function SignUpPage() {
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const supabaseAuth = useSupabaseAuth();
+  // console.log(supabaseAuth);
+  const [loading, setLoading] = useState(false);
 
   function handleOnChange(e) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     const newErrors = {
@@ -40,9 +44,27 @@ export default function SignUpPage() {
     setErrors(newErrors);
 
     const isValid = Object.values(newErrors).every((err) => err === "");
+    if (!isValid) {
+      return;
+    }
 
-    if (isValid) {
-      alert(`회원가입 성공`);
+    try {
+      setLoading(true);
+      const { data, error } = await supabaseAuth.signUp({
+        email: form.email,
+        password: form.password,
+        options: {
+          name: form.name,
+        },
+      });
+      if (error) throw error;
+      alert(`회원가입 성공!`);
+      navigate("/login");
+    } catch (error) {
+      alert(`회원가입 실패 : ${error.message}`);
+      console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -87,7 +109,7 @@ export default function SignUpPage() {
           error={errors.confirmPassword}
         />
         <button className="sign-btn" onClick={handleSineUpPage}>
-          회원가입
+          {loading ? "가입 중...." : "회원가입"}
         </button>
       </form>
     </div>

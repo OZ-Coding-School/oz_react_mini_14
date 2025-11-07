@@ -4,19 +4,23 @@ import _ from "lodash"; //debounce 사용 관련 // 전체 라이브러리 불�
 import { useCallback, useState } from "react";
 import { logInState, setSearchText, themeToggleState } from "../../store/slice";
 import { useDispatch, useSelector } from "react-redux";
+import { useSupabaseAuth } from "../../../supabase";
 
 export default function NavBar() {
+  const [inputValue, setInputValue] = useState("");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [inputValue, setInputValue] = useState("");
+  const supabaseAuth = useSupabaseAuth();
+
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
   const isLogIn = useSelector((state) => state.logIn.isLogIn);
 
-  function handleClick() {
+  const handleClick = useCallback(() => {
     navigate("/");
     setInputValue("");
     debouncedSearch(""); // debounce 함수 호출
-  }
+  });
 
   const debouncedSearch = useCallback(
     _.debounce((query) => {
@@ -25,27 +29,33 @@ export default function NavBar() {
     []
   );
 
-  function handleInputChange(e) {
+  const handleInputChange = useCallback((e) => {
     const value = e.target.value;
     setInputValue(value);
     debouncedSearch(value); // debounce 함수 호출
-  }
+  });
 
-  function handleDLToggle() {
+  const handleDLToggle = useCallback(() => {
     dispatch(themeToggleState());
-  }
+  });
 
-  function handlePage(param) {
+  const handlePage = useCallback(async (param) => {
     if (param === "login") {
       navigate("/login");
     } else if (param === "signup") {
       navigate("/signup");
     } else if (param === "logout") {
-      alert("로그아웃 되었습니다.");
-      dispatch(logInState(false));
-      navigate("/");
+      try {
+        await supabaseAuth.logout();
+        dispatch(logInState(false));
+        alert("로그아웃 되었습니다.");
+        navigate("/");
+      } catch (error) {
+        alert("로그아웃 중 오류가 발생하였습니다.");
+        console.log("로그아웃 실패 : ", error);
+      }
     }
-  }
+  });
 
   return (
     <nav className={`navbar ${isDarkMode ? "dark" : "light"}`}>
@@ -61,26 +71,46 @@ export default function NavBar() {
         />
       </div>
       <div className="loginBtn">
-        <button onClick={handleDLToggle}>{isDarkMode ? "🌙" : "☀️"}</button>
+        <button type="submit" aria-label="모드 변경" onClick={handleDLToggle}>
+          {isDarkMode ? "🌙" : "☀️"}
+        </button>
         {isLogIn ? (
           <>
             <button>🧓</button>
-            <button onClick={() => handlePage("logout")}>로그아웃</button>
+            <button
+              type="submit"
+              aria-label="로그아웃 진행"
+              onClick={() => handlePage("logout")}
+            >
+              로그아웃
+            </button>
           </>
         ) : (
           <>
-            <button onClick={() => handlePage("login")}>로그인</button>
-            <button onClick={() => handlePage("signup")}>회원가입</button>
+            <button
+              type="submit"
+              aria-label="로그인 데이터 전송"
+              onClick={() => handlePage("login")}
+            >
+              로그인
+            </button>
+            <button
+              type="submit"
+              aria-label="회원가입 데이터 전송"
+              onClick={() => handlePage("signup")}
+            >
+              회원가입
+            </button>
           </>
         )}
 
-        <button
+        {/* <button
           className="hamburgerBtn"
           // onClick={toggleMenu}
           aria-label="Toggle menu"
         >
           ☰
-        </button>
+        </button> */}
       </div>
     </nav>
   );
