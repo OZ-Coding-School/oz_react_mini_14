@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDebounce } from '@/hooks';
 import { ThemeContext } from '@/contexts/ThemContext';
-import { Button } from '@/components';
+import { Button, LinkButton } from '@/components';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -37,12 +37,18 @@ function Header() {
         onChange={(e) => setKeyword(e.target.value)}
       />
       <div className="hidden md:flex">
-        <Button type="button" variant="stone" size="md" className="mr-1">
+        <LinkButton
+          to="/login"
+          type="button"
+          variant="stone"
+          size="md"
+          className="mr-1"
+        >
           로그인
-        </Button>
-        <Button type="button" variant="stone" size="md">
+        </LinkButton>
+        <LinkButton to="/signup" type="button" variant="stone" size="md">
           회원가입
-        </Button>
+        </LinkButton>
       </div>
       <Button
         type="button"
@@ -71,12 +77,24 @@ function Header() {
       </Button>
       {isMobileMenuOpen && (
         <div className="absolute -bottom-30 left-0 z-1000 flex flex-col">
-          <Button type="button" variant="stone" size="full">
+          <LinkButton
+            to="/login"
+            type="button"
+            variant="stone"
+            size="screen"
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          >
             로그인
-          </Button>
-          <Button type="button" variant="stone" size="full">
+          </LinkButton>
+          <LinkButton
+            to="/signup"
+            type="button"
+            variant="stone"
+            size="screen"
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          >
             회원가입
-          </Button>
+          </LinkButton>
         </div>
       )}
     </header>
