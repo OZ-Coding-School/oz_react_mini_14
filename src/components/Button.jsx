@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { cva } from 'class-variance-authority';
 import { twMerge } from 'tailwind-merge';
 
@@ -20,21 +21,34 @@ const buttonVariants = cva(
         md: 'w-22 py-2',
         lg: 'w-33 py-2',
         xl: 'w-44 py-2',
-        full: 'h-[60px] w-screen rounded-none',
+        full: 'w-full py-2',
+        screen: 'h-[60px] w-screen rounded-none',
       },
     },
   },
 );
 
-function Button({ variant, size, className, children, ...rest }) {
+const Button = memo(function ({
+  variant,
+  size,
+  className,
+  disabled,
+  children,
+  ...rest
+}) {
   return (
     <button
-      className={twMerge(buttonVariants({ variant, size }), className)}
+      className={twMerge(
+        buttonVariants({ variant, size }),
+        className,
+        disabled && 'pointer-events-none bg-stone-400 select-none',
+      )}
+      disabled={disabled}
       {...rest}
     >
       {children}
     </button>
   );
-}
+});
 
 export default Button;
