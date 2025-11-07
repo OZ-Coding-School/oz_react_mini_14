@@ -5,3 +5,4 @@ export { default as MovieCard } from '@/components/MovieCard';
 export { default as Error } from '@/components/Error';
 export { default as Indicator } from '@/components/Indicator';
 export { default as Button } from '@/components/Button';
+export { default as FormField } from '@/components/FormField';
