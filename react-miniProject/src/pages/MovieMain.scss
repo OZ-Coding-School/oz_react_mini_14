@@ -9,22 +9,6 @@
     display: flex;
     justify-content: center;
     padding: 10px 0 20px 0;
-
-    button {
-      background-color: transparent; //투명한 색상
-      border: 1px solid #00bcd4;
-      color: #00bcd4;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s;
-
-      &:hover {
-        color: #fff;
-        transform: translateY(-2px);
-      }
-    }
   }
 
   &.dark {

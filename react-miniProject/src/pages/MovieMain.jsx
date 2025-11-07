@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
-import MovieCard from "../Components/movie-card";
-import MovieSwuper from "../Components/movie-swiper/MovieSwiper";
+import MovieCard from "../components/movie-card";
+import MovieSwuper from "../components/movie-swiper/MovieSwiper";
 import useMovieCardData from "../hooks/useMovieCardData";
 import useMovieTopRatedData from "../hooks/useMovieTopRatedData";
 import "./MovieMain.scss";
 import { useLocation } from "react-router-dom";
+import CommonButton from "../components/common/CommonButton";
 
 function MovieMain() {
   const { movieData, addMovie } = useMovieCardData(); //인기있는 영화데이터 가져오기
@@ -35,9 +36,9 @@ function MovieMain() {
         ))}
       </div>
       <div className="addMoiveBtn">
-        <button disabled={isAddMoiveBtn} onClick={addMovie}>
+        <CommonButton disabled={isAddMoiveBtn} onClick={addMovie}>
           ▼ 더보기
-        </button>
+        </CommonButton>
       </div>
     </div>
   );

@@ -30,22 +30,5 @@
   .btn-container {
     display: flex;
     gap: 10px;
-    .login-btn,
-    .signup-btn {
-      width: 100%;
-      max-width: 25rem;
-      background-color: #00bcd4;
-      color: #ffffff;
-      border: none;
-      padding: 1rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #017180;
-        transition: background-color 0.3s;
-      }
-    }
   }
 }

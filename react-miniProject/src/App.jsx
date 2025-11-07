@@ -1,9 +1,9 @@
 import "./styles/index.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./Components/layout/index.js";
+import Layout from "./components/layout/index.js";
 import MovieMain from "./pages/MovieMain.jsx";
 import { lazy, Suspense } from "react";
-import LoadingSkeleton from "./Components/skeleton/LoadingSkeleton.jsx";
+import LoadingSkeleton from "./components/skeleton/LoadingSkeleton.jsx";
 import { store } from "./store/index.js";
 import { Provider } from "react-redux";
 import LoginPage from "./pages/LoginPage.jsx";

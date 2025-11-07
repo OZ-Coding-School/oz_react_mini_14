@@ -1,0 +1,29 @@
+.common-btn {
+  background-color: transparent; //투명한 색상
+  border: 1px solid #00bcd4;
+  color: #00bcd4;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    color: #ffffff !important;
+    transform: translateY(-2px);
+  }
+}
+
+.loginPage-btn {
+  max-width: 400px;
+  min-width: 200px;
+  background-color: #00bcd4; //투명한 색상
+  color: black;
+}
+
+.signUpPage-btn {
+  width: 100%;
+  max-width: 25rem;
+  background-color: #00bcd4;
+  color: #000000;
+}

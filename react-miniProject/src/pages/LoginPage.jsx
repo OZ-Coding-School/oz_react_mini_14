@@ -9,6 +9,7 @@ import {
 } from "../utils/Login-SignupValidation";
 import { logInState } from "../store/slice";
 import { useSupabaseAuth } from "../../supabase";
+import CommonButton from "../components/common/CommonButton";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -100,21 +101,21 @@ export default function LoginPage() {
         {authError && <p className="auth-error">{authError}</p>}
 
         <div className="btn-container">
-          <button
-            type="submit"
-            className="login-btn"
+          <CommonButton
+            type="button"
+            className="loginPage-btn"
             aria-label="로그인 데이터 보내기"
           >
             {loading ? "로그인 중..." : "로그인"}
-          </button>
-          <button
-            className="signup-btn"
+          </CommonButton>
+          <CommonButton
+            className="loginPage-btn"
             onClick={handleSineUpPage}
-            type="submit"
+            type="button"
             aria-label="회원가입 정보 보내기"
           >
             회원가입
-          </button>
+          </CommonButton>
         </div>
       </form>
     </div>

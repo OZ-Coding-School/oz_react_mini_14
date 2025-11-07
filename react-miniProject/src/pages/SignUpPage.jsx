@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import InputField from "../Components/common/InputField";
+import InputField from "../components/common/InputField";
 import "./SignUpPage.scss";
 import {
   validateEmail,
@@ -9,6 +9,7 @@ import {
   validateConfirmPassword,
 } from "../utils/Login-SignupValidation";
 import { useSupabaseAuth } from "../../supabase";
+import CommonButton from "../components/common/CommonButton";
 
 export default function SignUpPage() {
   const [form, setForm] = useState({
@@ -108,9 +109,13 @@ export default function SignUpPage() {
           onChange={handleOnChange}
           error={errors.confirmPassword}
         />
-        <button className="sign-btn" onClick={handleSineUpPage}>
+        <CommonButton
+          type="button"
+          className="signUpPage-btn"
+          onClick={handleSineUpPage}
+        >
           {loading ? "가입 중...." : "회원가입"}
-        </button>
+        </CommonButton>
       </form>
     </div>
   );
