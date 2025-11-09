@@ -10,6 +10,7 @@ import {
 } from "../utils/Login-SignupValidation";
 import { useSupabaseAuth } from "../../supabase";
 import CommonButton from "../components/common/CommonButton";
+import { toast } from "react-toastify";
 
 export default function SignUpPage() {
   const [form, setForm] = useState({
@@ -59,10 +60,10 @@ export default function SignUpPage() {
         },
       });
       if (error) throw error;
-      alert(`회원가입 성공!`);
+      toast.success(`회원가입 성공!`);
       navigate("/login");
     } catch (error) {
-      alert(`회원가입 실패 : ${error.message}`);
+      toast.error(`회원가입 실패 : ${error.message}`);
       console.log(error.message);
     } finally {
       setLoading(false);
@@ -110,7 +111,7 @@ export default function SignUpPage() {
           error={errors.confirmPassword}
         />
         <CommonButton
-          type="button"
+          type="submit"
           className="signUpPage-btn"
           onClick={handleSineUpPage}
         >

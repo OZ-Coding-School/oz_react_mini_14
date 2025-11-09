@@ -6,6 +6,7 @@ import { logInState, setSearchText, themeToggleState } from "../../store/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useSupabaseAuth } from "../../../supabase";
 import CommonButton from "../common/CommonButton";
+import { toast } from "react-toastify";
 
 export default function NavBar() {
   const [inputValue, setInputValue] = useState("");
@@ -49,10 +50,10 @@ export default function NavBar() {
       try {
         await supabaseAuth.logout();
         dispatch(logInState(false));
-        alert("로그아웃 되었습니다.");
+        toast.success("로그아웃 되었습니다.");
         navigate("/");
       } catch (error) {
-        alert("로그아웃 중 오류가 발생하였습니다.");
+        toast.error("로그아웃 중 오류가 발생하였습니다.");
         console.log("로그아웃 실패 : ", error);
       }
     }
@@ -83,7 +84,7 @@ export default function NavBar() {
           <>
             <CommonButton>🧓</CommonButton>
             <CommonButton
-              type="button"
+              type="submit"
               aria-label="로그아웃 진행"
               onClick={() => handlePage("logout")}
             >
@@ -93,14 +94,14 @@ export default function NavBar() {
         ) : (
           <>
             <CommonButton
-              type="button"
+              type="submit"
               aria-label="로그인 데이터 전송"
               onClick={() => handlePage("login")}
             >
               로그인
             </CommonButton>
             <CommonButton
-              type="button"
+              type="submit"
               aria-label="회원가입 데이터 전송"
               onClick={() => handlePage("signup")}
             >

@@ -13,11 +13,11 @@ export default function useMovieDetailData(movieId) {
         const endPoint = `${API_URL}/${movieId}?api_key=${API_KEY}&language=ko`;
         const response = await fetch(endPoint);
         const jsonData = await response.json();
-        // console.log("jsonData : " + jsonData);
-        // const data = jsonData.find((el) => el.id === Number(movieId));
+
         if (!jsonData || jsonData.success === false) {
           throw new Error("영화 데이터를 불러올 수 없습니다.");
         }
+
         setMovieDetailDatas(jsonData);
       } catch (error) {
         console.error("API 요청 에러 : ", error);
@@ -29,8 +29,6 @@ export default function useMovieDetailData(movieId) {
       fetchMovieInfo();
     }
   }, [movieId]);
-  // console.log("loading : " + loading);
-  // console.log("movieData : " + movieData);
 
   return { movieDetailDatas, loading };
 }
