@@ -8,8 +8,8 @@ export const useOAuth = () => {
       await supabase.auth.signInWithOAuth({
         provider: "kakao",
         options: {
-          redirectTo,
-          ...otherOptions,
+          redirectTo: `${window.location.origin}/auth/callback`,
+          // ...otherOptions,
         },
       });
     } catch (error) {

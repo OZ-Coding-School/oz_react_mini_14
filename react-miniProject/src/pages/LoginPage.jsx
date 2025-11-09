@@ -10,12 +10,18 @@ import {
 import { logInState } from "../store/slice";
 import { useSupabaseAuth } from "../../supabase";
 import CommonButton from "../components/common/CommonButton";
+import { toast } from "react-toastify";
+import OAuthButton from "../components/common/OAutButton";
+import kakaoLogo from "../assets/icons/Kakao_icon.png";
+import googleLogo from "../assets/icons/Google_icon.png";
+import { useOAuth } from "../../supabase/auth/useOauth.auth";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({}); //이메일, 패스워드 입력 에러 메시지
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState(""); //로그인 에러 메시지 상태
+  const { loginWithKakao, loginWithGoogle } = useOAuth();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -56,7 +62,7 @@ export default function LoginPage() {
         throw error;
       }
 
-      alert("로그인 성공!");
+      toast.success("로그인 성공!");
       dispatch(logInState(true));
       navigate("/");
     } catch (error) {
@@ -80,7 +86,23 @@ export default function LoginPage() {
   return (
     <div className="login-container">
       <h2 className="login-title">로그인</h2>
-      <form className="login-fomr" onSubmit={handleSubmit}>
+      <div className="oauth-section">
+        <OAuthButton
+          logo={kakaoLogo}
+          text="카카오로 계속하기"
+          className="kakao-btn"
+          onClick={loginWithKakao}
+        />
+
+        <OAuthButton
+          logo={googleLogo}
+          text="Google로 계속하기"
+          className="google-btn"
+          onClick={loginWithGoogle}
+        />
+      </div>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <span className="divider">또는</span>
         <InputField
           label="이메일"
           type="email"
@@ -102,7 +124,7 @@ export default function LoginPage() {
 
         <div className="btn-container">
           <CommonButton
-            type="button"
+            type="submit"
             className="loginPage-btn"
             aria-label="로그인 데이터 보내기"
           >

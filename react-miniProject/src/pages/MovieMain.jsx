@@ -29,14 +29,16 @@ function MovieMain() {
 
   return (
     <div className={`movieMain-Container ${isDarkMode ? "dark" : "light"}`}>
+      <div className="movieMain-movieText">TopRated Movies</div>
       <MovieSwuper movieData={movieTopRatedData} />
+      <div className="movieMain-movieText">Populer Movies</div>
       <div className="movieMain-movieCard">
         {filteredMovies?.map((data) => (
           <MovieCard key={data.id} data={data} />
         ))}
       </div>
       <div className="addMoiveBtn">
-        <CommonButton disabled={isAddMoiveBtn} onClick={addMovie}>
+        <CommonButton disabled={isAddMoiveBtn} onClick={addMovie} type="button">
           ▼ 더보기
         </CommonButton>
       </div>

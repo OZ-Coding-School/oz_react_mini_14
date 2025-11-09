@@ -31,4 +31,32 @@
     display: flex;
     gap: 10px;
   }
+
+  .oauth-section {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    color: #666;
+    font-size: 0.9rem;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #ddd;
+    }
+
+    span {
+      padding: 0 10px;
+      font-weight: 500;
+    }
+  }
 }

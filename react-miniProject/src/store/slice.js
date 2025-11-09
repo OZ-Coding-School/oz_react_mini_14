@@ -38,7 +38,6 @@ const logInSlice = createSlice({
 
 export const { setSearchText } = searchSlice.actions;
 export const { themeToggleState } = themeToggleSlice.actions;
-
 export const { logInState } = logInSlice.actions;
 
 //컴바인리듀스 사용
