@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import LoginPage from "./pages/LoginPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import { SupabaseProvider } from "../supabase/index.js";
+import AuthCallback from "./pages/AuthCallback.jsx";
 const MovieDetail = lazy(() => import("./pages/MovieDetail.jsx"));
 
 //라우팅 역할을 하는 App
@@ -24,6 +25,7 @@ export default function App() {
                 <Route path="/detail/:movieId" element={<MovieDetail />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/auth/callback" element={<AuthCallback />} />
               </Route>
             </Routes>
           </Suspense>
