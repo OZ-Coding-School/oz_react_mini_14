@@ -1,17 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./MovieCard.scss";
 import { useSelector } from "react-redux";
-
-const BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
+import { BASE_URL } from "../../constants/api.js";
 
 function MovieCard({ data }) {
-  const navigate = useNavigate();
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
-
-  // const handleClick = () => {
-  //   // navigate(`/detail/${data.id}`);
-  // };
-
   return (
     <div className={`MovieCard-Container ${isDarkMode ? "dark" : "light"}`}>
       <Link to={`/detail/${data.id}`}>

@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-
-const API_URL = import.meta.env.VITE_API_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+import { API_URL, API_KEY } from "../constants/api.js";
 
 export default function useMovieDetailData(movieId) {
   const [movieDetailDatas, setMovieDetailDatas] = useState([]); //movieListDatas.results
