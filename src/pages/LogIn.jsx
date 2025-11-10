@@ -1,7 +1,9 @@
-import { useForm } from '@/hooks';
-import { Button, FormField } from '@/components';
-import { FORM_CONDITIONS } from '@/constants';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useAuth, useAuthActions, useForm } from '@/hooks';
+import { Button, FormField, Indicator } from '@/components';
+import { ERROR_TOAST_DURATION, FORM_CONDITIONS } from '@/constants';
 
 const FIELD_LIST = [
   {
@@ -26,13 +28,44 @@ function LogIn() {
       password: { value: '', valid: false },
     },
   });
+  const { user, loading, error } = useAuth();
+  const { logIn, clearError } = useAuthActions();
+  const navigate = useNavigate();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await logIn({
+      email: formState.email.value,
+      password: formState.password.value,
+    });
+  };
+
+  useEffect(() => {
+    if (user) {
+      toast.success('로그인에 성공하였습니다.');
+      navigate('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message, { autoClose: ERROR_TOAST_DURATION });
+      clearError();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
+
+  if (loading) return <Indicator />;
   return (
     <section className="mx-4 my-12 flex flex-col justify-center rounded-md bg-stone-300 p-4 shadow-md md:mx-14 md:p-10 lg:mx-80">
       <h1 className="mt-10 self-center text-3xl font-bold md:text-4xl">
         로그인
       </h1>
-      <form className="mt-10 flex flex-col items-stretch gap-4">
+      <form
+        className="mt-10 flex flex-col items-stretch gap-4"
+        onSubmit={handleSubmit}
+      >
         {FIELD_LIST.map((field) => (
           <FormField
             key={field.name}
