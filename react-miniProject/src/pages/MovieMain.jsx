@@ -6,9 +6,10 @@ import useMovieTopRatedData from "../hooks/useMovieTopRatedData";
 import "./MovieMain.scss";
 import { useLocation } from "react-router-dom";
 import CommonButton from "../components/common/CommonButton";
+import LoadingSkeleton from "../components/skeleton/LoadingSkeleton";
 
 function MovieMain() {
-  const { movieData, addMovie } = useMovieCardData(); //인기있는 영화데이터 가져오기
+  const { movieData, addMovie, loading } = useMovieCardData(); //인기있는 영화데이터 가져오기
   const movieTopRatedData = useMovieTopRatedData(); //평점이 제일 좋은 영화데이터 가져오기
   const searchText = useSelector((state) => state.search.text);
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
@@ -20,6 +21,14 @@ function MovieMain() {
   );
 
   if (searchText.length !== 0) {
+  }
+
+  if (loading) {
+    return (
+      <div style={{ minWidth: "1100px" }}>
+        <LoadingSkeleton />
+      </div>
+    );
   }
   //맨처음 und -> falsy
   //0 === und => return null

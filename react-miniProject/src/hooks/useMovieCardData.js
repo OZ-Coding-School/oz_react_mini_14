@@ -4,9 +4,12 @@ import { API_URL, API_KEY } from "../constants/api.js";
 export default function useMovieCardData() {
   const [movieData, setMoiveData] = useState([]); //movieListDatas.results
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const fetchMovieInfo = async (pageValue) => {
     try {
+      setLoading(true);
+
       let endPoint = `${API_URL}/popular?api_key=${API_KEY}&language=ko&page=${pageValue}`;
       const response = await fetch(endPoint);
       const jsonData = await response.json();
@@ -25,6 +28,8 @@ export default function useMovieCardData() {
       });
     } catch (error) {
       console.error("API 요청 에러 : ", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -36,5 +41,5 @@ export default function useMovieCardData() {
     setPage((prev) => prev + 1);
   };
 
-  return { movieData, addMovie };
+  return { movieData, addMovie, loading };
 }

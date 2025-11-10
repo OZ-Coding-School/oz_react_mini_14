@@ -3,11 +3,13 @@ import { API_URL, API_KEY } from "../constants/api.js";
 
 export default function useMovieDetailData(movieId) {
   const [movieDetailDatas, setMovieDetailDatas] = useState([]); //movieListDatas.results
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchMovieInfo = async () => {
       try {
+        setLoading(true);
+
         const endPoint = `${API_URL}/${movieId}?api_key=${API_KEY}&language=ko`;
         const response = await fetch(endPoint);
         const jsonData = await response.json();

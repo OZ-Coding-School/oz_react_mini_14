@@ -3,13 +3,10 @@ import { API_URL, API_KEY } from "../constants/api.js";
 
 export default function useMovieTopRatedData() {
   const [movieData, setMoiveData] = useState([]); //movieListDatas.results
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchMovieInfo = async () => {
       try {
-        setLoading(true);
-
         const endPoint = `${API_URL}/top_rated?api_key=${API_KEY}&language=ko&page=1`;
         const response = await fetch(endPoint);
         const jsonData = await response.json();
@@ -22,8 +19,6 @@ export default function useMovieTopRatedData() {
         setMoiveData(data);
       } catch (error) {
         console.error("API 요청 에러 : ", error);
-      } finally {
-        setLoading(false);
       }
     };
     fetchMovieInfo();
