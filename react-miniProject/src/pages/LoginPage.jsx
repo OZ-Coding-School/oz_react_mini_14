@@ -11,7 +11,7 @@ import { logInState } from "../store/slice";
 import { useSupabaseAuth } from "../../supabase";
 import CommonButton from "../components/common/CommonButton";
 import { toast } from "react-toastify";
-import OAuthButton from "../components/common/OAutButton";
+import OAuthButton from "../components/common/OAuthButton";
 import kakaoLogo from "../assets/icons/Kakao_icon.png";
 import googleLogo from "../assets/icons/Google_icon.png";
 import { useOAuth } from "../../supabase/auth/useOauth.auth";
