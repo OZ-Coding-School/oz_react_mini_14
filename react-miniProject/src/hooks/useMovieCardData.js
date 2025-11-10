@@ -16,7 +16,13 @@ export default function useMovieCardData() {
         throw new Error("영화 데이터를 찾을 수 없습니다.");
       }
 
-      setMoiveData((prev) => [...prev, ...data]);
+      setMoiveData((prev) => {
+        const combined = [...prev, ...data];
+        const uniqueMovies = Array.from(
+          new Map(combined.map((m) => [m.id, m])).values()
+        );
+        return uniqueMovies;
+      });
     } catch (error) {
       console.error("API 요청 에러 : ", error);
     }
@@ -32,24 +38,3 @@ export default function useMovieCardData() {
 
   return { movieData, addMovie };
 }
-
-// let value = 1;
-
-// useEffect(() => {
-//   const fetchMovieInfo = async () => {
-//     try {
-//       let endPoint = `${API_URL}/popular?api_key=${API_KEY}&language=ko&page=${value}`;
-//       const response = await fetch(endPoint);
-//       const jsonData = await response.json();
-//       const data = jsonData.results.filter((movie) => movie.adult === false);
-
-//       if (data.length === 0) {
-//         throw new Error("영화 데이터를 찾을 수 없습니다.");
-//       }
-//       setMoiveData(data);
-//     } catch (error) {
-//       console.error("API 요청 에러 : ", error);
-//     }
-//   };
-//   fetchMovieInfo();
-// }, []);
