@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import InputField from "../components/common/InputField";
 import "./SignUpPage.scss";
 import {
@@ -19,10 +19,10 @@ export default function SignUpPage() {
     password: "",
     confirmPassword: "",
   });
+
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const supabaseAuth = useSupabaseAuth();
-  // console.log(supabaseAuth);
   const [loading, setLoading] = useState(false);
 
   function handleOnChange(e) {
@@ -55,11 +55,11 @@ export default function SignUpPage() {
       const { data, error } = await supabaseAuth.signUp({
         email: form.email,
         password: form.password,
-        options: {
-          name: form.name,
-        },
+        display_name: form.name,
+        options: { data: {} },
       });
       if (error) throw error;
+
       toast.success(`회원가입 성공!`);
       navigate("/login");
     } catch (error) {

@@ -10,13 +10,14 @@ export const useEmailAuth = () => {
   const supabase = useSupabase();
   const { setItemToLocalStorage } = localStorageUtils();
 
-  const signUp = async ({ email, password, ...userData }) => {
+  const signUp = async ({ email, password, display_name, ...userData }) => {
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
+            display_name: display_name,
             avatar_url:
               "https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295396_1280.png",
             ...userData,
