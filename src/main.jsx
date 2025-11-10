@@ -1,22 +1,38 @@
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ThemeProvider from '@/contexts/ThemContext';
+import { Slide, ToastContainer } from 'react-toastify';
+import { ThemeProvider, AuthProvider } from '@/contexts';
 import MainLayout from '@/layouts/MainLayout';
 import { App, LogIn, MovieDetail, Search, SignUp } from '@/pages';
 import '@/index.css';
 
 createRoot(document.getElementById('root')).render(
-  <ThemeProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<App />} />
-          <Route path="/details/:id" element={<MovieDetail />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<LogIn />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  </ThemeProvider>,
+  <AuthProvider>
+    <ThemeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<App />} />
+            <Route path="/details/:id" element={<MovieDetail />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<LogIn />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="dark"
+        transition={Slide}
+      />
+    </ThemeProvider>
+  </AuthProvider>,
 );

@@ -1,0 +1,3 @@
+const ERROR_TOAST_DURATION = 4000;
+
+export { ERROR_TOAST_DURATION };

@@ -64,7 +64,9 @@ function useAuthActions() {
       },
     });
 
-  return { signUp, logIn, logOut };
+  const clearError = () => setError(null);
+
+  return { signUp, logIn, logOut, clearError };
 }
 
 export default useAuthActions;
