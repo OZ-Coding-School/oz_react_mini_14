@@ -1,6 +1,7 @@
 import { useForm } from '@/hooks';
 import { Button, FormField } from '@/components';
 import { FORM_CONDITIONS } from '@/constants';
+import { Link } from 'react-router-dom';
 
 const FIELD_LIST = [
   {
@@ -9,41 +10,27 @@ const FIELD_LIST = [
     name: 'email',
     conditions: FORM_CONDITIONS.EMAIL,
   },
-  {
-    label: '이름',
-    type: 'text',
-    name: 'name',
-    conditions: FORM_CONDITIONS.NAME,
-  },
+
   {
     label: '비밀번호',
     type: 'password',
     name: 'password',
     conditions: FORM_CONDITIONS.PASSWORD,
   },
-  {
-    label: '비밀번호 확인',
-    type: 'password',
-    name: 'passwordConfirm',
-    conditions: FORM_CONDITIONS.PASSWORD_CONFIRM,
-    pair: 'password',
-  },
 ];
 
-function SignUp() {
+function LogIn() {
   const { formState, isFormValid, handleFormChange } = useForm({
     initialState: {
       email: { value: '', valid: false },
-      name: { value: '', valid: false },
       password: { value: '', valid: false },
-      passwordConfirm: { value: '', valid: false, pair: 'password' },
     },
   });
 
   return (
     <section className="mx-4 my-12 flex flex-col justify-center rounded-md bg-stone-300 p-4 shadow-md md:mx-14 md:p-10 lg:mx-80">
       <h1 className="mt-10 self-center text-3xl font-bold md:text-4xl">
-        회원가입
+        로그인
       </h1>
       <form className="mt-10 flex flex-col items-stretch gap-4">
         {FIELD_LIST.map((field) => (
@@ -54,7 +41,6 @@ function SignUp() {
             name={field.name}
             conditions={field.conditions}
             value={formState[field.name].value}
-            pairValue={field.pair ? formState[field.pair].value : undefined}
             valid={formState[field.name].valid}
             onChange={handleFormChange}
           />
@@ -66,11 +52,15 @@ function SignUp() {
           disabled={!isFormValid}
           className="text-xl"
         >
-          회원가입
+          로그인
         </Button>
       </form>
+      <div className="mt-4 flex gap-2 self-center text-sm">
+        <p>오즈무비가 처음이신가요?</p>
+        <Link className="underline">간편 가입</Link>
+      </div>
     </section>
   );
 }
 
-export default SignUp;
+export default LogIn;
