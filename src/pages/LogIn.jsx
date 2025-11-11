@@ -87,7 +87,9 @@ function LogIn() {
       </form>
       <div className="mt-4 flex gap-2 self-center text-sm">
         <p>오즈무비가 처음이신가요?</p>
-        <Link className="underline">간편 가입</Link>
+        <Link to="/social-login" className="underline">
+          간편 가입
+        </Link>
       </div>
     </section>
   );

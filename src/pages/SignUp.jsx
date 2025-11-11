@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth, useAuthActions, useForm } from '@/hooks';
 import { Button, FormField, Indicator } from '@/components';
 import { ERROR_TOAST_DURATION, FORM_CONDITIONS } from '@/constants';
@@ -74,6 +74,12 @@ function SignUp() {
       <h1 className="mt-10 self-center text-3xl font-bold md:text-4xl">
         회원가입
       </h1>
+      <div className="mt-4 flex gap-2 self-center text-sm">
+        <p>SNS 계정으로 간편하게 가입해보세요.</p>
+        <Link to="/social-login" className="underline">
+          간편 가입
+        </Link>
+      </div>
       <form
         className="mt-10 flex flex-col items-stretch gap-4"
         onSubmit={handleSubmit}
