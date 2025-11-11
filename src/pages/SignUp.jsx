@@ -66,7 +66,7 @@ function SignUp() {
       clearError();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [error]);
 
   if (loading) return <Indicator />;
   return (

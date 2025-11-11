@@ -40,7 +40,7 @@ function LogIn() {
     });
 
     if (success) {
-      toast.success('로그인에 성공하였습니다.');
+      toast.success('로그인 되었습니다.');
       navigate('/');
     }
   };
@@ -51,7 +51,7 @@ function LogIn() {
       clearError();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [error]);
 
   if (loading) return <Indicator />;
   return (

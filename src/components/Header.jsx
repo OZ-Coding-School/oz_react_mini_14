@@ -37,6 +37,10 @@ function Header() {
   }, [debouncedKeyword]);
 
   useEffect(() => {
+    if (user) setIsMobileMenuOpen(false);
+  }, [user]);
+
+  useEffect(() => {
     if (error) {
       toast.error(error.message, { autoClose: ERROR_TOAST_DURATION });
       clearError();
