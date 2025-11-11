@@ -1,6 +1,7 @@
 import supabase from '@/lib/supabaseClient';
 import { useAuth } from '@/hooks';
 import getUserInfo from '@/utils/getUserInfo';
+import { SESSION_STORAGE_KEYS } from '@/constants';
 
 function useAuthActions() {
   const { setUser, setLoading, setError } = useAuth();
@@ -56,6 +57,21 @@ function useAuthActions() {
       },
     });
 
+  const logInWithKakao = async () => {
+    executeAuthAction({
+      action: async () => {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'kakao',
+        });
+        sessionStorage.setItem(
+          SESSION_STORAGE_KEYS.HAS_JUST_LOGGED_IN,
+          JSON.stringify(true),
+        );
+        if (error) throw error;
+      },
+    });
+  };
+
   const logOut = async () =>
     executeAuthAction({
       action: async () => {
@@ -68,7 +84,7 @@ function useAuthActions() {
 
   const clearError = () => setError(null);
 
-  return { signUp, logIn, logOut, clearError };
+  return { signUp, logIn, logInWithKakao, logOut, clearError };
 }
 
 export default useAuthActions;
