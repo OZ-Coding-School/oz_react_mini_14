@@ -7,7 +7,7 @@ import "./MovieMain.scss";
 import { useLocation } from "react-router-dom";
 import CommonButton from "../components/common/CommonButton";
 import LoadingSkeleton from "../components/skeleton/LoadingSkeleton";
-import { useMemo } from "react"; //usememo 사용
+import { useMemo } from "react"; //usememo 사용 주석 테스트
 
 function MovieMain() {
   const { movieList, addMovie, loading } = useMovieCardList(); //인기있는 영화데이터 가져오기
