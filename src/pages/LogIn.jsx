@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth, useAuthActions, useForm } from '@/hooks';
+import { setHasJustLoggedIn } from '@/utils/auth';
 import { Button, FormField, Indicator } from '@/components';
 import { ERROR_TOAST_DURATION, FORM_CONDITIONS } from '@/constants';
 
@@ -40,7 +41,7 @@ function LogIn() {
     });
 
     if (success) {
-      toast.success('로그인 되었습니다.');
+      setHasJustLoggedIn(true);
       navigate('/');
     }
   };

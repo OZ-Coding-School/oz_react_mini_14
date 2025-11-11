@@ -1,7 +1,6 @@
 import supabase from '@/lib/supabaseClient';
 import { useAuth } from '@/hooks';
-import getUserInfo from '@/utils/getUserInfo';
-import { SESSION_STORAGE_KEYS } from '@/constants';
+import { getUserInfo, setHasJustLoggedIn } from '@/utils/auth';
 
 function useAuthActions() {
   const { setUser, setLoading, setError } = useAuth();
@@ -63,10 +62,7 @@ function useAuthActions() {
         const { error } = await supabase.auth.signInWithOAuth({
           provider: 'kakao',
         });
-        sessionStorage.setItem(
-          SESSION_STORAGE_KEYS.HAS_JUST_LOGGED_IN,
-          JSON.stringify(true),
-        );
+        setHasJustLoggedIn(true);
         if (error) throw error;
       },
     });
@@ -78,10 +74,7 @@ function useAuthActions() {
         const { error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
         });
-        sessionStorage.setItem(
-          SESSION_STORAGE_KEYS.HAS_JUST_LOGGED_IN,
-          JSON.stringify(true),
-        );
+        setHasJustLoggedIn(true);
         if (error) throw error;
       },
     });

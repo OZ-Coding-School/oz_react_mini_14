@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAuth, useAuthActions, useForm } from '@/hooks';
+import { setHasJustLoggedIn } from '@/utils/auth';
 import { Button, FormField, Indicator } from '@/components';
 import { ERROR_TOAST_DURATION, FORM_CONDITIONS } from '@/constants';
-import { toast } from 'react-toastify';
 
 const FIELD_LIST = [
   {
@@ -55,8 +56,8 @@ function SignUp() {
     });
 
     if (success) {
-      toast.success('회원가입이 완료되었습니다.');
-      return navigate('/');
+      setHasJustLoggedIn(true);
+      navigate('/');
     }
   };
 
