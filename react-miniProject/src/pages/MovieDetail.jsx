@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import useMovieDetailData from "../hooks/useMovieDetailData";
+import useMovieDetailInfo from "../hooks/useMovieDetailInfo";
 import LoadingSkeleton from "../components/skeleton/LoadingSkeleton";
 import "./MovieDetail.scss";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ function Genre({ value }) {
 
 function MovieDetail() {
   const { movieId } = useParams();
-  const { movieDetailDatas, loading } = useMovieDetailData(movieId);
+  const { movieDetailDatas, loading } = useMovieDetailInfo(movieId);
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
 
   // console.log("movieDetailDatas : " + movieDetailDatas);

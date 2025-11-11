@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { API_URL, API_KEY } from "../constants/api.js";
+import movieApi from "../apis/movie.js";
 
-export default function useMovieCardData() {
+export default function useMovieCardList() {
   const [movieData, setMoiveData] = useState([]); //movieListDatas.results
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);

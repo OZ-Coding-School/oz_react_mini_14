@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { API_URL, API_KEY } from "../constants/api.js";
 
-export default function useMovieTopRatedData() {
+export default function useMovieTopRatedList() {
   const [movieData, setMoiveData] = useState([]); //movieListDatas.results
 
   useEffect(() => {
