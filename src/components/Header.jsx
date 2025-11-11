@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth, useDebounce } from '@/hooks';
+import { toast } from 'react-toastify';
+import { useAuth, useAuthActions, useDebounce } from '@/hooks';
 import { ThemeContext } from '@/contexts';
 import { AuthButtons, Button, LinkButton } from '@/components';
+import { ERROR_TOAST_DURATION } from '@/constants';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -10,7 +12,8 @@ function Header() {
   const [keyword, setKeyword] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, loading, error } = useAuth();
+  const { logOut, clearError } = useAuthActions();
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const debouncedKeyword = useDebounce({
@@ -18,11 +21,28 @@ function Header() {
     delay: DEBOUNCE_DELAY,
   });
 
+  const handleLogOut = async () => {
+    const { success } = await logOut();
+    if (success) {
+      toast.success('로그아웃 되었습니다.');
+      setIsProfileMenuOpen(false);
+      navigate('/');
+    }
+  };
+
   useEffect(() => {
     const normalizedKeyword = debouncedKeyword.trim().toLowerCase();
     if (normalizedKeyword) navigate(`/search?keyword=${normalizedKeyword}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedKeyword]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message, { autoClose: ERROR_TOAST_DURATION });
+      clearError();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <header className="flex-center relative bg-stone-800 px-4 py-4 font-bold text-stone-50 shadow-lg md:px-8">
@@ -63,9 +83,23 @@ function Header() {
         <Button
           type="button"
           variant="profile"
+          aria-label={
+            isProfileMenuOpen
+              ? '찜 목록 및 로그아웃 메뉴 닫기'
+              : '찜 목록 및 로그아웃 메뉴 열기'
+          }
           onClick={() => setIsProfileMenuOpen((prev) => !prev)}
         >
-          <div className="size-full bg-stone-200"></div>
+          <div className="size-full bg-stone-200">
+            {!loading && (
+              <img
+                src={user?.profileImgUrl}
+                alt=""
+                aria-hidden={true}
+                className="size-full object-cover object-center"
+              />
+            )}
+          </div>
         </Button>
       )}
       <Button
@@ -92,7 +126,12 @@ function Header() {
           <LinkButton variant="stone" size="full" className="rounded-none">
             찜 목록
           </LinkButton>
-          <Button variant="stone" size="full" className="rounded-none">
+          <Button
+            variant="stone"
+            size="full"
+            className="rounded-none"
+            onClick={handleLogOut}
+          >
             로그아웃
           </Button>
         </div>
