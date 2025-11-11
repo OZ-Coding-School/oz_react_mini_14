@@ -9,9 +9,10 @@ export default defineConfig({
       "@": "/src",
       "@components": "/src/components",
       "@api": "/src/api",
-      "@hooks": "/src/hook",
+      "@hook": "/src/hook",
       "@pages": "/src/pages",
       "@CommonStyle": "/src/components/CommonStyle",
+      "@context": "/src/context",
     },
   },
 });
