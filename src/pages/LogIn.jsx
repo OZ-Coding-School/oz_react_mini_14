@@ -28,25 +28,22 @@ function LogIn() {
       password: { value: '', valid: false },
     },
   });
-  const { user, loading, error } = useAuth();
+  const { loading, error } = useAuth();
   const { logIn, clearError } = useAuthActions();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await logIn({
+    const { success } = await logIn({
       email: formState.email.value,
       password: formState.password.value,
     });
-  };
 
-  useEffect(() => {
-    if (user) {
+    if (success) {
       toast.success('로그인에 성공하였습니다.');
       navigate('/');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  };
 
   useEffect(() => {
     if (error) {
@@ -54,7 +51,7 @@ function LogIn() {
       clearError();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
+  }, []);
 
   if (loading) return <Indicator />;
   return (

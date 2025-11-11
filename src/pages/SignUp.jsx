@@ -42,26 +42,23 @@ function SignUp() {
       passwordConfirm: { value: '', valid: false, pair: 'password' },
     },
   });
-  const { user, loading, error } = useAuth();
+  const { loading, error } = useAuth();
   const { signUp, clearError } = useAuthActions();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signUp({
+    const { success } = await signUp({
       email: formState.email.value,
       password: formState.password.value,
       name: formState.name.value,
     });
-  };
 
-  useEffect(() => {
-    if (user) {
+    if (success) {
       toast.success('회원가입이 완료되었습니다.');
-      navigate('/');
+      return navigate('/');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  };
 
   useEffect(() => {
     if (error) {
@@ -69,7 +66,7 @@ function SignUp() {
       clearError();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
+  }, []);
 
   if (loading) return <Indicator />;
   return (

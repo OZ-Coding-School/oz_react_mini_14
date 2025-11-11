@@ -10,6 +10,7 @@ function useAuthActions() {
     setError(null);
     try {
       await action();
+      return { success: true };
     } catch (error) {
       console.error(error);
       setError({
@@ -17,6 +18,7 @@ function useAuthActions() {
           error.message ??
           '예기치 않은 오류가 발생했습니다.\n잠시 후에 다시 시도해 주세요.',
       });
+      return { success: false };
     } finally {
       setLoading(false);
     }
