@@ -15,6 +15,7 @@ const buttonVariants = cva(
           stoneBase,
           'absolute top-[50%] h-40 w-18 -translate-y-[50%] text-4xl opacity-90',
         ),
+        profile: 'size-9 overflow-hidden rounded-full md:size-10',
       },
       size: {
         sm: 'w-11 py-1',
