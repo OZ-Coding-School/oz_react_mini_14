@@ -7,19 +7,23 @@ import "./MovieMain.scss";
 import { useLocation } from "react-router-dom";
 import CommonButton from "../components/common/CommonButton";
 import LoadingSkeleton from "../components/skeleton/LoadingSkeleton";
+import { useMemo } from "react";
 
 function MovieMain() {
-  const { movieData, addMovie, loading } = useMovieCardList(); //인기있는 영화데이터 가져오기
+  const { movieList, addMovie, loading } = useMovieCardList(); //인기있는 영화데이터 가져오기
   const movieTopRatedList = useMovieTopRatedList(); //평점이 제일 좋은 영화데이터 가져오기
-
   const searchText = useSelector((state) => state.search.text);
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
   const location = useLocation();
 
   const isAddMoiveBtn = location.pathname.includes("/detail");
 
-  const filteredMovies = movieData.filter((movie) =>
-    movie.title.toLowerCase().includes(searchText.toLowerCase())
+  const filteredMovies = useMemo(
+    () =>
+      movieList?.filter((movie) =>
+        movie.title.toLowerCase().includes(searchText.toLowerCase())
+      ),
+    [movieList, searchText]
   );
 
   if (searchText.length !== 0) {
@@ -34,7 +38,7 @@ function MovieMain() {
   }
   //맨처음 und -> falsy
   //0 === und => return null
-  if (!movieData.length > 0) {
+  if (!movieList.length > 0) {
     return null;
   }
 

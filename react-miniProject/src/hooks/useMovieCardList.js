@@ -3,7 +3,7 @@ import { API_URL, API_KEY } from "../constants/api.js";
 import movieApi from "../apis/movie.js";
 
 export default function useMovieCardList() {
-  const [movieData, setMoiveData] = useState([]); //movieListDatas.results
+  const [movieList, setMovieList] = useState([]); //movieListDatas.results
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
@@ -20,7 +20,7 @@ export default function useMovieCardList() {
         throw new Error("영화 데이터를 찾을 수 없습니다.");
       }
 
-      setMoiveData((prev) => {
+      setMovieList((prev) => {
         const combined = [...prev, ...data];
         const uniqueMovies = Array.from(
           new Map(combined.map((m) => [m.id, m])).values()
@@ -42,5 +42,5 @@ export default function useMovieCardList() {
     setPage((prev) => prev + 1);
   };
 
-  return { movieData, addMovie, loading };
+  return { movieList, addMovie, loading };
 }
