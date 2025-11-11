@@ -48,7 +48,7 @@ const FormField = memo(function ({
         value={value}
         onChange={handleInputChange}
         className={twMerge(
-          'mt-2 w-full rounded-md border-2 border-transparent bg-stone-50 px-4 py-2 outline-none',
+          'mt-2 w-full rounded-md border-2 border-transparent bg-stone-50 px-4 py-2 outline-none dark:bg-stone-700',
           !valid && 'border-red-400',
         )}
       />
@@ -58,8 +58,8 @@ const FormField = memo(function ({
             <li
               key={result.name}
               className={twMerge(
-                'font-bold text-stone-500',
-                result.passed && 'text-stone-950',
+                'font-bold text-stone-500 dark:text-stone-400',
+                result.passed && 'text-stone-950 dark:text-stone-50',
               )}
             >
               ✓ {result.name}

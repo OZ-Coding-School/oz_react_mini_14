@@ -1,7 +1,8 @@
 import { cva } from 'class-variance-authority';
 import { twMerge } from 'tailwind-merge';
 
-const stoneBase = 'bg-stone-500 text-stone-50 hover:bg-stone-900';
+const stoneBase =
+  'bg-stone-500 text-stone-50 hover:bg-stone-900 dark:bg-stone-700';
 
 const buttonVariants = cva(
   'flex-center rounded-md border border-transparent font-bold transition-all hover:border-stone-50',

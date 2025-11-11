@@ -73,7 +73,7 @@ function SignUp() {
 
   if (loading) return <Indicator />;
   return (
-    <section className="mx-4 my-12 flex flex-col justify-center rounded-md bg-stone-300 p-4 shadow-md md:mx-14 md:p-10 lg:mx-80">
+    <section className="mx-4 my-12 flex flex-col justify-center rounded-md bg-stone-300 p-4 shadow-md md:mx-14 md:p-10 lg:mx-80 dark:bg-stone-600 dark:text-stone-50">
       <h1 className="mt-10 self-center text-3xl font-bold md:text-4xl">
         회원가입
       </h1>

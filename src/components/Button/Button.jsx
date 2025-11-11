@@ -15,7 +15,8 @@ const Button = memo(function ({
       className={twMerge(
         buttonVariants({ variant, size }),
         className,
-        disabled && 'pointer-events-none bg-stone-400 select-none',
+        disabled &&
+          'pointer-events-none bg-stone-400 select-none dark:bg-stone-500',
       )}
       disabled={disabled}
       {...rest}
