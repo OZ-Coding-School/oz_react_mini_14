@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useAuth, useAuthActions, useForm } from '@/hooks';
 import { setHasJustLoggedIn } from '@/utils/auth';
 import { Button, FormField, Indicator } from '@/components';
-import { ERROR_TOAST_DURATION, FORM_CONDITIONS } from '@/constants';
+import { FORM_CONDITIONS, TOAST_DURATION } from '@/constants';
 
 const FIELD_LIST = [
   {
@@ -48,7 +48,7 @@ function LogIn() {
 
   useEffect(() => {
     if (error) {
-      toast.error(error.message, { autoClose: ERROR_TOAST_DURATION });
+      toast.error(error.message, { autoClose: TOAST_DURATION.error });
       clearError();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

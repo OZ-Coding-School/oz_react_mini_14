@@ -4,6 +4,7 @@ import { Slide, ToastContainer } from 'react-toastify';
 import { ThemeProvider, AuthProvider } from '@/contexts';
 import MainLayout from '@/layouts/MainLayout';
 import { App, LogIn, MovieDetail, Search, SignUp, SocialLogIn } from '@/pages';
+import { TOAST_DURATION } from '@/constants';
 import '@/index.css';
 
 createRoot(document.getElementById('root')).render(
@@ -23,7 +24,7 @@ createRoot(document.getElementById('root')).render(
       </BrowserRouter>
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={TOAST_DURATION.default}
         limit={3}
         hideProgressBar={false}
         newestOnTop={false}

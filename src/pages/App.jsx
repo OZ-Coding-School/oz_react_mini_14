@@ -4,7 +4,7 @@ import { useAuth, useAuthActions, useFetch } from '@/hooks';
 import { getMovieList } from '@/apis';
 import { getHasJustLoggedIn, setHasJustLoggedIn } from '@/utils/auth';
 import { Indicator, Error, MovieList, Carousel, Button } from '@/components';
-import { ERROR_TOAST_DURATION } from '@/constants';
+import { TOAST_DURATION } from '@/constants';
 
 function App() {
   const [isCarousel, setIsCarousel] = useState(false);
@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
     const hasJustLoggedIn = getHasJustLoggedIn();
     if (hasJustLoggedIn && authError) {
-      toast.error(authError.message, { autoClose: ERROR_TOAST_DURATION });
+      toast.error(authError.message, { autoClose: TOAST_DURATION.error });
       clearError();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

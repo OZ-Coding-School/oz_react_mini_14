@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useAuth, useAuthActions, useDebounce } from '@/hooks';
 import { ThemeContext } from '@/contexts';
 import { AuthButtons, Button, LinkButton } from '@/components';
-import { ERROR_TOAST_DURATION } from '@/constants';
+import { TOAST_DURATION } from '@/constants';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -23,8 +23,15 @@ function Header() {
 
   const handleLogOut = async () => {
     const { success } = await logOut();
+    const toastId = toast.loading('로그아웃 중입니다.');
+
     if (success) {
-      toast.success('로그아웃 되었습니다.');
+      toast.update(toastId, {
+        render: '로그아웃 되었습니다.',
+        type: 'success',
+        isLoading: false,
+        autoClose: TOAST_DURATION.default,
+      });
       setIsProfileMenuOpen(false);
       navigate('/');
     }
@@ -42,7 +49,7 @@ function Header() {
 
   useEffect(() => {
     if (error) {
-      toast.error(error.message, { autoClose: ERROR_TOAST_DURATION });
+      toast.error(error.message, { autoClose: TOAST_DURATION.error });
       clearError();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

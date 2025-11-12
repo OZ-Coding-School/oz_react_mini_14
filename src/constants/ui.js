@@ -1,3 +1,6 @@
-const ERROR_TOAST_DURATION = 4000;
+const TOAST_DURATION = {
+  default: 2000,
+  error: 4000,
+};
 
-export { ERROR_TOAST_DURATION };
+export { TOAST_DURATION };
