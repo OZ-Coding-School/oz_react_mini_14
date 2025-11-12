@@ -5,10 +5,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
 //스타일
-import { PageContainer } from "@components/common/Container";
-import SectionTitle from "@components/common/SectionTitle";
-import Typography from "@components/common/Typhography";
-import Icon from "@components/common/Icon";
+import { getImageUrl } from "@/constants/images";
+import {
+  PageContainer,
+  SectionTitle,
+  Typography,
+  Icon,
+} from "@components/common";
 import {
   faChevronRight,
   faChevronLeft,
@@ -73,7 +76,7 @@ const TopRankedMovie = () => {
               <RankingCard onClick={() => navigate(`/movie/${movie.id}`)}>
                 <RankNumber>{index + 1}</RankNumber>
                 <Poster
-                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  src={getImageUrl(movie.poster_path)}
                   alt={movie.title}
                 />
               </RankingCard>

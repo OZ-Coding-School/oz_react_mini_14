@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const SwiperContainer = styled.div`
   position: relative;
-  padding: 0 40px;
+  padding: 0 10px 40px;
 
   &:hover .custom-prev,
   &:hover .custom-next {
@@ -92,24 +92,11 @@ export const RankNumber = styled.div`
   pointer-events: none;
   line-height: 1;
 
-  /* First child (1번) - 포스터에 가깝게 */
-  &:first-of-child {
-    left: -10px; /* 더 오른쪽으로 */
-  }
-
   @media (max-width: 1240px) {
     font-size: 180px;
     bottom: -35px;
     left: -25px;
     -webkit-text-stroke: 4px ${(props) => props.theme.colors.text};
-
-    &:first-of-child {
-      left: -10px;
-    }
-
-    &:last-child {
-      left: -45px;
-    }
   }
 
   @media (max-width: 960px) {
@@ -117,10 +104,6 @@ export const RankNumber = styled.div`
     bottom: -30px;
     left: -20px;
     -webkit-text-stroke: 3px ${(props) => props.theme.colors.text};
-
-    &:first-of-child {
-      left: -8px;
-    }
   }
 
   @media (max-width: 768px) {
@@ -128,10 +111,6 @@ export const RankNumber = styled.div`
     bottom: -20px;
     left: -15px;
     -webkit-text-stroke: 2px ${(props) => props.theme.colors.text};
-
-    &:first-of-child {
-      left: -5px;
-    }
   }
 `;
 

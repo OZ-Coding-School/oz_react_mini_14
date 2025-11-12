@@ -7,9 +7,7 @@ import {
   faBars,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import Icon from "@components/common/Icon";
-import Typography from "@components/common/Typhography";
-import SearchInput from "@components/common/SearchInput";
+import { Icon, Typography, SearchInput } from "@components/common";
 import Categories from "@/components/Categories";
 import SideMenu from "@components/SideMenu";
 import { useAuth } from "@/hooks/useAuth";

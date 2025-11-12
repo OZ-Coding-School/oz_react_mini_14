@@ -1,9 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { PageContainer } from "@components/common/Container";
-import SectionTitle from "@/components/common/SectionTitle";
-import MovieCard from "@components/common/MovieCard";
-import Typography from "@components/common/Typhography";
+import {
+  PageContainer,
+  SectionTitle,
+  MovieCard,
+  Typography,
+} from "@/components/common";
 import { Grid, CardWrapper, LoadingBox } from "./style";
 import { useInfiniteMovies } from "@/hooks/useInfiniteMovies";
 import { useIntersectionOvserver } from "@/hooks/useIntersectionObserver";
@@ -50,7 +52,8 @@ const PopularMovies = () => {
             <CardWrapper key={movie.id}>
               <MovieCard
                 title={movie.title}
-                poster={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                poster={movie.poster_path}
+                size="w500"
                 onClick={() => navigate(`/movie/${movie.id}`)}
               />
             </CardWrapper>

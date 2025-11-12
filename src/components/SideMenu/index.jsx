@@ -1,17 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { SIDE_MENU_CATEGORIES, DEFAULT_CATEGORY } from "@/constants/menu";
 import {
   Overlay,
   MenuContainer,
   CloseButton,
   CategoryTabs,
+  CategorySection,
   CategoryTab,
   MenuList,
   MenuItem,
 } from "./style";
 
 const SideMenu = ({ isOpen, onClose }) => {
-  const [activeCategory, setActiveCategory] = useState("kines-pick");
+  const [activeCategory, setActiveCategory] = useState(DEFAULT_CATEGORY);
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,60 +34,42 @@ const SideMenu = ({ isOpen, onClose }) => {
     onClose();
   };
 
-  const categories = {
-    "kines-pick": {
-      name: "KINE's Pick",
-      items: [
-        { label: "오늘의 추천영화", path: "/popular" },
-        { label: "오늘의 랭킹", path: "/top_ranked" },
-      ],
-    },
-    community: {
-      name: "커뮤니티",
-      items: [
-        { label: "요즘 뜨는 코멘트", path: "/community/free" },
-        { label: "KINEMA 라운지", path: "/community/review" },
-      ],
-    },
-    mykinema: {
-      name: "나의KINEMA",
-      items: [
-        { label: "마이페이지", path: "/mypage" },
-        { label: "내가 찜한 영화", path: "/mypage/wishlist" },
-        { label: "내가 쓴 리뷰", path: "/mypage/reviews" },
-      ],
-    },
-  };
-
   return (
     <>
       <Overlay $isOpen={isOpen} onClick={onClose} />
       <MenuContainer ref={menuRef} $isOpen={isOpen}>
         <CloseButton onClick={onClose}>✕</CloseButton>
 
+        {/* 🔥 구조 변경: 각 탭마다 하위 메뉴 포함 */}
         <CategoryTabs>
-          {Object.keys(categories).map((key) => (
-            <CategoryTab
-              key={key}
-              $active={activeCategory === key}
-              onClick={() => setActiveCategory(key)}
-            >
-              {categories[key].name}
-            </CategoryTab>
+          {Object.keys(SIDE_MENU_CATEGORIES).map((key) => (
+            <CategorySection key={key}>
+              {/* 탭 버튼 */}
+              <CategoryTab
+                $active={activeCategory === key}
+                onClick={() => setActiveCategory(key)}
+              >
+                {SIDE_MENU_CATEGORIES[key].name}
+              </CategoryTab>
+
+              {/* 하위 메뉴 (active된 탭만 보임) */}
+              <MenuList
+                $visible={activeCategory === key}
+                key={activeCategory === key ? key : undefined}
+              >
+                {SIDE_MENU_CATEGORIES[key].items.map((item, index) => (
+                  <MenuItem
+                    key={index}
+                    onClick={() => handleNavigate(item.path)}
+                    $active={location.pathname === item.path}
+                  >
+                    {item.label}
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </CategorySection>
           ))}
         </CategoryTabs>
-
-        <MenuList>
-          {categories[activeCategory].items.map((item, index) => (
-            <MenuItem
-              key={index}
-              onClick={() => handleNavigate(item.path)}
-              $active={location.pathname === item.path}
-            >
-              {item.label}
-            </MenuItem>
-          ))}
-        </MenuList>
       </MenuContainer>
     </>
   );
