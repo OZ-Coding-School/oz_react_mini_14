@@ -1,6 +1,6 @@
 import supabase from '@/lib/supabaseClient';
 import { useAuth } from '@/hooks';
-import { getUserInfo, setHasJustLoggedIn } from '@/utils/auth';
+import { getUserInfo, setHasJustLoggedIn } from '@/utils';
 
 function useAuthActions() {
   const { setUser, setLoading, setError } = useAuth();

@@ -1,4 +1,4 @@
-import { IMAGE_BASE_URL } from '@/constants/url';
+import { IMAGE_BASE_URL } from '@/constants';
 import { Link } from 'react-router-dom';
 
 function MovieCard({ movie }) {
