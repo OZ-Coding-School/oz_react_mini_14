@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { cn } from '@/utils';
+import { checkFieldValidity, cn, getConditionTestResults } from '@/utils';
 
 const FormField = memo(function ({
   label,
@@ -71,14 +71,3 @@ const FormField = memo(function ({
 });
 
 export default FormField;
-
-function getConditionTestResults({ conditions, value, pairValue }) {
-  return conditions.map((condition) => ({
-    name: condition.description,
-    passed: condition.test(pairValue == null ? value : { value, pairValue }),
-  }));
-}
-
-function checkFieldValidity({ conditionTestResults }) {
-  return conditionTestResults.every((result) => result.passed);
-}
