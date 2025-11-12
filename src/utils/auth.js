@@ -1,4 +1,5 @@
-import { SESSION_STORAGE_KEYS } from '@/constants';
+import { toast } from 'react-toastify';
+import { SESSION_STORAGE_KEYS, TOAST_DURATION } from '@/constants';
 
 function setHasJustLoggedIn(value) {
   sessionStorage.setItem(
@@ -22,4 +23,20 @@ function getUserInfo({ user }) {
   };
 }
 
-export { setHasJustLoggedIn, getHasJustLoggedIn, getUserInfo };
+async function processLogout({ logOut }) {
+  const { success } = await logOut();
+  const toastId = toast.loading('로그아웃 중입니다.');
+
+  if (success) {
+    toast.update(toastId, {
+      render: '로그아웃 되었습니다.',
+      type: 'success',
+      isLoading: false,
+      autoClose: TOAST_DURATION.default,
+    });
+  }
+
+  return { success };
+}
+
+export { setHasJustLoggedIn, getHasJustLoggedIn, getUserInfo, processLogout };

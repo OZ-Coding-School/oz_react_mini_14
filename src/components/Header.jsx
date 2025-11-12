@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useAuth, useAuthActions, useDebounce } from '@/hooks';
+import { processLogout } from '@/utils';
 import { ThemeContext } from '@/contexts';
 import { AuthButtons, Button, LinkButton } from '@/components';
-import { TOAST_DURATION } from '@/constants';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -12,8 +11,8 @@ function Header() {
   const [keyword, setKeyword] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const { user, loading, error } = useAuth();
-  const { logOut, clearError } = useAuthActions();
+  const { user, loading } = useAuth();
+  const { logOut } = useAuthActions();
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const debouncedKeyword = useDebounce({
@@ -22,16 +21,9 @@ function Header() {
   });
 
   const handleLogOut = async () => {
-    const { success } = await logOut();
-    const toastId = toast.loading('로그아웃 중입니다.');
+    const { success } = await processLogout({ logOut });
 
     if (success) {
-      toast.update(toastId, {
-        render: '로그아웃 되었습니다.',
-        type: 'success',
-        isLoading: false,
-        autoClose: TOAST_DURATION.default,
-      });
       setIsProfileMenuOpen(false);
       navigate('/');
     }
@@ -47,14 +39,6 @@ function Header() {
     if (user) setIsMobileMenuOpen(false);
   }, [user]);
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error.message, { autoClose: TOAST_DURATION.error });
-      clearError();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <header className="flex-center relative bg-stone-800 px-4 py-4 font-bold text-stone-50 shadow-lg md:px-8">
       <Link
@@ -69,28 +53,7 @@ function Header() {
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
       />
-      {!user && (
-        <div className="hidden md:flex">
-          <AuthButtons isMobile={false} />
-        </div>
-      )}
-      {!user && (
-        <Button
-          type="button"
-          variant="icon"
-          size="sm"
-          className="md:hidden"
-          aria-label={
-            isMobileMenuOpen
-              ? '로그인 및 회원가입 메뉴 닫기'
-              : '로그인 및 회원가입 메뉴 열기'
-          }
-          onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-        >
-          &equiv;
-        </Button>
-      )}
-      {user && (
+      {user ? (
         <Button
           type="button"
           variant="profile"
@@ -112,6 +75,26 @@ function Header() {
             )}
           </div>
         </Button>
+      ) : (
+        <>
+          <Button
+            type="button"
+            variant="icon"
+            size="sm"
+            className="md:hidden"
+            aria-label={
+              isMobileMenuOpen
+                ? '로그인 및 회원가입 메뉴 닫기'
+                : '로그인 및 회원가입 메뉴 열기'
+            }
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          >
+            &equiv;
+          </Button>
+          <div className="hidden md:flex">
+            <AuthButtons isMobile={false} />
+          </div>
+        </>
       )}
       <Button
         type="button"

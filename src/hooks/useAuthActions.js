@@ -90,9 +90,7 @@ function useAuthActions() {
       },
     });
 
-  const clearError = () => setError(null);
-
-  return { signUp, logIn, logInWithKakao, logInWithGoogle, logOut, clearError };
+  return { signUp, logIn, logInWithKakao, logInWithGoogle, logOut };
 }
 
 export default useAuthActions;

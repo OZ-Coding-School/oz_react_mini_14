@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from 'react';
 import supabase from '@/lib/supabaseClient';
+import { toast } from 'react-toastify';
 import { getUserInfo } from '@/utils';
+import { TOAST_DURATION } from '@/constants';
 
 const AuthContext = createContext();
 
@@ -43,6 +45,13 @@ function AuthProvider({ children }) {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message, { autoClose: TOAST_DURATION.error });
+      setError(null);
+    }
+  }, [error]);
 
   return (
     <AuthContext
