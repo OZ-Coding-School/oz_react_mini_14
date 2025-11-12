@@ -2,23 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth, useAuthActions, useForm } from '@/hooks';
 import { setHasJustLoggedIn } from '@/utils';
 import { Button, FormField, Indicator } from '@/components';
-import { FORM_CONDITIONS } from '@/constants';
-
-const FIELD_LIST = [
-  {
-    label: '이메일',
-    type: 'email',
-    name: 'email',
-    conditions: FORM_CONDITIONS.EMAIL,
-  },
-
-  {
-    label: '비밀번호',
-    type: 'password',
-    name: 'password',
-    conditions: FORM_CONDITIONS.PASSWORD,
-  },
-];
+import { LOGIN_FIELDS } from '@/constants';
 
 function LogIn() {
   const { formState, isFormValid, handleFormChange } = useForm({
@@ -54,7 +38,7 @@ function LogIn() {
         className="mt-10 flex flex-col items-stretch gap-4"
         onSubmit={handleSubmit}
       >
-        {FIELD_LIST.map((field) => (
+        {LOGIN_FIELDS.map((field) => (
           <FormField
             key={field.name}
             label={field.label}
