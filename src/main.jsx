@@ -1,5 +1,13 @@
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.jsx";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ThemeProvider } from "@emotion/react";
+import { GlobalStyle } from "./styles/GlobalStyle";
+import { theme } from "./styles/theme";
+import App from "./App";
 
-createRoot(document.getElementById("root")).render(<App />);
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <ThemeProvider theme={theme}>
+    <GlobalStyle />
+    <App />
+  </ThemeProvider>
+);
