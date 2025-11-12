@@ -1,10 +1,8 @@
-import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useAuth, useAuthActions, useForm } from '@/hooks';
-import { setHasJustLoggedIn } from '@/utils/auth';
+import { setHasJustLoggedIn } from '@/utils';
 import { Button, FormField, Indicator } from '@/components';
-import { FORM_CONDITIONS, TOAST_DURATION } from '@/constants';
+import { FORM_CONDITIONS } from '@/constants';
 
 const FIELD_LIST = [
   {
@@ -43,8 +41,8 @@ function SignUp() {
       passwordConfirm: { value: '', valid: false, pair: 'password' },
     },
   });
-  const { loading, error } = useAuth();
-  const { signUp, clearError } = useAuthActions();
+  const { loading } = useAuth();
+  const { signUp } = useAuthActions();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -60,14 +58,6 @@ function SignUp() {
       navigate('/');
     }
   };
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error.message, { autoClose: TOAST_DURATION.error });
-      clearError();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
 
   if (loading) return <Indicator />;
   return (
