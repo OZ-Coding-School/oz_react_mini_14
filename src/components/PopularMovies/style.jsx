@@ -41,3 +41,10 @@ export const CardWrapper = styled.li`
     transform: translateY(-8px);
   }
 `;
+export const LoadingBox = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+`;

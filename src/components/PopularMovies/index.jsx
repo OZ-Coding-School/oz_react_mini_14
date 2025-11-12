@@ -1,20 +1,40 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useFetchData } from "@/hooks/useFetchData";
 import { PageContainer } from "@components/common/Container";
 import SectionTitle from "@/components/common/SectionTitle";
 import MovieCard from "@components/common/MovieCard";
 import Typography from "@components/common/Typhography";
-import { Grid, CardWrapper } from "./style";
+import { Grid, CardWrapper, LoadingBox } from "./style";
+import { useInfiniteMovies } from "@/hooks/useInfiniteMovies";
+import { useIntersectionOvserver } from "@/hooks/useIntersectionObserver";
 
 const PopularMovies = () => {
   const navigate = useNavigate();
-  const { data: popularData, loading, error } = useFetchData("/movie/popular");
+
+  //무한 스크롤 훅 불러오기
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    loading,
+    error,
+  } = useInfiniteMovies("popular");
+
+  //자동 로딩
+  const observerTarget = useIntersectionOvserver({
+    onIntersect: () => {
+      if (hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    enabled: hasNextPage,
+  });
 
   if (loading) return <Typography>Loading...</Typography>;
   if (error) return <Typography>Error: {error.message}</Typography>;
 
-  const popular = popularData?.results || [];
+  const allMovies = data?.pages.flatMap((page) => page.results) || [];
 
   return (
     <PageContainer>
@@ -24,7 +44,7 @@ const PopularMovies = () => {
         onMoreClick={() => navigate("/popular")}
       />
       <Grid>
-        {popular
+        {allMovies
           .filter((movie) => movie.poster_path)
           .map((movie) => (
             <CardWrapper key={movie.id}>
@@ -36,6 +56,11 @@ const PopularMovies = () => {
             </CardWrapper>
           ))}
       </Grid>
+
+      {/* 자동로딩영역 */}
+      <LoadingBox ref={observerTarget}>
+        {isFetchingNextPage && <Typography>더 불러오는 중...</Typography>}
+      </LoadingBox>
     </PageContainer>
   );
 };

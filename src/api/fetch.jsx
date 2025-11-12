@@ -52,3 +52,23 @@ export const fetchSimilarMovies = async ({ movieId, pageParam }) => {
     throw error;
   }
 };
+
+// 무한스크롤 - Popular Movie
+export const fetchPopularMovies = async ({ pageParam = 1 }) => {
+  try {
+    const response = await instance.get("/movie/popular", {
+      params: { page: pageParam },
+    });
+
+    const data = response.data;
+
+    return {
+      results: data.results,
+      nextPage: data.page + 1,
+      totalPages: data.total_pages,
+    };
+  } catch (error) {
+    console.error("Similar 영화 요청 중 오류 발생", error);
+    throw error;
+  }
+};
