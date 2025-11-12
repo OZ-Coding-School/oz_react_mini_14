@@ -1,15 +1,17 @@
 import "./styles/index.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./components/layout/index.js";
-import MovieMain from "./pages/MovieMain.jsx";
 import { lazy, Suspense } from "react";
-import LoadingSkeleton from "./components/skeleton/LoadingSkeleton.jsx";
 import { store } from "./store/index.js";
 import { Provider } from "react-redux";
-import LoginPage from "./pages/LoginPage.jsx";
-import SignUpPage from "./pages/SignUpPage.jsx";
 import { SupabaseProvider } from "../supabase/index.js";
-import AuthCallback from "./pages/AuthCallback.jsx";
+import { Layout, LoadingSkeleton } from "./components";
+import {
+  MovieMain,
+  LoginPage,
+  SignUpPage,
+  AuthCallback,
+} from "./pages/index.js";
+
 const MovieDetail = lazy(() => import("./pages/MovieDetail.jsx"));
 
 //라우팅 역할을 하는 App

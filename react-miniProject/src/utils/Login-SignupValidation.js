@@ -16,5 +16,9 @@ export const validatePassword = (password) => {
 };
 
 export const validateConfirmPassword = (password, confirm) => {
-  return password === confirm ? "" : "비밀번호가 일치하지 않습니다.";
+  return confirm === ""
+    ? "비밀번호 확인을 입력해 주십시오."
+    : password === confirm
+    ? ""
+    : "비밀번호가 일치하지 않습니다.";
 };

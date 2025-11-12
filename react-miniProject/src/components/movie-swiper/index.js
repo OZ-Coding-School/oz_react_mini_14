@@ -1,1 +1,1 @@
-export { default } from "./MovieSwiper";
+export { default as MovieSwiper } from "./MovieSwiper";

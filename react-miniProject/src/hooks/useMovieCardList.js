@@ -11,7 +11,7 @@ export default function useMovieCardList() {
     try {
       setLoading(true);
 
-      let endPoint = `${API_URL}/popular?api_key=${API_KEY}&language=ko&page=${pageValue}`;
+      const endPoint = `${API_URL}/popular?api_key=${API_KEY}&language=ko&page=${pageValue}`;
       const response = await fetch(endPoint);
       const jsonData = await response.json();
       const data = jsonData.results.filter((movie) => movie.adult === false);

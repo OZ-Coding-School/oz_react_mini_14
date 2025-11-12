@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import useMovieDetailInfo from "../hooks/useMovieDetailInfo";
-import LoadingSkeleton from "../components/skeleton/LoadingSkeleton";
+import { useMovieDetailInfo } from "../hooks/";
+import { LoadingSkeleton } from "../components";
 import "./MovieDetail.scss";
 import { useSelector } from "react-redux";
 
@@ -14,9 +14,6 @@ function MovieDetail() {
   const { movieId } = useParams();
   const { movieDetailDatas, loading } = useMovieDetailInfo(movieId);
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
-
-  // console.log("movieDetailDatas : " + movieDetailDatas);
-  // console.log("loading : " + loading);
 
   if (loading) return <LoadingSkeleton />;
   if (!movieDetailDatas) return <p>로딩 중....</p>;

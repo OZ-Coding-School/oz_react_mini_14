@@ -1,6 +1,6 @@
 // react에서 swiper 사용
 import { Swiper, SwiperSlide } from "swiper/react";
-import MovieCard from "../movie-card";
+import { MovieCard } from "../movie-card";
 import "./MovieSwiper.scss";
 
 // 필요한 기능 모듈 불러오기

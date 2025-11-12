@@ -1,19 +1,14 @@
 import { useState } from "react";
-import { data, useNavigate } from "react-router-dom";
-import InputField from "../components/common/InputField";
-import "./SignUpPage.scss";
-import {
-  validateEmail,
-  validateName,
-  validatePassword,
-  validateConfirmPassword,
-} from "../utils/Login-SignupValidation";
-import { useSupabaseAuth } from "../../supabase";
-import CommonButton from "../components/common/CommonButton";
 import { toast } from "react-toastify";
+import { data, useNavigate } from "react-router-dom";
+import "./SignUpPage.scss";
+import { useSupabaseAuth } from "../../supabase";
+import { CommonButton, InputField } from "../components";
+import { useForm, useInputValidation } from "../hooks/index.js";
+import { signUpInputFields } from "../constants/signUpInputFields.js";
 
 export default function SignUpPage() {
-  const [form, setForm] = useState({
+  const { form, handleChange } = useForm({
     name: "",
     email: "",
     password: "",
@@ -24,40 +19,28 @@ export default function SignUpPage() {
   const navigate = useNavigate();
   const supabaseAuth = useSupabaseAuth();
   const [loading, setLoading] = useState(false);
-
-  function handleOnChange(e) {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  }
+  const { validateSignUp, isValid } = useInputValidation();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const newErrors = {
-      name: validateName(form.name),
-      email: validateEmail(form.email),
-      password: validatePassword(form.password),
-      confirmPassword: validateConfirmPassword(
-        form.password,
-        form.confirmPassword
-      ),
-    };
-
+    const newErrors = validateSignUp(form);
     setErrors(newErrors);
 
-    const isValid = Object.values(newErrors).every((err) => err === "");
-    if (!isValid) {
+    if (!isValid(newErrors)) {
       return;
     }
 
     try {
       setLoading(true);
+
       const { data, error } = await supabaseAuth.signUp({
         email: form.email,
         password: form.password,
         display_name: form.name,
         options: { data: {} },
       });
+
       if (error) throw error;
 
       toast.success(`회원가입 성공!`);
@@ -70,50 +53,27 @@ export default function SignUpPage() {
     }
   }
 
-  function handleSineUpPage() {
-    navigate("/signup");
-  }
+  const inputFields = signUpInputFields;
 
   return (
     <div className="sign-container">
       <h2 className="sign-title">회원가입</h2>
       <form className="sign-fomr" onSubmit={handleSubmit}>
-        <InputField
-          label="이메일"
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleOnChange}
-          error={errors.email}
-        />
-        <InputField
-          label="이름"
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleOnChange}
-          error={errors.name}
-        />
-        <InputField
-          label="패스워드"
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleOnChange}
-          error={errors.password}
-        />
-        <InputField
-          label="패스워드 확인"
-          type="password"
-          name="confirmPassword"
-          value={form.confirmPassword}
-          onChange={handleOnChange}
-          error={errors.confirmPassword}
-        />
+        {inputFields.map((field) => (
+          <InputField
+            key={field.name}
+            label={field.label}
+            type={field.type}
+            name={field.name}
+            value={form[field.name]}
+            onChange={handleChange}
+            error={errors[field.name]}
+          />
+        ))}
         <CommonButton
           type="submit"
           className="signUpPage-btn"
-          onClick={handleSineUpPage}
+          onClick={() => navigate("/signup")}
         >
           {loading ? "가입 중...." : "회원가입"}
         </CommonButton>
