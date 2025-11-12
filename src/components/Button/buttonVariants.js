@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '@/utils';
 
 const stoneBase =
   'bg-stone-500 text-stone-50 hover:bg-stone-900 dark:bg-stone-700';
@@ -11,7 +11,7 @@ const buttonVariants = cva(
       variant: {
         stone: stoneBase,
         icon: 'bg-transparent text-3xl',
-        carousel: twMerge(
+        carousel: cn(
           stoneBase,
           'absolute top-[50%] h-40 w-18 -translate-y-[50%] text-4xl opacity-90',
         ),

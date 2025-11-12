@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '@/utils';
 import buttonVariants from '@/components/Button/buttonVariants';
 
 const Button = memo(function ({
@@ -12,12 +12,10 @@ const Button = memo(function ({
 }) {
   return (
     <button
-      className={twMerge(
-        buttonVariants({ variant, size }),
-        className,
-        disabled &&
-          'pointer-events-none bg-stone-400 select-none dark:bg-stone-500',
-      )}
+      className={cn(buttonVariants({ variant, size }), className, {
+        'pointer-events-none bg-stone-400 select-none dark:bg-stone-500':
+          disabled,
+      })}
       disabled={disabled}
       {...rest}
     >

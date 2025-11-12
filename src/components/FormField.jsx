@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '@/utils';
 
 const FormField = memo(function ({
   label,
@@ -47,9 +47,9 @@ const FormField = memo(function ({
         {...rest}
         value={value}
         onChange={handleInputChange}
-        className={twMerge(
+        className={cn(
           'mt-2 w-full rounded-md border-2 border-transparent bg-stone-50 px-4 py-2 outline-none dark:bg-stone-700',
-          !valid && 'border-red-400',
+          { 'border-red-400': !valid },
         )}
       />
       {conditionTestResults && (
@@ -57,10 +57,9 @@ const FormField = memo(function ({
           {conditionTestResults.map((result) => (
             <li
               key={result.name}
-              className={twMerge(
-                'font-bold text-stone-500 dark:text-stone-400',
-                result.passed && 'text-stone-950 dark:text-stone-50',
-              )}
+              className={cn('font-bold text-stone-500 dark:text-stone-400', {
+                'text-stone-950 dark:text-stone-50': result.passed,
+              })}
             >
               ✓ {result.name}
             </li>
