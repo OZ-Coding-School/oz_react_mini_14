@@ -1,7 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
-import { useFetchData } from "@hooks/useFetchData";
+import { useFetchData } from "@/hooks/useFetchData";
 import { SWIPER_CONFIG, truncateText } from "./bannerConfig";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Typography from "@components/common/Typhography";

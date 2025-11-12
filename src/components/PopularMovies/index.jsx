@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useFetchData } from "@hooks/useFetchData";
+import { useFetchData } from "@/hooks/useFetchData";
 import { PageContainer } from "@components/common/Container";
 import SectionTitle from "@/components/common/SectionTitle";
 import MovieCard from "@components/common/MovieCard";
