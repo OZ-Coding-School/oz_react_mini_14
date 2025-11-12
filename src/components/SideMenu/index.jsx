@@ -8,14 +8,13 @@ import {
   CategoryTab,
   MenuList,
   MenuItem,
-} from "./SideMenuStyle";
+} from "./style";
 
 const SideMenu = ({ isOpen, onClose }) => {
   const [activeCategory, setActiveCategory] = useState("kines-pick");
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const prevPathnameRef = useRef(location.pathname);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -28,12 +27,6 @@ const SideMenu = ({ isOpen, onClose }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen, onClose]);
 
-  // 페이지 이동 시 메뉴 닫기
-  useEffect(() => {
-    if (prevPathnameRef.current !== location.pathname && isOpen) onClose();
-    prevPathnameRef.current = location.pathname;
-  }, [location.pathname, isOpen, onClose]);
-
   const handleNavigate = (path) => {
     navigate(path);
     onClose();
@@ -41,26 +34,25 @@ const SideMenu = ({ isOpen, onClose }) => {
 
   const categories = {
     "kines-pick": {
-      name: "Kine's pick",
+      name: "KINE's Pick",
       items: [
-        { label: "홈", path: "/" },
-        { label: "인기 영화", path: "/popular" },
-        { label: "검색", path: "/search" },
+        { label: "오늘의 추천영화", path: "/popular" },
+        { label: "오늘의 랭킹", path: "/top_ranked" },
       ],
     },
     community: {
       name: "커뮤니티",
       items: [
-        { label: "자유게시판", path: "/community/free" },
-        { label: "영화 리뷰", path: "/community/review" },
+        { label: "요즘 뜨는 코멘트", path: "/community/free" },
+        { label: "KINEMA 라운지", path: "/community/review" },
       ],
     },
     mykinema: {
       name: "나의KINEMA",
       items: [
-        { label: "내 정보", path: "/mypage" },
-        { label: "찜한 영화", path: "/mypage/wishlist" },
-        { label: "내 리뷰", path: "/mypage/reviews" },
+        { label: "마이페이지", path: "/mypage" },
+        { label: "내가 찜한 영화", path: "/mypage/wishlist" },
+        { label: "내가 쓴 리뷰", path: "/mypage/reviews" },
       ],
     },
   };
