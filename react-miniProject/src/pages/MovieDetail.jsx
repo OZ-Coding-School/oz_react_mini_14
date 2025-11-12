@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import { useMovieDetailInfo } from "../hooks/";
-import { LoadingSkeleton } from "../components";
+import { useMovieDetailInfo } from "@hooks";
+import { LoadingSkeleton } from "@components";
 import "./MovieDetail.scss";
 import { useSelector } from "react-redux";
 

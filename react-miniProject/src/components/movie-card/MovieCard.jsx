@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import "./MovieCard.scss";
 import { useSelector } from "react-redux";
-import { BASE_URL } from "../../constants/api.js";
+import { BASE_URL } from "@constants/api.js";
+import "./MovieCard.scss";
 
 function MovieCard({ data }) {
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);

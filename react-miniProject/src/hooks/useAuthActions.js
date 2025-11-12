@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { logInState } from "../store/slice";
-import { useSupabaseAuth } from "../../supabase";
+import { logInState } from "@store/slice";
+import { useSupabaseAuth } from "@supabase_path";
 
 export const useAuthActions = () => {
   const dispatch = useDispatch();

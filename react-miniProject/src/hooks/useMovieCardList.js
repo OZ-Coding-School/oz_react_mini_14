@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { API_URL, API_KEY } from "../constants/api.js";
-import movieApi from "../apis/movie.js";
+import { API_URL, API_KEY } from "@constants/api.js";
+// import movieApi from "../apis/movie.js";
 
 export default function useMovieCardList() {
   const [movieList, setMovieList] = useState([]); //movieListDatas.results

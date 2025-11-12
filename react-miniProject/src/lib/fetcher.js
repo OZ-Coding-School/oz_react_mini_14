@@ -1,5 +1,5 @@
 //커스텀 진행 예정
-import { API_URL, API_KEY } from "../constants/api.js";
+import { API_URL, API_KEY } from "@constants/api.js";
 
 // 나중에는 이곳에서 access token 을 발급받아서 자동으로 세팅하는 것도 가능함.
 class HTTPClient {

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import "./NavBar.scss";
 import { useSelector } from "react-redux";
-import { CommonButton } from "../common";
-import { useAuthActions, useSearchHandler, useThemeToggle } from "../../hooks";
+import { CommonButton } from "@common";
+import { useAuthActions, useSearchHandler, useThemeToggle } from "@hooks";
+import "./NavBar.scss";
 
 export default function NavBar() {
   const navigate = useNavigate();

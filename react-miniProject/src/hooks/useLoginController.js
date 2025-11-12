@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logInState } from "../store/slice";
-import { useSupabaseAuth } from "../../supabase";
+import { logInState } from "@store/slice";
+import { useSupabaseAuth } from "@supabase_path";
 import { toast } from "react-toastify";
 import { useForm, useInputValidation } from "./index.js";
 

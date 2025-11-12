@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useSupabase } from "../../supabase";
+import { useSupabase } from "@supabase_path";
 import { useEffect } from "react";
-import { logInState } from "../store/slice";
+import { logInState } from "@store/slice";
 
 export default function AuthCallback() {
   const navigate = useNavigate();

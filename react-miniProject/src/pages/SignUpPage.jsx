@@ -2,10 +2,10 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { data, useNavigate } from "react-router-dom";
 import "./SignUpPage.scss";
-import { useSupabaseAuth } from "../../supabase";
-import { CommonButton, InputField } from "../components";
-import { useForm, useInputValidation } from "../hooks/index.js";
-import { signUpInputFields } from "../constants/signUpInputFields.js";
+import { useSupabaseAuth } from "@supabase_path";
+import { CommonButton, InputField } from "@components";
+import { useForm, useInputValidation } from "@hooks";
+import { signUpInputFields } from "@constants/signUpInputFields.js";
 
 export default function SignUpPage() {
   const { form, handleChange } = useForm({

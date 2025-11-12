@@ -1,10 +1,10 @@
 import "./LoginPage.scss";
 import { useNavigate } from "react-router-dom";
-import { CommonButton, OAuthButton, InputField } from "../components";
-import { useOAuth } from "../../supabase/auth/useOauth.auth";
-import { useLoginController } from "../hooks/useLoginController";
-import kakaoLogo from "../assets/icons/Kakao_icon.png";
-import googleLogo from "../assets/icons/Google_icon.png";
+import { CommonButton, OAuthButton, InputField } from "@components";
+import { useOAuth } from "@supabase_path/auth/useOauth.auth";
+import { useLoginController } from "@hooks/useLoginController";
+import kakaoLogo from "@assets/icons/Kakao_icon.png";
+import googleLogo from "@assets/icons/Google_icon.png";
 
 export default function LoginPage() {
   const { form, errors, authError, loading, handleChange, handleLogin } =

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API_URL, API_KEY } from "../constants/api.js";
+import { API_URL, API_KEY } from "@constants/api.js";
 
 export default function useMovieDetailInfo(movieId) {
   const [movieDetailDatas, setMovieDetailDatas] = useState([]); //movieListDatas.results

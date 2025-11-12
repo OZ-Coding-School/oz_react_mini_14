@@ -3,7 +3,7 @@ import {
   validateName,
   validatePassword,
   validateConfirmPassword,
-} from "../utils/Login-SignupValidation";
+} from "@utils/Login-SignupValidation";
 
 export function useInputValidation() {
   function validateLoginForm({ email, password }) {
