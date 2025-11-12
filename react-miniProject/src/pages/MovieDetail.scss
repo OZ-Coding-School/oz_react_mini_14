@@ -70,4 +70,12 @@
     grid-row: 3;
     line-height: 1.5;
   }
+
+  &.dark {
+    @include theme-dark;
+  }
+
+  &.light {
+    @include theme-light;
+  }
 }

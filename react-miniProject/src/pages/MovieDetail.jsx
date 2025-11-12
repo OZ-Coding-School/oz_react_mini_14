@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
-import useMovieDetailData from "../hooks/useMovieDetailData";
-import LoadingSkeleton from "../Components/skeleton/LoadingSkeleton";
+import { useMovieDetailInfo } from "@hooks";
+import { LoadingSkeleton } from "@components";
 import "./MovieDetail.scss";
+import { useSelector } from "react-redux";
 
 const BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
 
@@ -11,15 +12,25 @@ function Genre({ value }) {
 
 function MovieDetail() {
   const { movieId } = useParams();
-  const { movieDetailDatas, loading } = useMovieDetailData(movieId);
-  // console.log("movieDetailDatas : " + movieDetailDatas);
-  // console.log("loading : " + loading);
+  const { movieDetailDatas, loading } = useMovieDetailInfo(movieId);
+  const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
 
   if (loading) return <LoadingSkeleton />;
   if (!movieDetailDatas) return <p>로딩 중....</p>;
 
   return (
-    <div className="movie">
+    <div
+      className={`movie ${isDarkMode ? "dark" : "light"}`}
+      style={{
+        backgroundImage: `
+          linear-gradient(to right, rgba(15,32,39,0.8), rgba(32,58,67,0.6), rgba(44,83,100,0.8)), 
+          url(${BASE_URL}${movieDetailDatas.backdrop_path})
+        `,
+        backgroundSize: "cover", // 이미지가 화면 전체를 덮도록
+        backgroundPosition: "center center", // 중앙 기준 배치
+        backgroundRepeat: "no-repeat", // 반복 안함
+      }}
+    >
       <div className="detail-poster">
         <img
           src={`${BASE_URL}${movieDetailDatas.poster_path}`}
