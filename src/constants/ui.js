@@ -37,4 +37,9 @@ const LOGIN_FIELDS = SIGNUP_FIELDS.filter((field) =>
   ['email', 'password'].includes(field.name),
 );
 
-export { TOAST_DURATION, SIGNUP_FIELDS, LOGIN_FIELDS };
+const SocialAuthButtonsMode = {
+  SIGNUP: 'signup',
+  LOGIN: 'login',
+};
+
+export { TOAST_DURATION, SIGNUP_FIELDS, LOGIN_FIELDS, SocialAuthButtonsMode };

@@ -16,6 +16,9 @@ const buttonVariants = cva(
           'absolute top-[50%] h-40 w-18 -translate-y-[50%] text-4xl opacity-90',
         ),
         profile: 'size-9 overflow-hidden rounded-full md:size-10',
+        ['oauth-kakao']: 'bg-[#FEE500] text-[rgba(0,0,0,0.85)]',
+        ['oauth-google']:
+          'bg-white text-[#1f1f1f] dark:bg-[#131314] dark:text-[#e3e3e3]',
       },
       size: {
         sm: 'w-11 py-1',

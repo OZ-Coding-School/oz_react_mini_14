@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth, useAuthActions, useForm } from '@/hooks';
 import { setHasJustLoggedIn } from '@/utils';
-import { Button, FormField, Indicator } from '@/components';
-import { LOGIN_FIELDS } from '@/constants';
+import { Button, FormField, Indicator, SocialAuthButtons } from '@/components';
+import { LOGIN_FIELDS, SocialAuthButtonsMode } from '@/constants';
 
 function LogIn() {
   const { formState, isFormValid, handleFormChange } = useForm({
@@ -34,6 +34,12 @@ function LogIn() {
       <h1 className="mt-10 self-center text-3xl font-bold md:text-4xl">
         로그인
       </h1>
+      <div className="mt-4 flex gap-2 self-center text-sm">
+        <p>오즈무비가 처음이신가요?</p>
+        <Link to="/signup" className="underline">
+          회원가입
+        </Link>
+      </div>
       <form
         className="mt-10 flex flex-col items-stretch gap-4"
         onSubmit={handleSubmit}
@@ -60,12 +66,7 @@ function LogIn() {
           로그인
         </Button>
       </form>
-      <div className="mt-4 flex gap-2 self-center text-sm">
-        <p>오즈무비가 처음이신가요?</p>
-        <Link to="/social-login" className="underline">
-          간편 가입
-        </Link>
-      </div>
+      <SocialAuthButtons mode={SocialAuthButtonsMode.LOGIN} />
     </section>
   );
 }

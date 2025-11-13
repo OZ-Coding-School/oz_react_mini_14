@@ -7,4 +7,5 @@ export { default as Indicator } from '@/components/Indicator';
 export { default as Button } from '@/components/Button/Button';
 export { default as LinkButton } from '@/components/Button/LinkButton';
 export { default as AuthButtons } from '@/components/Button/AuthButtons';
+export { default as SocialAuthButtons } from '@/components/Button/SocialAuthButtons';
 export { default as FormField } from '@/components/FormField';
