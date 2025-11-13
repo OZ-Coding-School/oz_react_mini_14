@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Slide, ToastContainer } from 'react-toastify';
 import { ThemeProvider, AuthProvider } from '@/contexts';
 import MainLayout from '@/layouts/MainLayout';
-import { App, LogIn, MovieDetail, Search, SignUp } from '@/pages';
+import { App, LogIn, MovieDetail, MyPage, Search, SignUp } from '@/pages';
 import { TOAST_DURATION } from '@/constants';
 import '@/index.css';
 
@@ -18,6 +18,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/search" element={<Search />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LogIn />} />
+            <Route path="/my-page" element={<MyPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -116,9 +116,14 @@ function Header() {
         </div>
       )}
       {isProfileMenuOpen && (
-        <div className="absolute right-6 -bottom-18 w-30 md:right-13">
-          <LinkButton variant="stone" size="full" className="rounded-none">
-            찜 목록
+        <div className="absolute right-6 -bottom-18 z-1000 w-30 md:right-13">
+          <LinkButton
+            to="/my-page"
+            variant="stone"
+            size="full"
+            className="rounded-none"
+          >
+            마이페이지
           </LinkButton>
           <Button
             variant="stone"
