@@ -14,7 +14,6 @@ const App = () => {
       <h1 className="text-2xl font-bold mb-8">🎬 Movie List</h1>
       <MovieList movies={movies} />        
       </div>
-    </div>
   );
 };
 

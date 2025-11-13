@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import movieDetailData from "../assets/movieDetailData.json";
+import movieDetailData from "./movieDetailData.json";
+import MovieList from "./MovieList";
 
 
-const detail = () => {
+const MovieDetail = () => {
   const [movie, setMovie] = useState(null);
 
   useEffect(() => {
@@ -16,9 +17,9 @@ const detail = () => {
       <div className="flex w-[900px] gap-8">
         <div className="w-[350px] h-[500px] flex-shrink-0 border border-gray-600 bg-gray-700 flex justify-center items-center">
           <img
-            src={`${Image_base_url}${movie.poster_path || movie.backdrop_path}`}
-            alt={movie.title}
-            className="w-full h-full object-cover"
+            ///src={`${Image_base_url}${movie.poster_path || movie.backdrop_path}`}
+            ///alt={movie.title}
+            ///className="w-full h-full object-cover"///
  />
         </div>
         <div className="flex flex-col flex-1 gap-4">
