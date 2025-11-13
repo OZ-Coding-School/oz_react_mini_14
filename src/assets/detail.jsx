@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import movieDetailData from "../assets/movieDetailData.json";
 
 
-const MovieDetail = () => {
+const detail = () => {
   const [movie, setMovie] = useState(null);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const MovieDetail = () => {
           };
 
 
-          
+
 export default MovieDetail;
 
 
