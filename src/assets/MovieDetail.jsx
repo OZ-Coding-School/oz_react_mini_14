@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import movieDetailData from "./movieDetailData.json";
-import MovieList from "./MovieList";
+
 
 
 const MovieDetail = () => {
@@ -13,44 +13,39 @@ const MovieDetail = () => {
   if (movie) return;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex justify-center items-center p-10">
-      <div className="flex w-[900px] gap-8">
-        <div className="w-[350px] h-[500px] flex-shrink-0 border border-gray-600 bg-gray-700 flex justify-center items-center">
-          <img
-            ///src={`${Image_base_url}${movie.poster_path || movie.backdrop_path}`}
-            ///alt={movie.title}
-            ///className="w-full h-full object-cover"///
- />
-        </div>
-        <div className="flex flex-col flex-1 gap-4">
-          <div className="flex gap-4">
-            <div className="flex-1 bg-gray-800 border border-gray-700 flex justify-center items-center p-3">
-              <h2 className="text-xl font-bold">{movie.title}</h2>
-            </div>
-            <div className="w-[100px] bg-gray-800 border border-gray-700 flex justify-center items-center p-3">
-              <p> {movie.vote_average}</p>
-            </div>
+    <div className="bg-gray-900 text-white min-h-screen p-10 flex justify-center items-start">
+      <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-10 max-w-6xl w-full">
+        {/* 포스터 */}
+        <div className="flex flex-col gap-4">
+          {/* 제목 + 평점 */}
+          <div className="flex justify-between items-center">
+            <h2 className="text-3xl font-bold">{movie.title}</h2>
+            <span className="text-lg text-yellow-400 font-semibold">
+              ⭐ {movie.vote_average.toFixed(1)}
+            </span>
           </div>
           
-          <div className="bg-gray-800 border border-gray-700 p-4 text-center">
+           {/* 장르 */}
+          <div className="flex flex-wrap gap-2">
             {movie.genres.map((genre) => (
-              <span key={genre.id} className="mx-2">
+              <span
+                key={genre.id}
+                className="bg-gray-700 px-3 py-1 rounded-full text-sm"
+              >
                 {genre.name}
               </span>
             ))}
           </div>
 
-          <div className="bg-gray-800 border border-gray-700 p-6 leading-relaxed overflow-y-auto">
-            {movie.overview}
+          {/* 줄거리 */}
+          <div className="mt-2">
+            <h3 className="text-xl font-semibold mb-2">줄거리</h3>
+            <p className="text-gray-300 leading-relaxed">{movie.overview}</p>
           </div>
-           </div>
-          </div>
-         </div>
-         );    
-          };
-
-
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default MovieDetail;
-
-
