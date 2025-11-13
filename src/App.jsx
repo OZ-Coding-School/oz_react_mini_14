@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";git a
+import React, { useState, useEffect } from "react";
 import movieListData from "./assets/movieListData.json";
 import MovieList from "./assets/MovieList";
 
