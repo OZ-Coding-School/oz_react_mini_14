@@ -1,4 +1,4 @@
-import { IMAGE_BASE_URL } from '@/constants/url';
+import { IMAGE_BASE_URL } from '@/constants';
 import { Link } from 'react-router-dom';
 
 function MovieCard({ movie }) {
@@ -14,7 +14,7 @@ function MovieCard({ movie }) {
           {movie.title}
         </p>
         <p className="mb-2 ml-2 text-xs text-stone-600 dark:text-stone-300">
-          평점: {movie.vote_average}
+          평점: {movie.vote_average.toFixed(2)}
         </p>
       </article>
     </Link>

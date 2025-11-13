@@ -1,26 +1,49 @@
-import { useState } from 'react';
-import useFetch from '@/hooks/useFetch';
-import getMovieList from '@/apis/getMovieList';
-import Indicator from '@/components/Indicator';
-import Error from '@/components/Error';
-import MovieList from '@/components/MovieList';
-import Carousel from '@/components/Carousel';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { useAuth, useAuthActions, useFetch } from '@/hooks';
+import { getMovieList } from '@/apis';
+import { getHasJustLoggedIn, setHasJustLoggedIn } from '@/utils/auth';
+import { Indicator, Error, MovieList, Carousel, Button } from '@/components';
+import { TOAST_DURATION } from '@/constants';
 
 function App() {
   const [isCarousel, setIsCarousel] = useState(false);
   const { data: movieList, loading, error } = useFetch({ api: getMovieList });
+  const { user, loading: authLoading, error: authError } = useAuth();
+  const { clearError } = useAuthActions();
   const filteredMovieList = movieList.filter((item) => !item.adult);
+
+  useEffect(() => {
+    const hasJustLoggedIn = getHasJustLoggedIn();
+    if (hasJustLoggedIn && user) {
+      toast.success(`${user.name}님, 환영합니다!`);
+      setHasJustLoggedIn(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authLoading]);
+
+  useEffect(() => {
+    const hasJustLoggedIn = getHasJustLoggedIn();
+    if (hasJustLoggedIn && authError) {
+      toast.error(authError.message, { autoClose: TOAST_DURATION.error });
+      clearError();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authError]);
 
   if (loading || !movieList) return <Indicator />;
   if (error) return <Error message={error.message} />;
   return (
     <>
-      <button
-        className="button mt-10 ml-22 w-44 px-4 py-2 text-stone-50"
+      <Button
+        type="button"
+        variant="stone"
+        size="xl"
+        className="mt-10 ml-22"
         onClick={() => setIsCarousel((prev) => !prev)}
       >
         {isCarousel ? 'View List' : 'View Carousel'}
-      </button>
+      </Button>
       {isCarousel ? (
         <Carousel movieList={filteredMovieList} />
       ) : (

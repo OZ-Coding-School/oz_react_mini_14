@@ -1,4 +1,4 @@
-import { API_BASE_URL, API_END_POINTS } from '@/constants/url';
+import { API_BASE_URL, API_END_POINTS } from '@/constants';
 
 async function getMovieListByKeyword({ params }) {
   const { keyword } = params;

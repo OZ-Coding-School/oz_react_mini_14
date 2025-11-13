@@ -11,12 +11,18 @@ function ThemeProvider({ children }) {
 
     setIsDarkMode(newIsDarkMode);
     localStorage.setItem(STORAGE_KEY, newIsDarkMode);
-    document.documentElement.classList.toggle('dark', !!newIsDarkMode);
+    document.documentElement.classList.toggle('dark', newIsDarkMode);
   };
 
   useEffect(() => {
     const darkMode = localStorage.getItem(STORAGE_KEY);
-    if (darkMode) setIsDarkMode(darkMode);
+
+    if (darkMode !== null) {
+      const parsedDarkMode = darkMode === 'true' ? true : false;
+
+      setIsDarkMode(parsedDarkMode);
+      document.documentElement.classList.toggle('dark', parsedDarkMode);
+    }
   }, []);
 
   return (
