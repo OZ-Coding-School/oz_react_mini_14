@@ -5,7 +5,7 @@ import MovieCard from "../components/MovieCard";
 
 export default function SearchResults() {
   const [searchParams] = useSearchParams();
-  const query = searchParams.get("query");
+  const query = searchParams.get("query") || "";
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
