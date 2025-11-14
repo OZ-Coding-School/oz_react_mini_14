@@ -5,6 +5,15 @@ export const changeFromDto = ({ type, dto }) => {
   switch (type) {
     case DTO_TYPE.user:
       const { user_metadata: userInfo } = dto?.user;
+
+      const displayName = //이름 필드 선언.
+        userInfo.display_name || // 이메일 회원가입 시 직접 저장한 값
+        userInfo.full_name || // Google
+        userInfo.name || // 다른 OAuth
+        userInfo.nickname || // Kakao
+        userInfo.userName || // 예전에 저장한 값
+        (userInfo.email ? userInfo.email.split("@")[0] : "Unknown");
+
       return {
         user: {
           id: userInfo.sub,
@@ -13,6 +22,7 @@ export const changeFromDto = ({ type, dto }) => {
             ? userInfo.userName
             : userInfo.email.split("@")[0],
           profileImageUrl: userInfo.avatar_url,
+          name: displayName, //displayName 이름 필드 추가. //userName은 닉네임
         },
       };
     case DTO_TYPE.error:
