@@ -1,10 +1,12 @@
 export const SWIPER_CONFIG = {
-  spaceBetween: 0,
+  spaceBetween: 40,
   slidesPerView: 1.6,
+  centeredSlides: true,
   navigation: true,
   pagination: {
     clickable: true,
-    dynamicBullets: false,
+    dynamicBullets: true,
+    dynamicMainBullets: 3,
   },
   autoplay: {
     delay: 5000,
@@ -14,10 +16,22 @@ export const SWIPER_CONFIG = {
   effect: "slide",
   speed: 800,
   breakpoints: {
-    1240: { slidesPerView: 3 },
-    960: { slidesPerView: 2 },
-    768: { slidesPerView: 1.6 },
-    0: { slidesPerView: 1.6 },
+    1240: {
+      slidesPerView: 1.6,
+      spaceBetween: 40,
+    },
+    960: {
+      slidesPerView: 1.2,
+      spaceBetween: 16,
+    },
+    768: {
+      slidesPerView: 1.2,
+      spaceBetween: 12,
+    },
+    0: {
+      slidesPerView: 1.2,
+      spaceBetween: 4,
+    },
   },
 };
 

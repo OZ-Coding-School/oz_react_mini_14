@@ -1,14 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useInfiniteMovies, useIntersectionObserver } from "@/hooks";
+import { Grid, CardWrapper, LoadingBox } from "./style";
 import {
   PageContainer,
   SectionTitle,
   MovieCard,
   Typography,
-} from "@/components/common";
-import { Grid, CardWrapper, LoadingBox } from "./style";
-import { useInfiniteMovies } from "@/hooks/useInfiniteMovies";
-import { useIntersectionOvserver } from "@/hooks/useIntersectionObserver";
+} from "@/components";
+
+const ITEMS_PER_PAGE = 18;
 
 const PopularMovies = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const PopularMovies = () => {
   } = useInfiniteMovies("popular");
 
   //자동 로딩
-  const observerTarget = useIntersectionOvserver({
+  const observerTarget = useIntersectionObserver({
     onIntersect: () => {
       if (hasNextPage && !isFetchingNextPage) {
         fetchNextPage();
@@ -36,7 +37,11 @@ const PopularMovies = () => {
   if (loading) return <Typography>Loading...</Typography>;
   if (error) return <Typography>Error: {error.message}</Typography>;
 
-  const allMovies = data?.pages.flatMap((page) => page.results) || [];
+  // const allMovies = data?.pages.flatMap((page) => page.results) || [];
+  const allMovies =
+    data?.pages
+      .flatMap((page) => page.results.slice(0, ITEMS_PER_PAGE))
+      .filter((movie) => movie.poster_path) || [];
 
   return (
     <PageContainer>

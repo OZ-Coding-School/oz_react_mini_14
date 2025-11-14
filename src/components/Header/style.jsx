@@ -21,7 +21,7 @@ export const HeaderArea = styled.header`
   `}
 
   @media (max-width: 768px) {
-    padding: 52px 16px 20px;
+    padding: 0 16px 20px;
     backdrop-filter: blur(20px);
   }
 `;
@@ -54,7 +54,7 @@ export const Logo = styled.a`
   }
 
   @media (max-width: 960px) {
-    top: 52px;
+    top: 44px;
     left: 16px;
     width: 118px;
 
@@ -64,8 +64,6 @@ export const Logo = styled.a`
   }
 
   @media (max-width: 768px) {
-    top: 52px;
-    left: 16px;
     width: 108px;
 
     img {
@@ -80,10 +78,15 @@ export const RightSection = styled.div`
   align-items: center;
   gap: 20px;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1240px) {
     flex-wrap: wrap;
     width: 100%;
     justify-content: flex-end;
+    order: 3;
+
+    @media (max-width: 1240px) {
+      order: 2;
+    }
   }
 `;
 
@@ -113,7 +116,7 @@ export const HamburgerBtn = styled.button`
 export const UserMenu = styled.div`
   position: relative;
 
-  .user {
+  .user-icon {
     color: ${(props) => props.theme.colors.accent};
     transition: transform 0.2s ease;
     cursor: pointer;
@@ -123,7 +126,7 @@ export const UserMenu = styled.div`
     }
   }
 
-  &:hover .user {
+  &:hover .user-icon {
     transform: scale(1.1);
   }
 
@@ -163,5 +166,19 @@ export const UserMenu = styled.div`
 
   &:hover .dropdown {
     display: block;
+  }
+`;
+
+export const BellIcon = styled.div`
+  display: none;
+  cursor: pointer;
+
+  @media (max-width: 900px) {
+    display: block;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
   }
 `;

@@ -1,50 +1,53 @@
 import styled from "@emotion/styled";
 
-export const Grid = styled.ul`
+export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  padding: 0 30px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0 80px;
+  margin: 32px auto;
+  width: 100%;
 
-  @media (max-width: 1400px) {
-    grid-template-columns: repeat(4, 1fr);
+  @media (max-width: 1240px) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0 24px;
   }
 
-  @media (max-width: 1000px) {
-    grid-template-columns: repeat(3, 1fr);
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0 16px;
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
     padding: 0 16px;
-    gap: 16px;
   }
 
-  @media (max-width: 375px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 0 12px;
   }
 `;
 
-export const CardWrapper = styled.li`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  position: relative;
-  z-index: 1;
+export const CardWrapper = styled.div`
+  width: 100%;
+  min-width: 0;
+  height: 100%;
   transition: transform 0.3s ease;
 
   &:hover {
     transform: translateY(-8px);
   }
 `;
+
 export const LoadingBox = styled.div`
-  height: 50px;
+  height: 100px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 20px 0;
+  justify-content: center;
+  margin: 40px 0;
 `;

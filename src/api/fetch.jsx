@@ -1,7 +1,7 @@
 // fetchData
 // api data 불러오기 (tmdb data 전부)
 
-import instance from "./axios";
+import instance from "./api";
 
 export const fetchData = async (endpoint, extraParams = {}) => {
   try {
@@ -17,7 +17,7 @@ export const fetchData = async (endpoint, extraParams = {}) => {
 export const fetchTopRagedMovies = async ({ pageParam = 1 }) => {
   try {
     const response = await instance.get(`/movie/top_rated`, {
-      prams: { page: pageParam },
+      params: { page: pageParam },
     });
 
     const data = response.data;

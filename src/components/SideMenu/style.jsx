@@ -1,14 +1,7 @@
 import styled, { keyframes } from "styled-components";
 
 export const Overlay = styled.div`
-  position: fixed;
-  inset: 0;
-  background-color: transparent;
-  backdrop-filter: blur(10px);
-  opacity: ${(props) => (props.$isOpen ? 1 : 0)};
-  visibility: ${(props) => (props.$isOpen ? "visible" : "hidden")};
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 1999;
+  display: none;
 `;
 
 export const MenuContainer = styled.nav`
@@ -17,6 +10,7 @@ export const MenuContainer = styled.nav`
   right: 0;
   width: 100%;
   height: auto;
+  max-height: 90vh;
   background-color: rgba(26, 28, 32, 0.2);
   backdrop-filter: blur(25px);
   transform: translateY(${(props) => (props.$isOpen ? "0px" : "-100%")});
@@ -26,7 +20,20 @@ export const MenuContainer = styled.nav`
   overflow-x: auto;
 
   @media (max-width: 768px) {
-    max-width: 100%;
+    left: auto;
+    right: 0;
+    width: 100%;
+    width: 280px;
+    height: 100vh;
+    max-height: 100vh;
+    padding: 80px 24px 40px;
+    transform: translateX(${(props) => (props.$isOpen ? "0" : "100%")});
+    background-color: rgba(26, 28, 32, 0.2);
+  }
+
+  @media (max-width: 480px) {
+    max-width: 280px;
+    padding: 80px 20px 32px;
   }
 `;
 
@@ -49,18 +56,43 @@ export const CloseButton = styled.button`
   &:hover {
     color: #ff1a66;
   }
+
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+  }
 `;
 
 export const CategoryTabs = styled.div`
   display: flex;
   gap: 120px;
   align-items: flex-start;
+
+  @media (max-width: 1024px) {
+    gap: 60px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
 `;
 
 export const CategorySection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-bottom: 32px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 `;
 
 export const CategoryTab = styled.button`
@@ -77,12 +109,31 @@ export const CategoryTab = styled.button`
   transition: all 0.3s ease;
   white-space: nowrap;
 
-  &:hover {
+  @media (max-width: 1024px) {
+    font-size: 28px;
+    padding: 10px 0;
+    margin-bottom: 16px;
+    border-bottom-width: 3px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 8px 0;
+    margin-bottom: 16px;
+    width: 100%;
+    text-align: left;
     color: #ff1a66;
+    border-bottom: none;
+    cursor: default;
+    pointer-events: none;
+
+    &:hover {
+      color: #ff1a66;
+    }
   }
 `;
 
-// 🔥 애니메이션
 const fadeSlideIn = keyframes`
   from {
     opacity: 0;
@@ -114,6 +165,14 @@ export const MenuList = styled.ul`
   animation: ${(props) => (props.$visible ? fadeSlideIn : "none")} 0.3s
     ease-in-out;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+    gap: 0;
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+  }
 `;
 
 export const MenuItem = styled.li`
@@ -129,5 +188,21 @@ export const MenuItem = styled.li`
 
   &:hover {
     color: #ff1a66;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 18px;
+    padding: 14px 10px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+    padding: 12px 8px;
+    font-weight: ${(props) => (props.$active ? "600" : "400")};
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 10px 8px;
   }
 `;

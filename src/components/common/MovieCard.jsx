@@ -1,23 +1,32 @@
 import styled from "@emotion/styled";
-import Typography from "./Typhography";
+import Typography from "./Typography";
 import { getImageUrl } from "@/constants/images";
 
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease;
+  width: 100%;
+`;
+
+const PosterWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: 150%; /* 2:3 비율 = (3/2) * 100% = 150% */
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #1a1a1a; /* 로딩 중 배경색 */
+  margin-bottom: 8px;
 `;
 
 const Poster = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  cursor: pointer;
-  width: 270px;
-  height: auto;
-  aspect-ratio: 2/3;
-  border-radius: 8px;
+  height: 100%;
   object-fit: cover;
-  margin-bottom: 8px;
-  transition: transform 0.3 ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: scale(1.05);
@@ -30,9 +39,14 @@ const RankBadge = styled.div`
   margin-bottom: 4px;
 `;
 
+const TitleWrapper = styled.div`
+  margin-top: 8px;
+  min-height: 48px; /* 제목 최소 높이 */
+`;
+
 const MovieCard = ({ title, poster, onClick, rank, size = "w500" }) => {
   return (
-    <Card onClick={onClick}>
+    <Card>
       {rank !== undefined && (
         <RankBadge>
           <Typography
@@ -44,19 +58,27 @@ const MovieCard = ({ title, poster, onClick, rank, size = "w500" }) => {
           </Typography>
         </RankBadge>
       )}
-      <Poster src={getImageUrl(poster, size)} alt={title} />
-      <Typography
-        variant="movieTitle"
-        tag="p"
-        style={{
-          marginTop: "8px",
-          marginBottom: "16px",
-          fontSize: "16px",
-          fontWeight: "700",
-        }}
-      >
-        {title}
-      </Typography>
+      <PosterWrapper onClick={onClick}>
+        <Poster src={getImageUrl(poster, size)} alt={title} loading="lazy" />
+      </PosterWrapper>
+      <TitleWrapper>
+        <Typography
+          variant="movieTitle"
+          as="p"
+          style={{
+            fontSize: "16px",
+            fontWeight: "500",
+            lineHeight: "1.4",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+          }}
+        >
+          {title}
+        </Typography>
+      </TitleWrapper>
     </Card>
   );
 };

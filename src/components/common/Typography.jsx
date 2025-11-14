@@ -12,7 +12,7 @@ const typographyVariants = {
       }
     `,
   h2: `
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 700;
       line-height: auto;
 
@@ -96,7 +96,7 @@ const Typography = ({
   ...props
 }) => {
   return (
-    <StyledTypography tag={tag} $variant={variant} color={color} {...props}>
+    <StyledTypography as={tag} $variant={variant} color={color} {...props}>
       {children}
     </StyledTypography>
   );

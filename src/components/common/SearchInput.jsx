@@ -24,7 +24,6 @@ const StyledInput = styled.input`
   @media (max-width: 1240px) {
     width: 100%;
     order: 3;
-    margin-bottom: 12px;
   }
 `;
 

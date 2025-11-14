@@ -33,6 +33,10 @@ export const GlobalStyle = () => {
           z-index: 0;
         }
 
+        body.no-overlay::before {
+          display: none;
+        }
+
         img {
           display: block;
           max-width: 100%;

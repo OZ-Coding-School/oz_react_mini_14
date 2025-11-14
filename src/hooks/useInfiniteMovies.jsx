@@ -9,7 +9,7 @@ import {
 // @param { string } type - 'top-rated' 또는 'similar'
 // @param {number} movieId - type이 'similar'일 때 필요한 영화 ID
 
-export const useInfiniteMovies = (type, movieId = null) => {
+const useInfiniteMovies = (type, movieId = null) => {
   return useInfiniteQuery({
     // queryKey: 캐시 관리용 고유 키
     queryKey: movieId ? ["movies", type, movieId] : ["movies", type],
@@ -37,3 +37,5 @@ export const useInfiniteMovies = (type, movieId = null) => {
     initialPageParam: 1,
   });
 };
+
+export default useInfiniteMovies;

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export const useIntersectionOvserver = ({ onIntersect, enabled = true }) => {
+const useIntersectionObserver = ({ onIntersect, enabled = true }) => {
   const targetRef = useRef(null);
 
   useEffect(() => {
@@ -35,3 +35,5 @@ export const useIntersectionOvserver = ({ onIntersect, enabled = true }) => {
 
   return targetRef;
 };
+
+export default useIntersectionObserver;

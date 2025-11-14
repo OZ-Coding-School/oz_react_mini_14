@@ -1,15 +1,14 @@
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import Typography from "./Typhography";
+import Typography from "./Typography";
 
 const Wrapper = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding: 0 30px 36px;
+  padding: 0 60px;
 
   @media (max-width: 1240px) {
     padding: 0 24px;
@@ -30,6 +29,7 @@ const MoreButton = styled.button`
   border: none;
   color: ${(props) => props.theme.colors.text};
   transition: color 0.3s ease;
+  margin-right: 12px;
 
   &:hover {
     color: ${(props) => props.theme.colors.accent};
@@ -63,12 +63,12 @@ const SectionTitle = ({
 }) => {
   return (
     <Wrapper>
-      <Typography variant="sectionTitle" tag="h2">
+      <Typography variant="sectionTitle" as="h2">
         {title}
       </Typography>
       {showMoreButton && (
         <MoreButton onClick={onMoreClick}>
-          <Typography variant="caption" tag="span">
+          <Typography variant="caption" as="span">
             {moreText}
           </Typography>
           <StyledIcon icon={faChevronRight} />

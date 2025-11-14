@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import Typography from "./Typhography";
+import Typography from "./Typography";
 
 const Wrapper = styled.div`
   display: flex;

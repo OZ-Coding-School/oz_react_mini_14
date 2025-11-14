@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
-import { fetchData } from "@api/api";
+import { fetchData } from "@/api";
 
-export const useFetchData = (endpoint, params = {}) => {
+const useFetchData = (endpoint, params = {}) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -46,3 +46,5 @@ export const useFetchData = (endpoint, params = {}) => {
 
   return { data, loading, error };
 };
+
+export default useFetchData;

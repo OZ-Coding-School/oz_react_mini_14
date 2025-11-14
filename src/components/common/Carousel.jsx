@@ -12,6 +12,8 @@ const Container = styled.div`
 
 const Carousel = ({
   children,
+  data,
+  renderItem,
   sliderPerView = 5,
   spaceBetween = 16,
   loop = false,
@@ -25,9 +27,19 @@ const Carousel = ({
         loop={loop}
         {...swiperProps}
       >
-        {children.map((child, idx) => {
-          <SwiperSlide key={idx}>{child}</SwiperSlide>;
-        })}
+        {/* data + renderItem 패턴 */}
+        {data && renderItem
+          ? data.map((item, index) => (
+              <SwiperSlide key={item.id || index}>
+                {renderItem(item, index)}
+              </SwiperSlide>
+            ))
+          : /* children 패턴 */
+          children && Array.isArray(children)
+          ? children.map((child, idx) => (
+              <SwiperSlide key={idx}>{child}</SwiperSlide>
+            ))
+          : null}
       </Swiper>
     </Container>
   );

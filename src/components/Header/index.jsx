@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { debounce } from "lodash";
+import { useAuth } from "@/hooks";
 import {
-  faUser,
-  faBell,
-  faBars,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { Icon, Typography, SearchInput } from "@components/common";
-import Categories from "@/components/Categories";
-import SideMenu from "@components/SideMenu";
-import { useAuth } from "@/hooks/useAuth";
+  Icon,
+  Typography,
+  SearchInput,
+  Categories,
+  SideMenu,
+} from "@/components";
 
 import {
   HeaderArea,
@@ -20,6 +18,7 @@ import {
   IconGroup,
   HamburgerBtn,
   UserMenu,
+  BellIcon,
 } from "./style";
 
 const Header = () => {
@@ -93,7 +92,12 @@ const Header = () => {
               ) : user ? (
                 <>
                   <UserMenu>
-                    <Icon icon={faUser} className="user" label="사용자" />
+                    <Icon
+                      name="user"
+                      className="user-icon"
+                      size="24px"
+                      label="사용자"
+                    />
                     <div className="dropdown">
                       <Link to="/profile">
                         <Typography variant="bodySmall">내 프로필</Typography>
@@ -103,11 +107,18 @@ const Header = () => {
                       </button>
                     </div>
                   </UserMenu>
-                  <Icon icon={faBell} className="bell" label="알림" />
+                  <BellIcon>
+                    <Icon name="bell" size="24px" label="알림" />
+                  </BellIcon>
                 </>
               ) : (
                 <Link to="/login" style={{ textDecoration: "none" }}>
-                  <Icon icon={faUser} className="user" label="로그인" />
+                  <Icon
+                    name="user"
+                    size="24px"
+                    label="로그인"
+                    className="user-icon"
+                  />
                 </Link>
               )}
 
@@ -117,7 +128,11 @@ const Header = () => {
                 aria-label="메뉴"
                 aria-expanded={isMenuOpen}
               >
-                <Icon icon={isMenuOpen ? faXmark : faBars} label="메뉴" />
+                <Icon
+                  name={isMenuOpen ? "xmark" : "bars"}
+                  size="24px"
+                  label="메뉴"
+                />
               </HamburgerBtn>
             </IconGroup>
           </RightSection>

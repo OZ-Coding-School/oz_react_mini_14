@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SIDE_MENU_CATEGORIES, DEFAULT_CATEGORY } from "@/constants/menu";
 import {
-  Overlay,
   MenuContainer,
   CloseButton,
   CategoryTabs,
@@ -36,11 +35,9 @@ const SideMenu = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <Overlay $isOpen={isOpen} onClick={onClose} />
       <MenuContainer ref={menuRef} $isOpen={isOpen}>
         <CloseButton onClick={onClose}>✕</CloseButton>
 
-        {/* 🔥 구조 변경: 각 탭마다 하위 메뉴 포함 */}
         <CategoryTabs>
           {Object.keys(SIDE_MENU_CATEGORIES).map((key) => (
             <CategorySection key={key}>
