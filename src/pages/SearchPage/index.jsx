@@ -1,11 +1,10 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useFetchData, useDebounce } from "@/hooks";
-import { PageContainer, MovieCard, Typography } from "@components";
-import { TopSection, MovieGrid } from "./style";
+import { PageContainer, MovieGrid, Typography } from "@/components";
+import { SearchContainer } from "./style";
+import SearchEmpty from "./SearchEmpty";
 
 const SearchPage = () => {
-  const navigate = useNavigate();
   const location = useLocation();
 
   const searchParams = new URLSearchParams(location.search);
@@ -17,43 +16,39 @@ const SearchPage = () => {
     : null;
   const { data, loading } = useFetchData(endpoint);
 
-  const results = data?.results || [];
+  const results = data?.results?.filter((movie) => movie.poster_path) || [];
 
-  const handleClick = (id) => {
-    navigate(`/movie/${id}`);
+  const renderEmptyState = () => {
+    if (loading) {
+      return <SearchEmpty type="loading" />;
+    }
+
+    if (!searchTerm || searchTerm.trim() === "") {
+      return <SearchEmpty type="empty" />;
+    }
+
+    if (results.length === 0) {
+      return <SearchEmpty type="noResults" searchTerm={searchTerm} />;
+    }
+    return null;
   };
 
-  if (loading) {
-    return <Typography>Loading...</Typography>;
+  const emptyState = renderEmptyState();
+
+  if (emptyState) {
+    return <PageContainer>{emptyState}</PageContainer>;
   }
 
-  if (!debouncedQuery) {
-    return <Typography>검색어를 입력해주세요.</Typography>;
-  }
-
-  if (results.length === 0) {
-    return <Typography>검색 결과가 없습니다.</Typography>;
-  }
   return (
-    <PageContainer>
-      <TopSection>
-        <Typography variant="h2">
-          "{searchTerm}"검색 결과 {results.length}
-        </Typography>
-      </TopSection>
-      <MovieGrid>
-        {results
-          .filter((movie) => movie.poster_path) // 포스터 있는 것만
-          .map((movie) => (
-            <MovieCard
-              key={movie.id}
-              title={movie.title}
-              poster={movie.poster_path}
-              onClick={() => handleClick(movie.id)}
-            />
-          ))}
-      </MovieGrid>
-    </PageContainer>
+    <SearchContainer>
+      <Typography
+        variant="h2"
+        style={{ marginBottom: "40px", paddingLeft: "160px" }}
+      >
+        "{searchTerm}" 검색 결과 ({results.length})
+      </Typography>
+      <MovieGrid movies={results} padding="0 80px" />
+    </SearchContainer>
   );
 };
 

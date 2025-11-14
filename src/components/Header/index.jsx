@@ -49,6 +49,8 @@ const Header = () => {
   const handleSearchSubmit = (e) => {
     if (e.key === "Enter" && searchValue.trim() !== "") {
       navigate(`/search?q=${searchValue}`);
+    } else {
+      navigate("/search");
     }
   };
 
