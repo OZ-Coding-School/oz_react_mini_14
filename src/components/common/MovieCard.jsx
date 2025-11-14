@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import Typography from "./Typhography";
+import { getImageUrl } from "@/constants/images";
 
 const Card = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ const RankBadge = styled.div`
   margin-bottom: 4px;
 `;
 
-const MovieCard = ({ title, poster, onClick, rank }) => {
+const MovieCard = ({ title, poster, onClick, rank, size = "w500" }) => {
   return (
     <Card onClick={onClick}>
       {rank !== undefined && (
@@ -43,7 +44,7 @@ const MovieCard = ({ title, poster, onClick, rank }) => {
           </Typography>
         </RankBadge>
       )}
-      <Poster src={poster} alt={title} />
+      <Poster src={getImageUrl(poster, size)} alt={title} />
       <Typography
         variant="movieTitle"
         tag="p"

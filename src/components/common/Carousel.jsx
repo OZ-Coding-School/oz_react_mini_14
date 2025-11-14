@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/";
+import "swiper/css";
 
 const Container = styled.div`
   width: 100%;
