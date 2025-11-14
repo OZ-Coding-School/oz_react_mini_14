@@ -38,6 +38,7 @@ const SideMenu = ({ isOpen, onClose }) => {
       <MenuContainer ref={menuRef} $isOpen={isOpen}>
         <CloseButton onClick={onClose}>✕</CloseButton>
 
+        {/* 🔥 구조 변경: 각 탭마다 하위 메뉴 포함 */}
         <CategoryTabs>
           {Object.keys(SIDE_MENU_CATEGORIES).map((key) => (
             <CategorySection key={key}>
