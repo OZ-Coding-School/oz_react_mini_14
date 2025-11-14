@@ -1,4 +1,5 @@
 import { combineReducers, createSlice } from "@reduxjs/toolkit";
+import { USER_INFO_KEY } from "@supabase_path";
 
 const searchSlice = createSlice({
   name: "search",
@@ -27,7 +28,8 @@ const themeToggleSlice = createSlice({
 const logInSlice = createSlice({
   name: "logIn",
   initialState: {
-    isLogIn: false,
+    // 초기값 설정이 중요함. 새로고침 시 초기값이 고정될 수 있음.
+    isLogIn: !!localStorage.getItem(USER_INFO_KEY.customKey), //!!는 Boolean 타입으로 변환
   },
   reducers: {
     logInState: (state, action) => {
