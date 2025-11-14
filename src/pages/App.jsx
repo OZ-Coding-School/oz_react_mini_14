@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useAuth, useAuthActions, useFetch } from '@/hooks';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth, useAuthActions } from '@/hooks';
 import { getMovieList } from '@/apis';
 import { getHasJustLoggedIn, setHasJustLoggedIn } from '@/utils/auth';
 import { Indicator, Error, MovieList, Carousel, Button } from '@/components';
@@ -8,10 +9,14 @@ import { TOAST_DURATION } from '@/constants';
 
 function App() {
   const [isCarousel, setIsCarousel] = useState(false);
-  const { data: movieList, loading, error } = useFetch({ api: getMovieList });
+  const {
+    data: movieList,
+    loading,
+    error,
+  } = useQuery({ queryKey: ['movie'], queryFn: getMovieList });
   const { user, loading: authLoading, error: authError } = useAuth();
   const { clearError } = useAuthActions();
-  const filteredMovieList = movieList.filter((item) => !item.adult);
+  const filteredMovieList = movieList?.filter((item) => !item.adult);
 
   useEffect(() => {
     const hasJustLoggedIn = getHasJustLoggedIn();

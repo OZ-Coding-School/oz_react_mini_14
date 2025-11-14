@@ -1,18 +1,19 @@
-import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { useFetch } from '@/hooks';
 import { getMovieDetails } from '@/apis';
 import { Indicator, Error } from '@/components';
 import { IMAGE_BASE_URL } from '@/constants/url';
+import { useQuery } from '@tanstack/react-query';
 
 function MovieDetail() {
   const { id } = useParams();
-  const fetchOptions = useMemo(() => ({ params: { id } }), [id]);
   const {
     data: movie,
     loading,
     error,
-  } = useFetch({ api: getMovieDetails, options: fetchOptions });
+  } = useQuery({
+    queryKey: ['movie', id],
+    queryFn: () => getMovieDetails({ params: { id } }),
+  });
 
   if (loading || !movie) return <Indicator />;
   if (error) return <Error message={error.message} />;
