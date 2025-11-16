@@ -1,5 +1,9 @@
-import { useAuthActions } from '@/hooks';
-import { cn } from '@/utils';
+import {
+  cn,
+  logInWithGoogle,
+  logInWithKakao,
+  setHasJustLoggedIn,
+} from '@/utils';
 import { Button } from '@/components';
 import { SocialAuthButtonsMode } from '@/constants';
 
@@ -8,20 +12,30 @@ const BUTTON_LIST = [
     labelPrefix: '카카오계정으로',
     variant: 'oauth-kakao',
     iconSrc: '/images/oauth/kakao.svg',
-    actionKey: 'logInWithKakao',
+    onClick: logInWithKakao,
   },
   {
     labelPrefix: '구글계정으로',
     variant: 'oauth-google',
     iconSrc: '/images/oauth/google.svg',
-    actionKey: 'logInWithGoogle',
+    onClick: logInWithGoogle,
   },
 ];
 
-function SocialAuthButtons({ mode }) {
-  const actions = useAuthActions();
+function SocialAuthButtons({ mode, startAuthProcessing }) {
   const isSignUpMode = mode === SocialAuthButtonsMode.SIGNUP;
   const labelText = isSignUpMode ? '회원가입' : '로그인';
+
+  const handleClick = (action) => {
+    startAuthProcessing();
+    setTimeout(async () => {
+      const { success } = await action();
+
+      if (success) {
+        setHasJustLoggedIn(true);
+      }
+    }, 0);
+  };
 
   return (
     <div className="flex-center mt-15 flex-col items-stretch">
@@ -41,7 +55,7 @@ function SocialAuthButtons({ mode }) {
             key={btn.labelPrefix}
             variant={btn.variant}
             size="full"
-            onClick={actions[btn.actionKey]}
+            onClick={() => handleClick(btn.onClick)}
           >
             <img
               src={btn.iconSrc}

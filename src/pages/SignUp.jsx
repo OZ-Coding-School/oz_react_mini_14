@@ -1,10 +1,17 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth, useAuthActions, useForm } from '@/hooks';
-import { setHasJustLoggedIn } from '@/utils';
+import { toast } from 'react-toastify';
+import { useForm } from '@/hooks';
+import { setHasJustLoggedIn, signUp } from '@/utils';
 import { Button, FormField, Indicator, SocialAuthButtons } from '@/components';
-import { SIGNUP_FIELDS, SocialAuthButtonsMode } from '@/constants';
+import {
+  SIGNUP_FIELDS,
+  SocialAuthButtonsMode,
+  TOAST_DURATION,
+} from '@/constants';
 
 function SignUp() {
+  const [isSigningUp, setIsSigningUp] = useState(false);
   const { formState, isFormValid, handleFormChange } = useForm({
     initialState: {
       email: { value: '', valid: false },
@@ -13,25 +20,31 @@ function SignUp() {
       passwordConfirm: { value: '', valid: false, pair: 'password' },
     },
   });
-  const { loading } = useAuth();
-  const { signUp } = useAuthActions();
   const navigate = useNavigate();
+
+  const startSigningUp = () => setIsSigningUp(true);
+  const endSigningUp = () => setIsSigningUp(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { success } = await signUp({
+    startSigningUp();
+    const { success, error } = await signUp({
       email: formState.email.value,
       password: formState.password.value,
       name: formState.name.value,
     });
+    endSigningUp();
 
     if (success) {
       setHasJustLoggedIn(true);
       navigate('/');
     }
+    if (error) {
+      toast.error(error.message, { autoClose: TOAST_DURATION.error });
+    }
   };
 
-  if (loading) return <Indicator />;
+  if (isSigningUp) return <Indicator />;
   return (
     <section className="mx-4 my-12 flex flex-col justify-center rounded-md bg-stone-300 p-4 shadow-md md:mx-14 md:p-10 lg:mx-80 dark:bg-stone-600 dark:text-stone-50">
       <h1 className="mt-10 self-center text-3xl font-bold md:text-4xl">
@@ -70,7 +83,10 @@ function SignUp() {
           회원가입
         </Button>
       </form>
-      <SocialAuthButtons mode={SocialAuthButtonsMode.SIGNUP} />
+      <SocialAuthButtons
+        mode={SocialAuthButtonsMode.SIGNUP}
+        startAuthProcessing={startSigningUp}
+      />
     </section>
   );
 }

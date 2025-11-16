@@ -1,5 +1,24 @@
-import { toast } from 'react-toastify';
-import { SESSION_STORAGE_KEYS, TOAST_DURATION } from '@/constants';
+import supabase from '@/lib/supabaseClient';
+import { SESSION_STORAGE_KEYS } from '@/constants';
+
+async function executeAuthAction({ action }) {
+  try {
+    await action();
+
+    return { success: true, error: null };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      success: false,
+      error: {
+        message:
+          error?.message ??
+          '예기치 않은 오류가 발생했습니다.\n잠시 후에 다시 시도해 주세요.',
+      },
+    };
+  }
+}
 
 function setHasJustLoggedIn(value) {
   sessionStorage.setItem(
@@ -14,29 +33,88 @@ function getHasJustLoggedIn() {
   );
 }
 
-function getUserInfo({ user }) {
-  return {
-    id: user.id,
-    name: user.user_metadata.name,
-    email: user.email,
-    profileImgUrl: user.user_metadata.avatar_url,
-  };
+function setHasJustLoggedOut(value) {
+  sessionStorage.setItem(
+    SESSION_STORAGE_KEYS.HAS_JUST_LOGGED_OUT,
+    JSON.stringify(value),
+  );
 }
 
-async function processLogout({ logOut }) {
-  const { success } = await logOut();
-  const toastId = toast.loading('로그아웃 중입니다.');
-
-  if (success) {
-    toast.update(toastId, {
-      render: '로그아웃 되었습니다.',
-      type: 'success',
-      isLoading: false,
-      autoClose: TOAST_DURATION.default,
-    });
-  }
-
-  return { success };
+function getHasJustLoggedOut() {
+  return JSON.parse(
+    sessionStorage.getItem(SESSION_STORAGE_KEYS.HAS_JUST_LOGGED_OUT),
+  );
 }
 
-export { setHasJustLoggedIn, getHasJustLoggedIn, getUserInfo, processLogout };
+async function signUp({ email, password, name }) {
+  return await executeAuthAction({
+    action: async () => {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { name } },
+      });
+
+      if (error) throw error;
+    },
+  });
+}
+
+async function logIn({ email, password }) {
+  return executeAuthAction({
+    action: async () => {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+    },
+  });
+}
+
+async function logInWithKakao() {
+  return await executeAuthAction({
+    action: async () => {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'kakao',
+      });
+
+      if (error) throw error;
+    },
+  });
+}
+
+async function logInWithGoogle() {
+  return await executeAuthAction({
+    action: async () => {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      });
+
+      if (error) throw error;
+    },
+  });
+}
+
+async function logOut() {
+  return await executeAuthAction({
+    action: async () => {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) throw error;
+    },
+  });
+}
+
+export {
+  setHasJustLoggedIn,
+  getHasJustLoggedIn,
+  setHasJustLoggedOut,
+  getHasJustLoggedOut,
+  signUp,
+  logIn,
+  logInWithKakao,
+  logInWithGoogle,
+  logOut,
+};

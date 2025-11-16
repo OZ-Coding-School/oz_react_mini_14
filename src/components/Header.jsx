@@ -1,9 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth, useAuthActions, useDebounce } from '@/hooks';
-import { processLogout } from '@/utils';
+import { useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import { useAuth, useDebounce } from '@/hooks';
+import { getUserInfo } from '@/apis';
 import { ThemeContext } from '@/contexts';
 import { AuthButtons, Button, LinkButton } from '@/components';
+import { TOAST_DURATION } from '@/constants';
+import { logOut, setHasJustLoggedOut } from '@/utils';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -11,8 +15,12 @@ function Header() {
   const [keyword, setKeyword] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const { user, loading } = useAuth();
-  const { logOut } = useAuthActions();
+  const { userId } = useAuth();
+  const { data: user, loading } = useQuery({
+    queryKey: ['user', userId],
+    queryFn: () => getUserInfo({ params: { id: userId } }),
+    enabled: !!userId,
+  });
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const debouncedKeyword = useDebounce({
@@ -21,11 +29,15 @@ function Header() {
   });
 
   const handleLogOut = async () => {
-    const { success } = await processLogout({ logOut });
+    const { success, error } = await logOut();
 
     if (success) {
       setIsProfileMenuOpen(false);
+      setHasJustLoggedOut(true);
       navigate('/');
+    }
+    if (error) {
+      toast.error(error.message, { autoClose: TOAST_DURATION.error });
     }
   };
 
@@ -67,8 +79,8 @@ function Header() {
           <div className="size-full bg-stone-200">
             {!loading && (
               <img
-                src={user?.profileImgUrl}
-                alt=""
+                src={user?.profile_img_url}
+                alt="유저의 프로필 이미지"
                 aria-hidden={true}
                 className="size-full object-cover object-center"
               />
