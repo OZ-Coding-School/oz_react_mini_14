@@ -1,7 +1,8 @@
-import { IMAGE_BASE_URL } from '@/constants';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
+import { IMAGE_BASE_URL } from '@/constants';
 
-function MovieCard({ movie }) {
+const MovieCard = memo(function ({ movie }) {
   return (
     <Link to={`/details/${movie.id}`}>
       <article className="mx-auto w-40 shrink-0 grow-0 overflow-hidden rounded-md border border-stone-300 bg-stone-50 shadow-sm transition-all hover:scale-[102%] hover:border-stone-950 md:w-54 dark:border-stone-500 dark:bg-stone-500 hover:dark:border-stone-50">
@@ -19,6 +20,6 @@ function MovieCard({ movie }) {
       </article>
     </Link>
   );
-}
+});
 
 export default MovieCard;
