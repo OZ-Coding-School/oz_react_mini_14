@@ -54,7 +54,7 @@ function UserMenu() {
           onClick={() => setIsProfileMenuOpen((prev) => !prev)}
         >
           <img
-            src={user.profileImgUrl ?? '/images/default_profile.png'}
+            src={user.profileImgUrl}
             alt="유저의 프로필 이미지"
             aria-hidden={true}
             className="size-full object-cover object-center"
