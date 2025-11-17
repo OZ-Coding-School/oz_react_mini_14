@@ -1,8 +1,9 @@
 import { API_BASE_URL, API_END_POINTS } from '@/constants';
 
-async function getMovieList() {
+async function getMovieList({ params }) {
+  const { page } = params;
   const response = await fetch(
-    `${API_BASE_URL}${API_END_POINTS.POPULAR}?language=ko-KR&page=1`,
+    `${API_BASE_URL}${API_END_POINTS.POPULAR}?language=ko-KR&page=${page}`,
     {
       method: 'GET',
       headers: {
@@ -18,7 +19,11 @@ async function getMovieList() {
     );
 
   const data = await response.json();
-  return data.results;
+  return {
+    data: data.results,
+    page: data.page,
+    totalPage: data.total_pages,
+  };
 }
 
 async function getMovieListByKeyword({ params }) {

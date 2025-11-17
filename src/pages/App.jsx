@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks';
 import { getMovieList, getUserInfo } from '@/apis';
 import {
@@ -12,19 +12,31 @@ import {
 import { Indicator, Error, MovieList, Carousel, Button } from '@/components';
 
 function App() {
+  const bottomRef = useRef(null);
   const [isCarousel, setIsCarousel] = useState(false);
   const { userId } = useAuth();
   const {
     data: movieList,
-    loading: movieLoading,
+    isLoading: isMovieLoading,
     error: movieError,
-  } = useQuery({ queryKey: ['movie'], queryFn: getMovieList });
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['movie'],
+    queryFn: ({ pageParam }) => getMovieList({ params: { page: pageParam } }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) =>
+      lastPage.page === lastPage.totalPage ? null : lastPage.page + 1,
+  });
   const { data: user } = useQuery({
     queryKey: ['user', userId],
     queryFn: () => getUserInfo({ params: { id: userId } }),
     enabled: !!userId,
   });
-  const filteredMovieList = movieList?.filter((item) => !item.adult);
+  const filteredMovieList = movieList?.pages.flatMap((page) =>
+    page.data.filter((item) => !item.adult),
+  );
 
   useEffect(() => {
     const hasJustLoggedIn = getHasJustLoggedIn();
@@ -40,7 +52,20 @@ function App() {
     }
   }, [user]);
 
-  if (movieLoading || !movieList) return <Indicator />;
+  useEffect(() => {
+    if (!bottomRef.current) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      const isInView = entries[0].isIntersecting;
+      if (isInView && hasNextPage) fetchNextPage();
+    });
+
+    observer.observe(bottomRef.current);
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasNextPage]);
+
+  if (isMovieLoading) return <Indicator />;
   if (movieError) return <Error message={movieError.message} />;
   return (
     <>
@@ -56,7 +81,11 @@ function App() {
       {isCarousel ? (
         <Carousel movieList={filteredMovieList} />
       ) : (
-        <MovieList movieList={filteredMovieList} />
+        <>
+          <MovieList movieList={filteredMovieList} />
+          <div className="h-5" ref={bottomRef}></div>
+          {isFetchingNextPage && <Indicator />}
+        </>
       )}
     </>
   );
