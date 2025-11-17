@@ -11,7 +11,7 @@ const options = {
 export async function fetchPopularMovies(page = 1) {
   try {
     const res = await fetch(
-      `${BASE_URL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`,
+      `${BASE_URL}/movie/popular?language=kr-KO&page=${page}`,
       options
     );
 
@@ -47,7 +47,7 @@ export async function searchMovies(query) {
   const res = await fetch(
     `${BASE_URL}/search/movie?query=${encodeURIComponent(
       query
-    )}&include_adult=false&language=en-US&page=1`,
+    )}language=ko-KR&page=1`,
     {
       headers: {
         accept: "application/json",
