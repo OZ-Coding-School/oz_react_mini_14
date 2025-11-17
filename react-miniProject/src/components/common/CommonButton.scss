@@ -7,7 +7,10 @@
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s;
-
+  height: 50px; // 고정 높이 추가
+  line-height: 20px; // 아이콘·텍스트 모두 수평 정렬됨
+  font-weight: bold;
+  font-size: larger;
   &:hover {
     color: #ffffff !important;
     transform: translateY(-2px);
@@ -16,8 +19,6 @@
 
 .loginPage-btn {
   width: 100%;
-  // max-width: 400px;
-  // min-width: 200px;
   background-color: #00bcd4; //투명한 색상
   color: black;
 }

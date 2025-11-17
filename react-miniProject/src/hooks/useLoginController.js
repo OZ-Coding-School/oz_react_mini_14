@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logInState } from "@store/slice";
+import { logInState, setUserName } from "@store/slice";
 import { useSupabaseAuth } from "@supabase_path";
 import { toast } from "react-toastify";
 import { useForm, useInputValidation } from "./index.js";
@@ -40,6 +40,7 @@ export function useLoginController() {
       if (user) {
         setItemToLocalStorage(USER_INFO_KEY.customKey, user);
         dispatch(logInState(true)); // Redux 상태 업데이트
+        dispatch(setUserName(user.user_metadata?.name || user.name || "")); //userName 추가 전역관리
       }
 
       toast.success("로그인 성공!");

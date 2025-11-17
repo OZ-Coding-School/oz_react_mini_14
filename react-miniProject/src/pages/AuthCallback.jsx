@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSupabase } from "@supabase_path";
 import { useEffect } from "react";
-import { logInState } from "@store/slice";
+import { logInState, setUserName } from "@store/slice";
 import { localStorageUtils, USER_INFO_KEY } from "@supabase_path/utilities";
 import { toast } from "react-toastify";
 
@@ -28,6 +28,14 @@ export default function AuthCallback() {
         if (data.session?.user) {
           setItemToLocalStorage(USER_INFO_KEY.customKey, data.session.user);
           dispatch(logInState(true)); // Redux 로그인 상태 변경
+          dispatch(
+            setUserName(
+              data.session.user.user_metadata?.name ||
+                data.session.user.name ||
+                ""
+            )
+          ); //userName 추가 전역관리
+
           toast.success(`로그인 성공`);
           navigate("/");
         } else {
