@@ -23,7 +23,7 @@ export const useAuthActions = () => {
       await supabaseAuth.logout();
       dispatch(logInState(false));
       removeItemFromLocalStorage(USER_INFO_KEY.customKey); //로그아웃 시 로컬스토리지 모두 제거
-      dispatch(clearUserInfo());
+      dispatch(clearUserInfo()); //로그아웃시 userinfo 클리어
       toast.success("로그아웃 되었습니다.");
       navigate("/");
     } catch (error) {
