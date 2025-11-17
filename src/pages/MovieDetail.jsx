@@ -8,14 +8,14 @@ function MovieDetail() {
   const { id } = useParams();
   const {
     data: movie,
-    loading,
+    isLoading,
     error,
   } = useQuery({
     queryKey: ['movie', id],
     queryFn: () => getMovieDetails({ params: { id } }),
   });
 
-  if (loading || !movie) return <Indicator />;
+  if (isLoading) return <Indicator />;
   if (error) return <Error message={error.message} />;
   return (
     <section className="relative flex grow">

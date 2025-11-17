@@ -8,7 +8,7 @@ function Search() {
   const keyword = searchParams.get('keyword') ?? '';
   const {
     data: movieList,
-    loading,
+    isLoading,
     error,
   } = useQuery({
     queryKey: ['movie', keyword],
@@ -16,7 +16,7 @@ function Search() {
   });
   const filteredMovieList = movieList?.filter((item) => !item.adult);
 
-  if (loading || !movieList) return <Indicator />;
+  if (isLoading) return <Indicator />;
   if (error) return <Error message={error.message} />;
   if (movieList.length === 0)
     return (
