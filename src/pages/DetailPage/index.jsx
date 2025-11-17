@@ -16,6 +16,7 @@ import {
   WishlistButton,
   CenteredMessage,
 } from "./style";
+import SimilarMovies from "./MovieSimilar";
 
 const Details = () => {
   useNoOverlay();
@@ -132,6 +133,7 @@ const Details = () => {
         movieId={id}
         movieData={detail}
       />
+      <SimilarMovies movieId={id} />
     </Container>
   );
 };

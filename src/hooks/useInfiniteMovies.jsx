@@ -9,7 +9,7 @@ const ITEMS_PER_PAGE = 18;
 
 //무한스크롤 영화 데이터
 const useInfiniteMovies = (type, movieId = null) => {
-  return useInfiniteQuery({
+  const query = useInfiniteQuery({
     queryKey: movieId ? ["movies", type, movieId] : ["movies", type],
 
     queryFn: ({ pageParam }) => {
@@ -39,6 +39,15 @@ const useInfiniteMovies = (type, movieId = null) => {
 
     initialPageParam: 1,
   });
+
+  return {
+    data: query.data,
+    fetchNextPage: query.fetchNextPage,
+    hasNextPage: query.hasNextPage,
+    isFetchingNextPage: query.isFetchingNextPage,
+    loading: query.isLoading,
+    error: query.isError ? query.error : null,
+  };
 };
 
 export default useInfiniteMovies;
