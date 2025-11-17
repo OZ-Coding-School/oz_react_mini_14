@@ -8,14 +8,9 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 60px;
-
-  @media (max-width: 1240px) {
-    padding: 0 24px;
-  }
+  padding: 0;
 
   @media (max-width: 768px) {
-    padding: 0 16px;
     margin-bottom: 12px;
   }
 `;

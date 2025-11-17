@@ -20,9 +20,8 @@ const Container = styled.div`
 const Title = styled.h2`
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 40px;
   color: white;
-  padding-left: 80px;
+  padding: 0 60px;
 
   @media (max-width: 768px) {
     font-size: 24px;
@@ -34,32 +33,32 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 20px;
-  padding: 0 80px;
+  padding: 0;
   margin: 32px auto;
   width: 100%;
 
   @media (max-width: 1240px) {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 16px;
-    padding: 0 24px;
+    padding: 0;
   }
 
   @media (max-width: 960px) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
-    padding: 0 16px;
+    padding: 0;
   }
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
-    padding: 0 16px;
+    padding: 0;
   }
 
   @media (max-width: 600px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
-    padding: 0 12px;
+    padding: 0;
   }
 `;
 

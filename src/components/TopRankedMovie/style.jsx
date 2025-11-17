@@ -2,15 +2,11 @@ import styled from "@emotion/styled";
 
 export const SwiperContainer = styled.div`
   position: relative;
-  padding: 0 60px;
+  padding: 0;
 
   &:hover .custom-prev,
   &:hover .custom-next {
     opacity: 1;
-  }
-
-  @media (max-width: 768px) {
-    padding: 0 16px;
   }
 `;
 

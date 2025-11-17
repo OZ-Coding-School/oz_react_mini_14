@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useFetchData } from "@/hooks";
 import { Navigation } from "swiper/modules";

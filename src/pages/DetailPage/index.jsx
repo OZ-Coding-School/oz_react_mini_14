@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getImageUrl } from "@/constants/images";
 import { useAuth, useWishlist, useFetchData, useNoOverlay } from "@/hooks";
 import { Typography, Icon } from "@/components";
-import MovieInfo from "./MovieInfo";
-import MovieRating from "./MovieRating";
-import MovieOTT from "./MovieOTT";
+import { DETAIL_PAGE_TABS } from "./tabConfig";
 import {
   Container,
   Banner,
@@ -16,6 +14,7 @@ import {
   Tabs,
   Tab,
   WishlistButton,
+  CenteredMessage,
 } from "./style";
 
 const Details = () => {
@@ -34,14 +33,10 @@ const Details = () => {
     loading: creditsLoading,
     error: creditsError,
   } = useFetchData(`/movie/${id}/credits`);
-
   const { isWishlisted, saving, toggleWishlist } = useWishlist(id);
 
   const handleWishlistClick = async () => {
-    if (!user) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
+    if (!user) return alert("로그인이 필요합니다.");
 
     const success = await toggleWishlist(detail);
     if (success) {
@@ -53,74 +48,27 @@ const Details = () => {
     }
   };
 
-  // 로딩 체크
-  if (detailLoading || creditsLoading) {
+  // 로딩/에러 상태
+  const loading = detailLoading || creditsLoading;
+  const error = detailError || creditsError;
+
+  const getErrorMessage = () => {
+    if (loading) return "로딩 중...";
+    if (error) return "오류가 발생했습니다.";
+    return "영화를 찾을 수 없습니다.";
+  };
+
+  if (loading || error || !detail) {
     return (
       <Container>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-            color: "white",
-            flexDirection: "column",
-            gap: "20px",
-          }}
-        >
-          <Typography>로딩 중...</Typography>
-          <div style={{ fontSize: "14px", opacity: 0.6 }}>
-            Detail: {detailLoading ? "로딩중" : "완료"} | Credits:{" "}
-            {creditsLoading ? "로딩중" : "완료"}
-          </div>
-        </div>
+        <CenteredMessage>
+          <Typography variant="body">{getErrorMessage()}</Typography>
+        </CenteredMessage>
       </Container>
     );
   }
 
-  // 에러 체크
-  if (detailError || creditsError) {
-    return (
-      <Container>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-            color: "white",
-            flexDirection: "column",
-            gap: "20px",
-          }}
-        >
-          <Typography>데이터를 불러오는 중 오류가 발생했습니다.</Typography>
-          <div style={{ fontSize: "14px", opacity: 0.6 }}>
-            {detailError && <div>Detail Error: {detailError.message}</div>}
-            {creditsError && <div>Credits Error: {creditsError.message}</div>}
-          </div>
-        </div>
-      </Container>
-    );
-  }
-
-  // 데이터 없음
-  if (!detail) {
-    return (
-      <Container>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-            color: "white",
-          }}
-        >
-          <Typography>영화를 찾을 수 없습니다.</Typography>
-        </div>
-      </Container>
-    );
-  }
+  const ActiveComponent = DETAIL_PAGE_TABS[activeTab].component;
 
   return (
     <Container>
@@ -140,51 +88,50 @@ const Details = () => {
               />
             </WishlistButton>
           </div>
+
           <MovieInfoStyle>
-            <span>{detail.release_date || "날짜 정보 없음"}</span>
-            <span>{detail.runtime ? `.${detail.runtime}분` : ""}</span>
-            <span>
-              {detail.genres?.length > 0
-                ? `.${detail.genres.map((g) => g.name).join(", ")}`
-                : ""}
-            </span>
-            <span>
-              {detail.production_countries?.length > 0
-                ? `.${detail.production_countries
-                    .map((c) => c.name)
-                    .join(", ")}`
-                : ""}
-            </span>
+            <Typography variant="body" component="span">
+              {detail.release_date || "날짜 정보 없음"}
+            </Typography>
+            {detail.runtime && (
+              <Typography variant="body" component="span">
+                .{detail.runtime}분
+              </Typography>
+            )}
+            {detail.genres?.length > 0 && (
+              <Typography variant="body" component="span">
+                .{detail.genres.map((g) => g.name).join(", ")}
+              </Typography>
+            )}
+            {detail.production_countries?.length > 0 && (
+              <Typography variant="body" component="span">
+                .{detail.production_countries.map((c) => c.name).join(", ")}
+              </Typography>
+            )}
           </MovieInfoStyle>
         </TitleWrapper>
       </Banner>
 
       <TabsWrapper>
         <Tabs>
-          <Tab
-            $active={activeTab === "info"}
-            onClick={() => setActiveTab("info")}
-          >
-            기본정보
-          </Tab>
-          <Tab
-            $active={activeTab === "rating"}
-            onClick={() => setActiveTab("rating")}
-          >
-            평점
-          </Tab>
-          <Tab
-            $active={activeTab === "ott"}
-            onClick={() => setActiveTab("ott")}
-          >
-            OTT 정보
-          </Tab>
+          {Object.entries(DETAIL_PAGE_TABS).map(([key, { label }]) => (
+            <Tab
+              key={key}
+              $active={activeTab === key}
+              onClick={() => setActiveTab(key)}
+            >
+              {label}
+            </Tab>
+          ))}
         </Tabs>
       </TabsWrapper>
 
-      {activeTab === "info" && <MovieInfo detail={detail} credits={credits} />}
-      {activeTab === "rating" && <MovieRating movieId={id} detail={detail} />}
-      {activeTab === "ott" && <MovieOTT movieId={id} detail={detail} />}
+      <ActiveComponent
+        detail={detail}
+        credits={credits}
+        movieId={id}
+        movieData={detail}
+      />
     </Container>
   );
 };

@@ -6,11 +6,12 @@ export const BannerContainer = styled.section`
   margin-bottom: 40px;
   width: 100%;
   height: auto;
+  overflow: hidden;
 
   .swiper {
     width: 100%;
     height: 644px;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .swiper-wrapper {

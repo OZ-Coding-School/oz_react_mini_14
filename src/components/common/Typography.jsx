@@ -21,6 +21,11 @@ const typographyVariants = {
       }
     `,
   h3: `
+      font-size: 24px;
+      font-weight: 500;
+      line-height: auto;
+    `,
+  h4: `
       font-size: 20px;
       font-weight: 500;
       line-height: auto;
@@ -38,7 +43,7 @@ const typographyVariants = {
     `,
 
   bodyMedium: `
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 400;
       line-height: 1.5;
     `,

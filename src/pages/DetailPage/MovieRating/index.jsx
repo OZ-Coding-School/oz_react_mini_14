@@ -1,29 +1,22 @@
-import React, { useState } from "react";
 import { useRating, useAuth } from "@/hooks";
 import { useNavigate } from "react-router-dom";
-import { Typography, Icon } from "@/components";
+import { Typography, StarRating } from "@/components";
 import {
   Content,
   ContentBox,
   TitleSection,
   RatingSelectSection,
-  StarContainer,
-  StarButton,
   LoginPrompt,
   LoginLink,
   RatingInfoGrid,
   InfoBox,
   AverageBox,
-  StarsDisplay,
   DeleteButton,
 } from "./style";
 
 const MovieRating = ({ detail, movieId }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [hoverRating, setHoverRating] = useState(0);
-
-  // useRating 훅 사용
   const { rating, loading, saving, saveRating, deleteRating } = useRating(
     movieId,
     detail.title,
@@ -32,7 +25,7 @@ const MovieRating = ({ detail, movieId }) => {
 
   // TMDB 평점을 5점 만점으로 변환
   const tmdbRating = detail.vote_average
-    ? (detail.vote_average / 2).toFixed(1)
+    ? Math.round(detail.vote_average / 2)
     : 0;
 
   const handleStarClick = async (newRating) => {
@@ -57,36 +50,21 @@ const MovieRating = ({ detail, movieId }) => {
     }
   };
 
+  const getRatingMessage = () => {
+    if (rating > 0) return `내가 준 평점: ${rating * 2}점`;
+    if (user) return "아직 평점을 주지 않았습니다";
+    return "로그인 후 평점을 남겨보세요";
+  };
+
   if (loading) {
-    return <div>평점 불러오는 중...</div>;
+    return (
+      <Content>
+        <ContentBox>
+          <Typography variant="body">평점 불러오는 중...</Typography>
+        </ContentBox>
+      </Content>
+    );
   }
-
-  const renderInteractiveStar = (currentRating) =>
-    [1, 2, 3, 4, 5].map((star) => (
-      <StarButton
-        key={star}
-        onClick={() => handleStarClick(star)}
-        onMouseEnter={() => setHoverRating}
-        onMouseLeave={() => setHoverRating(0)}
-      >
-        <Icon
-          name="starSolid"
-          size="56px"
-          color={star <= (hoverRating || currentRating) ? "#ff1a66" : "#d9d9d9"}
-        />
-      </StarButton>
-    ));
-
-  const renderDisplayStars = (currentRating, size = "30px") =>
-    [1, 2, 3, 4, 5].map((star) => (
-      <div key={star} style={{ display: "flex" }}>
-        <Icon
-          name="starSolid"
-          size={size}
-          color={star <= currentRating ? "#ff1a66" : "d9d9d9"}
-        />
-      </div>
-    ));
 
   return (
     <Content>
@@ -94,17 +72,20 @@ const MovieRating = ({ detail, movieId }) => {
         <TitleSection>
           <Typography variant="h3">별점을 선택해주세요.</Typography>
         </TitleSection>
+
         {/* 상단: 별점 선택 섹션 */}
         <RatingSelectSection>
-          <StarContainer>{renderInteractiveStar(rating)}</StarContainer>
+          <StarRating
+            size="44px"
+            rating={rating}
+            onRatingChange={handleStarClick}
+            interactive={true}
+          />
 
           {!user && (
             <LoginPrompt>
               <LoginLink onClick={() => navigate("/login")}>로그인</LoginLink>
-              <Typography
-                variant="bodyMedium"
-                style={{ display: "inline", marginLeft: "4px" }}
-              >
+              <Typography variant="bodyMedium">
                 하고 평점을 남겨보세요!
               </Typography>
             </LoginPrompt>
@@ -113,38 +94,28 @@ const MovieRating = ({ detail, movieId }) => {
 
         {/* 하단: 평점 정보 박스 2개 */}
         <RatingInfoGrid>
-          {/*실관람객 평점 (TMDB) */}
+          {/* 실관람객 평점 (TMDB) */}
           <InfoBox>
             <Typography variant="h3">실관람객평점</Typography>
-
             <AverageBox>
               <Typography variant="body">
                 {detail.vote_average?.toFixed(1) || 0} / 10점
               </Typography>
-              <StarsDisplay>
-                {renderDisplayStars(Math.round(tmdbRating))}
-              </StarsDisplay>
+              <StarRating rating={tmdbRating} />
             </AverageBox>
           </InfoBox>
 
           {/* 내 평점 */}
           <InfoBox>
             <Typography variant="h3">내 평점</Typography>
-
             <AverageBox>
-              <Typography variant="body">
-                {rating > 0
-                  ? `내가 준 평점: ${rating * 2}점`
-                  : user
-                  ? "아직 평점을 주지 않았습니다"
-                  : "로그인 후 평점을 남겨보세요"}
-              </Typography>
-              <StarsDisplay>{renderDisplayStars(rating)}</StarsDisplay>
+              <Typography variant="body">{getRatingMessage()}</Typography>
+              <StarRating rating={rating} />
             </AverageBox>
 
             {rating > 0 && user && (
               <DeleteButton onClick={handleDeleteRating} disabled={saving}>
-                <Typography variant="bodyMedium" style={{ fontWeight: "600" }}>
+                <Typography variant="bodyMedium">
                   {saving ? "처리중..." : "평점 삭제"}
                 </Typography>
               </DeleteButton>
@@ -155,4 +126,5 @@ const MovieRating = ({ detail, movieId }) => {
     </Content>
   );
 };
+
 export default MovieRating;

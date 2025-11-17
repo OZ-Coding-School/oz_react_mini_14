@@ -1,4 +1,4 @@
-export const theme = {
+const theme = {
   colors: {
     bg: "#1a1c20",
     text: "#fff",
@@ -12,3 +12,5 @@ export const theme = {
     family: `"Pretendard", sans-serif`,
   },
 };
+
+export default theme;

@@ -59,8 +59,8 @@ export const StarContainer = styled.div`
 
     svg {
       font-size: 30px !important;
-      width: 30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
     }
   }
 `;

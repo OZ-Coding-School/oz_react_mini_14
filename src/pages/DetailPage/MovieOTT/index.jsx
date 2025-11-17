@@ -1,4 +1,3 @@
-import React from "react";
 import { useFetchData } from "@/hooks";
 import { getImageUrl } from "@/constants/images";
 import { Typography, Button } from "@/components";

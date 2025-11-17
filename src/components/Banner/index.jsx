@@ -1,9 +1,9 @@
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { useFetchData } from "@/hooks";
-import { SWIPER_CONFIG, truncateText } from "./bannerConfig";
+import { SWIPER_CONFIG } from "./bannerConfig";
+import { truncateText } from "@/utils/text";
 import { getImageUrl } from "@/constants/images";
 import { Typography } from "@/components";
 
@@ -32,7 +32,7 @@ const Banner = () => {
               <SlideContent isActive={isActive}>
                 <ImgWrapper onClick={() => navigate(`/movie/${movie.id}`)}>
                   <img
-                    src={getImageUrl(movie.backdrop_path)}
+                    src={getImageUrl(movie.backdrop_path, "original")}
                     alt={movie.title}
                   />
                 </ImgWrapper>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SIDE_MENU_CATEGORIES, DEFAULT_CATEGORY } from "@/constants/menu";
 import {
@@ -38,7 +38,6 @@ const SideMenu = ({ isOpen, onClose }) => {
       <MenuContainer ref={menuRef} $isOpen={isOpen}>
         <CloseButton onClick={onClose}>✕</CloseButton>
 
-        {/* 🔥 구조 변경: 각 탭마다 하위 메뉴 포함 */}
         <CategoryTabs>
           {Object.keys(SIDE_MENU_CATEGORIES).map((key) => (
             <CategorySection key={key}>
@@ -51,10 +50,7 @@ const SideMenu = ({ isOpen, onClose }) => {
               </CategoryTab>
 
               {/* 하위 메뉴 (active된 탭만 보임) */}
-              <MenuList
-                $visible={activeCategory === key}
-                key={activeCategory === key ? key : undefined}
-              >
+              <MenuList $visible={activeCategory === key}>
                 {SIDE_MENU_CATEGORIES[key].items.map((item, index) => (
                   <MenuItem
                     key={index}
