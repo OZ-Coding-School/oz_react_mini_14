@@ -1,25 +1,23 @@
+// vite.config.js
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { fileURLToPath } from "url";
-import { dirname, resolve } from "path";
+import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "node:path";
 
-// __filename(언더스코어 파일네임), __dirname(언더스코어 디어네임) 대체 코드
+// ESM 환경에서 __dirname 정의
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@components": resolve(__dirname, "src/components"),
+      "@": resolve(__dirname, "src"), // 전체 src
       "@api": resolve(__dirname, "src/api"),
       "@hooks": resolve(__dirname, "src/hooks"),
-      "@pages": resolve(__dirname, "src/pages"),
+      "@components": resolve(__dirname, "src/components"),
       "@styles": resolve(__dirname, "src/styles"),
-      "@utils": resolve(__dirname, "src/utils"),
-      "@contexts": resolve(__dirname, "src/contexts"),
-      // 필요시 추가...
     },
   },
 });

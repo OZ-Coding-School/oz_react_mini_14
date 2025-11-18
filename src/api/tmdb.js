@@ -1,3 +1,5 @@
+// src/api/tmdb.js
+
 // 환경변수에서 API 토큰 가져오기
 const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -15,7 +17,7 @@ export const getPopularMovies = async () => {
   try {
     const response = await fetch(
       `${BASE_URL}/movie/popular?language=ko-KR`,
-      options
+      options,
     );
     const data = await response.json();
 
@@ -32,7 +34,7 @@ export const getMovieDetail = async (movieId) => {
   try {
     const response = await fetch(
       `${BASE_URL}/movie/${movieId}?language=ko-KR`,
-      options
+      options,
     );
     const data = await response.json();
     return data;
@@ -41,14 +43,15 @@ export const getMovieDetail = async (movieId) => {
     throw error;
   }
 };
-// 영화 검색 API (3단계 새 기능!)
+
+// 영화 검색 API
 export const searchMovies = async (query) => {
   try {
     const response = await fetch(
       `${BASE_URL}/search/movie?query=${encodeURIComponent(
-        query
+        query,
       )}&language=ko-KR`,
-      options
+      options,
     );
     const data = await response.json();
 

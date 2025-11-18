@@ -1,86 +1,129 @@
-/* 상단 네비게이션 미니멀, 세련된 리뉴얼 */
+/* 상단 네비게이션 */
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #18181b;
-  padding: 1.1rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 99;
-  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.09);
+  padding: 14px 24px;
+  background: #111827;
 }
 
-/* 로고 부분 */
+/* 로고 */
 .navbar-logo a {
   font-size: 1.25rem;
-  font-weight: bold;
-  color: #8a5cf2;
+  font-weight: 700;
+  color: #8b5cf6;
   text-decoration: none;
-  letter-spacing: 1.3px;
 }
 
-/* 오른쪽 nav (로그인/회원가입) */
+/* 오른쪽 영역: 계정 + 검색 */
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 1.1rem;
+  gap: 1.5rem;
 }
 
+/* 계정 메뉴 */
 .navbar-account {
   display: flex;
-  gap: 0.74rem;
   align-items: center;
+  gap: 0.75rem;
 }
 
-/* 로그인, 회원가입 버튼 스타일 */
+/* 로그인/회원가입 버튼 */
 .navbar-link {
-  padding: 0.4rem 1.15rem;
-  border-radius: 999px; /* "필" 느낌 */
-  font-size: 1rem;
-  font-weight: 500;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: none;
+  background: #1f2933;
+  color: #e5e7eb;
+  font-size: 0.9rem;
   text-decoration: none;
-  background: #222228;
-  color: #ececec;
-  transition:
-    background 0.14s,
-    color 0.14s;
-  border: none;
-  box-shadow: none;
-  letter-spacing: 0.5px;
-}
-.navbar-link:hover {
-  background: #2a2438;
-  color: #a88cff;
+  cursor: pointer;
 }
 
-/* 회원가입만 accent 적용 */
-.navbar-link.signup {
-  background: linear-gradient(90deg, #6d28d9 60%, #8a5cf2 100%);
-  color: #fff;
-  font-weight: 600;
-}
-.navbar-link.signup:hover {
-  background: #7c3aed;
-  color: #fff;
+/* === 검색창 레이아웃 핵심 === */
+
+/* 검색 컨테이너: NavBar 안에서 고정 너비 */
+.search-container {
+  position: relative; /* 결과 리스트의 기준 */
+  width: 260px; /* 너무 폭 좁지 않게 고정 */
 }
 
-/* 로그인 후 사용자 이메일 */
-.navbar-user-email {
-  color: #b3b3b3;
-  font-size: 0.97rem;
+/* 검색 결과 항목 링크 – 밑줄 제거 */
+.search-result-item a {
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit; /* 파란 기본 링크 색도 제거 */
 }
 
-/* 검색 인풋 스타일 개선 */
+/* 검색 인풋 */
 .search-input {
-  padding: 0.53rem 1.05rem;
-  border-radius: 8px;
+  width: 100%;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
   border: none;
-  background: #222226;
-  color: #ececec;
-  font-size: 1rem;
-  transition: outline 0.15s;
+  background: #111827;
+  color: #e5e7eb;
+  font-size: 0.9rem;
 }
-.search-input:focus {
-  outline: 2px solid #8a5cf2;
+
+/* 검색 결과 드롭다운 */
+.search-results {
+  position: absolute;
+  top: 110%; /* 인풋 바로 아래 */
+  left: 0;
+  width: 100%; /* 인풋 너비와 동일 */
+  margin: 0.25rem 0 0;
+  padding: 0.4rem 0;
+  list-style: none;
+  background: #020617;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 60; /* NavBar 위로만 살짝 */
+}
+
+/* 드롭다운 항목 */
+.search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+}
+
+/* 작은 포스터 */
+.search-result-poster {
+  width: 40px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 0.6rem;
+}
+
+/* 제목/연도 텍스트 */
+.search-result-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.search-result-title {
+  font-size: 0.85rem;
+  color: #f9fafb;
+}
+
+.search-result-year {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* 상태 메시지 (검색 중 / 없음) */
+.search-loading,
+.search-empty {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
 }

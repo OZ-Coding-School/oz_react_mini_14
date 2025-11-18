@@ -16,7 +16,7 @@ function FormInput({
       <input
         id={name}
         type={type}
-        name={name}
+        name={name} // handleChange(핸들체인지)가 사용하는 name
         className="form-input"
         value={value}
         onChange={onChange}
@@ -27,4 +27,5 @@ function FormInput({
     </div>
   );
 }
+
 export default FormInput;

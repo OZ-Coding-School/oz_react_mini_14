@@ -1,7 +1,9 @@
+// src/components/LoginForm.jsx
 import { useState } from "react";
 import { supabase } from "../api/supabase";
 import { validateEmail } from "../utils/validateEmail";
 import { validatePassword } from "../utils/validatePassword";
+import FormInput from "./FormInput";
 import "./LoginForm.css";
 
 export default function LoginForm() {
@@ -9,7 +11,6 @@ export default function LoginForm() {
     email: "",
     password: "",
     error: "",
-    // 필요시 user 추가 가능: user: null
   });
 
   // 입력값 변경 event handler(이벤트 핸들러)
@@ -42,47 +43,44 @@ export default function LoginForm() {
       password: state.password,
     });
 
-    // 결과 처리(result handling, 결과 핸들링)
     if (error) {
       setState({ ...state, error: error.message });
     } else {
       setState({ ...state, error: "" });
-      // 필요시: setState({ ...state, error: "", user: data.user });
-      // 전역 관리 필요 시 context(컨텍스트)로 확장 가능
     }
   }
 
   // 렌더링(render, 렌더)
   return (
     <div className="login-container">
-      <h2 className="login-title">로그인</h2>
+      <h2 className="login-title"></h2>
       <form className="login-form" onSubmit={handleLogin}>
-        <label htmlFor="email" className="login-label">
-          이메일
-        </label>
-        <input
-          id="email"
-          name="email"
-          className="login-input"
+        {/* 이메일 입력 FormInput(폼인풋) 사용 */}
+        <FormInput
+          label="이메일"
+          name="email" // state.email 과 연결
+          type="text"
           placeholder="이메일"
           value={state.email}
           onChange={handleChange}
+          error={null} // 필요시 에러 메시지 넣을 자리
         />
-        <label htmlFor="password" className="login-label">
-          패스워드
-        </label>
-        <input
-          id="password"
-          name="password"
+
+        {/* 패스워드 입력 FormInput(폼인풋) 사용 */}
+        <FormInput
+          label="패스워드"
+          name="password" // state.password 와 연결
           type="password"
-          className="login-input"
           placeholder="패스워드"
           value={state.password}
           onChange={handleChange}
+          error={null}
         />
+
         <button type="submit" className="login-button">
           로그인
         </button>
+
         {state.error && <div className="login-error">{state.error}</div>}
       </form>
     </div>

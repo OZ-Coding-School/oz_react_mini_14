@@ -1,8 +1,9 @@
+// src/components/NavBar.jsx
 import { Link } from "react-router-dom"; // 링크(라우터)
 import { useState, useEffect, useRef } from "react";
-import { searchMovies } from "../api/tmdb"; // TMDB 검색 API(에이피아이)
-import { useDebounce } from "../hooks/useDebounce";
-import "../components/Navbar.css"; // 스타일 CSS
+import { searchMovies } from "../api"; // TMDB 검색 API - Barrel(배럴) 사용
+import { useDebounce } from "../hooks"; // 디바운스 훅 - Barrel(배럴) 사용
+import "./NavBar.css"; // 스타일 CSS
 
 function NavBar() {
   // user(유저) 상태 자체 관리 (임시 예시: null)
@@ -54,6 +55,7 @@ function NavBar() {
   }, [debouncedSearchQuery]);
 
   const handleSearchChange = (e) => setSearchQuery(e.target.value);
+
   const handleResultClick = () => {
     setSearchQuery("");
     setSearchResults([]);
