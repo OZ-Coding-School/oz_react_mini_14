@@ -6,7 +6,6 @@ import MovieDetail from "./pages/MovieDetail";
 import Layout from "./components/Layout";
 import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
-import { AuthProvider } from "./contexts/AuthContext";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -24,8 +23,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    {/* <AuthProvider> - 삭제 */}
+    <RouterProvider router={router} />
+    {/* </AuthProvider> - 삭제 */}
   </React.StrictMode>,
 );

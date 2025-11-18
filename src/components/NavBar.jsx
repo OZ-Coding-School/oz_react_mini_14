@@ -1,19 +1,21 @@
-import { Link } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom"; // 링크(라우터)
 import { useState, useEffect, useRef } from "react";
-import { searchMovies } from "../api/tmdb";
+import { searchMovies } from "../api/tmdb"; // TMDB 검색 API(에이피아이)
 import { useDebounce } from "../hooks/useDebounce";
-import "../components/Navbar.css";
+import "../components/Navbar.css"; // 스타일 CSS
 
 function NavBar() {
-  const { user } = useAuth();
+  // user(유저) 상태 자체 관리 (임시 예시: null)
+  const [user] = useState(null); // setUser 제거
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
+
+  // 검색창 참조 useRef(유즈레프, 리액트 훅)
   const searchRef = useRef(null);
 
-  // 검색 디바운스
+  // 검색 디바운스(debounce, 디바운스)
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   // 외부 클릭 감지로 검색 결과 닫기
@@ -29,7 +31,7 @@ function NavBar() {
     };
   }, []);
 
-  // 검색 fetch
+  // 검색 결과 fetch(패치)
   useEffect(() => {
     const fetchResults = async () => {
       if (debouncedSearchQuery.trim() === "") {
