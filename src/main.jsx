@@ -4,6 +4,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./pages/App";
 import MovieDetail from "./pages/MovieDetail";
 import Layout from "./components/Layout";
+import LoginForm from "./components/LoginForm";
+import SignUpForm from "./components/SignUpForm";
+import { AuthProvider } from "./contexts/AuthContext";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -11,20 +14,18 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      {
-        path: "/",
-        element: <App />,
-      },
-      {
-        path: "/details/:id", // :id 추가 - 동적 파라미터
-        element: <MovieDetail />,
-      },
+      { path: "/", element: <App /> },
+      { path: "/details/:id", element: <MovieDetail /> },
+      { path: "/login", element: <LoginForm /> },
+      { path: "/signup", element: <SignUpForm /> },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  </React.StrictMode>,
 );

@@ -25,59 +25,78 @@ function MovieDetail() {
     fetchMovieDetail();
   }, [id]);
 
-  // 로딩 중일 때
   if (loading) {
-    return <div className="detail-container">로딩 중...</div>;
+    // section(섹션): 페이지 내 구분되는 부분, 여기서는 로딩 안내
+    return <section className="detail-container">로딩 중...</section>;
   }
 
-  // 데이터가 없을 때
   if (!movieDetail) {
+    // section(섹션): 페이지 내 구분되는 부분, 영화 정보 없을 때 안내
     return (
-      <div className="detail-container">영화 정보를 찾을 수 없습니다.</div>
+      <section className="detail-container">
+        영화 정보를 찾을 수 없습니다.
+      </section>
     );
   }
 
   return (
-    <div className="detail-container">
-      <div className="detail-backdrop">
+    // section(섹션): MovieDetail 전체를 감싸는 시맨틱 컨테이너
+    <section className="detail-container">
+      {/* figure(피규어): 백드롭 이미지와 그 설명을 묶는 시맨틱 태그 */}
+      <figure className="detail-backdrop">
         <img
           src={`${imageBaseUrl}${movieDetail.backdrop_path}`}
-          alt={movieDetail.title}
+          alt={`${movieDetail.title} 배경 이미지`}
           className="detail-backdrop-image"
+          loading="lazy"
         />
+        {/* figcaption(피규어캡션): 시각장애인/스크린리더용 숨김 설명(선택, 필요하면 사용) */}
+        <figcaption className="sr-only">
+          {movieDetail.title}의 배경 이미지
+        </figcaption>
         <div className="detail-backdrop-overlay"></div>
-      </div>
+      </figure>
 
-      <div className="detail-content">
-        <div className="detail-poster">
+      {/* main(메인): 페이지의 주요 컨텐츠를 묶는 시맨틱 태그 */}
+      <main className="detail-content">
+        {/* aside(어사이드): 본문 외 부가 정보(포스터) 시맨틱 */}
+        <aside className="detail-poster">
           <img
             src={`${imageBaseUrl}${movieDetail.poster_path}`}
-            alt={movieDetail.title}
+            alt={`${movieDetail.title} 포스터`}
+            loading="lazy"
           />
-        </div>
+        </aside>
 
-        <div className="detail-info">
-          <h1 className="detail-title">{movieDetail.title}</h1>
+        {/* article(아티클): 영화 상세 정보 블록 */}
+        <article className="detail-info">
+          {/* header(헤더): 상세정보의 타이틀 영역 */}
+          <header>
+            <h1 className="detail-title">{movieDetail.title}</h1>
+          </header>
 
-          <div className="detail-rating">
+          {/* section(섹션): 평점 정보 영역, 시맨틱 구조상 구분 */}
+          <section className="detail-rating">
             <span>⭐ {movieDetail.vote_average.toFixed(1)}</span>
-          </div>
+          </section>
 
-          <div className="detail-genres">
+          {/* section(섹션): 장르 정보 영역 */}
+          <section className="detail-genres">
             {movieDetail.genres.map((genre) => (
               <span key={genre.id} className="genre-tag">
                 {genre.name}
               </span>
             ))}
-          </div>
+          </section>
 
-          <div className="detail-overview">
-            <h3>줄거리</h3>
+          {/* section(섹션): 줄거리(overview, 오버뷰) 영역 */}
+          <section className="detail-overview">
+            <h2>줄거리</h2>
             <p>{movieDetail.overview}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+          </section>
+        </article>
+      </main>
+    </section>
   );
 }
 

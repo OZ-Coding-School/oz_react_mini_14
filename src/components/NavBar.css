@@ -1,26 +1,86 @@
+/* 상단 네비게이션 미니멀, 세련된 리뉴얼 */
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
-  background-color: #1a1a1a;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background: #18181b;
+  padding: 1.1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.09);
 }
 
-.logo {
-  font-size: 1.5rem;
+/* 로고 부분 */
+.navbar-logo a {
+  font-size: 1.25rem;
   font-weight: bold;
-  color: #e50914;
+  color: #8a5cf2;
   text-decoration: none;
+  letter-spacing: 1.3px;
 }
 
-.nav-link {
-  color: white;
-  text-decoration: none;
+/* 오른쪽 nav (로그인/회원가입) */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.navbar-account {
+  display: flex;
+  gap: 0.74rem;
+  align-items: center;
+}
+
+/* 로그인, 회원가입 버튼 스타일 */
+.navbar-link {
+  padding: 0.4rem 1.15rem;
+  border-radius: 999px; /* "필" 느낌 */
   font-size: 1rem;
-  transition: color 0.3s;
+  font-weight: 500;
+  text-decoration: none;
+  background: #222228;
+  color: #ececec;
+  transition:
+    background 0.14s,
+    color 0.14s;
+  border: none;
+  box-shadow: none;
+  letter-spacing: 0.5px;
+}
+.navbar-link:hover {
+  background: #2a2438;
+  color: #a88cff;
 }
 
-.nav-link:hover {
-  color: #e50914;
+/* 회원가입만 accent 적용 */
+.navbar-link.signup {
+  background: linear-gradient(90deg, #6d28d9 60%, #8a5cf2 100%);
+  color: #fff;
+  font-weight: 600;
+}
+.navbar-link.signup:hover {
+  background: #7c3aed;
+  color: #fff;
+}
+
+/* 로그인 후 사용자 이메일 */
+.navbar-user-email {
+  color: #b3b3b3;
+  font-size: 0.97rem;
+}
+
+/* 검색 인풋 스타일 개선 */
+.search-input {
+  padding: 0.53rem 1.05rem;
+  border-radius: 8px;
+  border: none;
+  background: #222226;
+  color: #ececec;
+  font-size: 1rem;
+  transition: outline 0.15s;
+}
+.search-input:focus {
+  outline: 2px solid #8a5cf2;
 }
