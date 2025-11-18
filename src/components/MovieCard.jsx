@@ -1,6 +1,6 @@
 // src/components/MovieCard.jsx
 import { Link } from "react-router-dom";
-import { imageBaseUrl } from "../contexts/baseUrls";
+import { imageBaseUrl } from "../constants/baseUrls";
 import "./MovieCard.css";
 
 function MovieCard({ movie }) {
