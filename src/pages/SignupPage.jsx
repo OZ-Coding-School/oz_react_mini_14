@@ -1,6 +1,7 @@
 import { useState } from "react";
 import InputField from "../components/common/InputField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSupabaseAuth } from "../supabase";
 
 export default function SignupPage() {
   const [form, setForm] = useState({
@@ -10,6 +11,9 @@ export default function SignupPage() {
     passwordConfirm: "",
   });
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  const { signUp } = useSupabaseAuth();
 
   const validate = () => {
     const newErrors = {};
@@ -38,13 +42,29 @@ export default function SignupPage() {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate();
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      console.log("회원가입 성공:", form);
+    if (Object.keys(newErrors).length !== 0) return;
+
+    try {
+      const response = await signUp({
+        email: form.email,
+        password: form.password,
+        userName: form.name,
+      });
+
+      if (response.error) {
+        setErrors({ form: response.error.message });
+        return;
+      }
+      alert("회원가입이 완료되었습니다!");
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+      setErrors({ form: "회원가입 중 오류가 발생했습니다." });
     }
   };
 
@@ -87,6 +107,9 @@ export default function SignupPage() {
           onChange={handleChange}
           error={errors.passwordConfirm}
         />
+
+        {errors.form && <p className="text-red-500 text-sm">{errors.form}</p>}
+
         <button
           className="bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
           type="submit"

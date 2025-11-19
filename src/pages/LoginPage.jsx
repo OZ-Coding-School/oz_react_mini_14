@@ -1,11 +1,14 @@
 import InputField from "../components/common/InputField";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useSupabaseAuth } from "../supabase";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const { login } = useSupabaseAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,19 +24,30 @@ export default function LoginPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!form.email || !form.password) {
+      setErrors({ form: "이메일과 비밀번호를 입력해주세요." });
+      return;
+    }
+
     console.log("로그인 시도:", form);
 
-    if (form.email && form.password) {
-      localStorage.setItem("token", "sample_token_123");
+    const response = await login({
+      email: form.email,
+      password: form.password,
+    });
 
-      navigate("/");
-
-      console.log("로그인 성공:", form);
-    } else {
-      setErrors({ form: "이메일과 비밀번호를 입력해주세요." });
+    if (response.error) {
+      setErrors({ form: response.error.message });
+      console.log("로그인 실패:", response.error);
+      return;
     }
+
+    console.log("로그인 성공:", response.user);
+
+    navigate("/");
   };
 
   return (
