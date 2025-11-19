@@ -1,12 +1,16 @@
+// src/components/Layout.jsx
+import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
 
-function Layout({ children }) {
+function Layout() {
   return (
     <>
       <header>
         <NavBar />
       </header>
-      <main>{children}</main>
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 }
