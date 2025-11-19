@@ -7,7 +7,6 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 컴포넌트 마운트 시 API 호출
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -20,24 +19,29 @@ function App() {
         setLoading(false);
       }
     };
-
     fetchMovies();
   }, []);
 
-  // 로딩 중일 때
   if (loading) {
     return <div className="loading">영화 목록을 불러오는 중...</div>;
   }
 
   return (
-    <div className="app-container">
-      <h1 className="app-title">인기 영화</h1>
+    // section(섹션)으로 전체 영화 리스트 구획
+    <section className="app-container" aria-labelledby="popular-movies-title">
+      {/* h1(헤딩원)로 메인 타이틀, id 연결 */}
+      <h1 id="popular-movies-title" className="app-title">
+        인기 영화
+      </h1>
       <div className="movie-grid">
         {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          // 각 영화는 article로 semantic block
+          <article key={movie.id} className="movie-article">
+            <MovieCard movie={movie} />
+          </article>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 

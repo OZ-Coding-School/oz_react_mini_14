@@ -15,11 +15,31 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 2rem;
+  justify-items: center;
+}
+
+.movie-card {
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
 }
 
 @media (max-width: 768px) {
   .movie-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 1rem;
+  }
+  .movie-card {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.7rem;
+  }
+  .movie-card {
+    max-width: 120px;
   }
 }

@@ -1,22 +1,28 @@
+/* 카드 전체를 감싸는 링크 */
+.movie-card-link {
+  display: block; /* 카드 전체가 클릭 가능 */
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit;
+}
+
+/* 카드 전체 */
 .movie-card {
-  display: flex;
-  flex-direction: column;
-  background-color: #1a1a1a;
-  border-radius: 8px;
+  background-color: #18181b;
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45);
+  transition:
+    transform 0.15s ease-out,
+    box-shadow 0.15s ease-out;
 }
 
 .movie-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
 }
 
-.movie-card-image-wrapper {
-  width: 100%;
+/* 포스터 영역 */
+.movie-card-image-wrap {
   aspect-ratio: 2 / 3;
   overflow: hidden;
 }
@@ -25,23 +31,42 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.movie-card-info {
-  padding: 1rem;
+/* 아래 한 줄: 제목 + 작은 평점 */
+.movie-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 10px;
+  gap: 6px;
 }
 
+/* 제목 */
 .movie-card-title {
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0 0 0.5rem 0;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f9fafb;
+  flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+/* 평점: 작은 배지 */
 .movie-card-rating {
-  font-size: 0.9rem;
-  color: #ffd700;
-  margin: 0;
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 500;
+  color: #facc15;
+  background: rgba(15, 23, 42, 0.88);
+  padding: 1px 5px;
+  border-radius: 999px;
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0.9;
 }

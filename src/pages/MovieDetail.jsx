@@ -1,13 +1,14 @@
+// src/pages/MovieDetail.jsx
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieDetail } from "../api/tmdb";
+import { imageBaseUrl } from "../constants/baseUrls";
 import "./MovieDetail.css";
 
 function MovieDetail() {
   const { id } = useParams();
   const [movieDetail, setMovieDetail] = useState(null);
   const [loading, setLoading] = useState(true);
-  const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
   useEffect(() => {
     const fetchMovieDetail = async () => {
@@ -25,59 +26,66 @@ function MovieDetail() {
     fetchMovieDetail();
   }, [id]);
 
-  // 로딩 중일 때
   if (loading) {
-    return <div className="detail-container">로딩 중...</div>;
+    return <section className="detail-container">로딩 중...</section>;
   }
 
-  // 데이터가 없을 때
   if (!movieDetail) {
     return (
-      <div className="detail-container">영화 정보를 찾을 수 없습니다.</div>
+      <section className="detail-container">
+        영화 정보를 찾을 수 없습니다.
+      </section>
     );
   }
 
   return (
-    <div className="detail-container">
-      <div className="detail-backdrop">
+    <section className="detail-container">
+      <figure className="detail-backdrop">
         <img
           src={`${imageBaseUrl}${movieDetail.backdrop_path}`}
-          alt={movieDetail.title}
+          alt={`${movieDetail.title} 배경 이미지`}
           className="detail-backdrop-image"
+          loading="lazy"
         />
-        <div className="detail-backdrop-overlay"></div>
-      </div>
+        <figcaption className="sr-only">
+          {movieDetail.title}의 배경 이미지
+        </figcaption>
+        <div className="detail-backdrop-overlay" />
+      </figure>
 
-      <div className="detail-content">
-        <div className="detail-poster">
+      <main className="detail-content">
+        <aside className="detail-poster">
           <img
             src={`${imageBaseUrl}${movieDetail.poster_path}`}
-            alt={movieDetail.title}
+            alt={`${movieDetail.title} 포스터`}
+            loading="lazy"
           />
-        </div>
+        </aside>
 
-        <div className="detail-info">
-          <h1 className="detail-title">{movieDetail.title}</h1>
+        <article className="detail-info">
+          <header>
+            <h1 className="detail-title">{movieDetail.title}</h1>
+          </header>
 
-          <div className="detail-rating">
+          <section className="detail-rating">
             <span>⭐ {movieDetail.vote_average.toFixed(1)}</span>
-          </div>
+          </section>
 
-          <div className="detail-genres">
+          <section className="detail-genres">
             {movieDetail.genres.map((genre) => (
               <span key={genre.id} className="genre-tag">
                 {genre.name}
               </span>
             ))}
-          </div>
+          </section>
 
-          <div className="detail-overview">
-            <h3>줄거리</h3>
+          <section className="detail-overview">
+            <h2>줄거리</h2>
             <p>{movieDetail.overview}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+          </section>
+        </article>
+      </main>
+    </section>
   );
 }
 
