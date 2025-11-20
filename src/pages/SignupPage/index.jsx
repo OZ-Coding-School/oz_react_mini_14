@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { supabase } from "@/api/supabase";
+import { supabase } from "@/api";
 import {
   PageWrapper,
   SignupContainer,
@@ -11,7 +11,7 @@ import {
   ErrorMessage,
   SuccessMessage,
   Divider,
-} from "./SignupStyle";
+} from "./style";
 
 export default function SignupPage() {
   const navigate = useNavigate();

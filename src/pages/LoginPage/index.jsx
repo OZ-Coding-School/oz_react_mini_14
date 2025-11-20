@@ -9,7 +9,7 @@ import {
   ErrorMessage,
   Divider,
   SocialButtons,
-} from "./LoginStyle";
+} from "./style";
 
 export default function LoginPage() {
   const navigate = useNavigate();
