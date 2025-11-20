@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { Typography, Button } from "@/components";
-import { FormContainer, TextArea, ButtonGroup, MyReviewBox } from "./style";
+import {
+  FormContainer,
+  TextArea,
+  ButtonGroup,
+  MyReviewBox,
+  TitleSection,
+} from "./style";
 
 const ReviewForm = ({
   myReview,
@@ -25,6 +31,7 @@ const ReviewForm = ({
       return;
     }
     const success = await onSave(reviewText, currentRating, movieData);
+
     if (success) {
       setIsEditing(false);
       alert(myReview ? "리뷰가 수정되었습니다!" : "리뷰가 작성되었습니다!");
@@ -79,7 +86,9 @@ const ReviewForm = ({
   if (myReview && !isEditing) {
     return (
       <FormContainer>
-        <h3>내 리뷰</h3>
+        <TitleSection>
+          <Typography variant="h3">내 리뷰</Typography>
+        </TitleSection>
         <MyReviewBox>{myReview.review_text}</MyReviewBox>
         <ButtonGroup>
           <Button onClick={() => setIsEditing(true)} variant="secondary">

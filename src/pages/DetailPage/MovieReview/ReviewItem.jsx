@@ -38,8 +38,8 @@ const ReviewItem = ({ review }) => {
     <ReviewCard>
       <ReviewHeader>
         <UserInfo>
-          <Typography variant="h5">{review.user_id || "익명"}</Typography>
-          <StarRating rating={review.rating} />
+          <Typography variant="caption">{review.user_id || "익명"}</Typography>
+          <StarRating size="14px" rating={review.rating} />
         </UserInfo>
         <ReviewDate>
           <Typography
@@ -52,7 +52,7 @@ const ReviewItem = ({ review }) => {
       </ReviewHeader>
 
       <ReviewContent>
-        <Typography variant="body">{review.review_text}</Typography>
+        <Typography variant="bodySmall">{review.review_text}</Typography>
       </ReviewContent>
     </ReviewCard>
   );

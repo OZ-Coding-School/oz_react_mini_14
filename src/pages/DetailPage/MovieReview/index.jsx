@@ -1,8 +1,9 @@
 import { Typography } from "@/components";
 import { useReview, useAuth } from "@/hooks";
-import { TitleSection, EmptyState, Content, ContentBox } from "./style";
+import { EmptyState, Content, ContentBox, ReviewList } from "./style";
 import ReviewForm from "./ReviewForm";
 import ReviewItem from "./ReviewItem";
+import { getDisplayName } from "@/utils/formatUser";
 
 const MovieReview = ({ movieId, movieData, currentRating }) => {
   const { user } = useAuth();
@@ -17,13 +18,32 @@ const MovieReview = ({ movieId, movieData, currentRating }) => {
     );
   }
 
-  const otherReviews = reviews.filter((review) => review.user_id !== user?.id);
   return (
     <Content>
       <ContentBox>
-        <TitleSection>
-          <Typography variant="h3">관람평을 남겨보세요.</Typography>
-        </TitleSection>
+        <Typography variant="h3">실관람객 한줄평</Typography>
+
+        {reviews.length > 0 ? (
+          <ReviewList>
+            {reviews.map((review) => (
+              <ReviewItem
+                key={review.id}
+                review={review}
+                displayName={getDisplayName(review.user_id)}
+                isMyReview={review.user_id === user?.id}
+              />
+            ))}
+          </ReviewList>
+        ) : (
+          <EmptyState>
+            <Typography
+              variant="caption"
+              style={{ color: "rgba(255, 255, 255, 0.6)" }}
+            >
+              아직 작성된 관람평이 없습니다.
+            </Typography>
+          </EmptyState>
+        )}
 
         <ReviewForm
           myReview={myReview}
@@ -33,23 +53,6 @@ const MovieReview = ({ movieId, movieData, currentRating }) => {
           currentRating={currentRating}
           movieData={movieData}
         />
-
-        {otherReviews.length > 0 ? (
-          <ReviewList>
-            {otherReviews.map((review) => (
-              <ReviewItem key={review.id} review={review} />
-            ))}
-          </ReviewList>
-        ) : (
-          <EmptyState>
-            <Typography
-              variant="body"
-              style={{ color: "rgba(255, 255, 255, 0.6" }}
-            >
-              아직 작성된 관람평이 없습니다.
-            </Typography>
-          </EmptyState>
-        )}
       </ContentBox>
     </Content>
   );

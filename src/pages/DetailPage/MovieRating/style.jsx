@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 
 export const Content = styled.div`
   display: flex;
+
   justify-content: center;
   margin-top: 68px;
-  margin-bottom: 172px;
+  margin-bottom: 88px;
   padding: 0 80px;
 
   @media (max-width: 768px) {
