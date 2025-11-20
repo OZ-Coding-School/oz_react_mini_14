@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { useAuth } from '@/hooks';
-import { getUserInfo } from '@/apis';
+import { useCurrentUser } from '@/hooks';
 import { logOut, setHasJustLoggedOut } from '@/utils';
 import { TOAST_DURATION } from '@/constants';
 import { AuthButtons, Button, LinkButton } from '.';
@@ -11,12 +9,7 @@ import { AuthButtons, Button, LinkButton } from '.';
 function UserMenu() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const { userId } = useAuth();
-  const { data: user, isLoading: isUserLoading } = useQuery({
-    queryKey: ['user', userId],
-    queryFn: () => getUserInfo({ params: { id: userId } }),
-    enabled: !!userId,
-  });
+  const { data: user, isLoading: isUserLoading } = useCurrentUser();
   const navigate = useNavigate();
 
   const handleLogOut = async () => {

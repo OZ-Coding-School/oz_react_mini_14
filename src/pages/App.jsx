@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { useAuth } from '@/hooks';
-import { getMovieList, getUserInfo } from '@/apis';
+import { useCurrentUser, useInfiniteMovies } from '@/hooks';
 import {
   getHasJustLoggedIn,
   getHasJustLoggedOut,
@@ -14,7 +12,6 @@ import { Indicator, Error, MovieList, Carousel, Button } from '@/components';
 function App() {
   const bottomRef = useRef(null);
   const [isCarousel, setIsCarousel] = useState(false);
-  const { userId } = useAuth();
   const {
     data: movieList,
     isLoading: isMovieLoading,
@@ -22,18 +19,8 @@ function App() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['movie'],
-    queryFn: ({ pageParam }) => getMovieList({ params: { page: pageParam } }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage) =>
-      lastPage.page === lastPage.totalPage ? null : lastPage.page + 1,
-  });
-  const { data: user } = useQuery({
-    queryKey: ['user', userId],
-    queryFn: () => getUserInfo({ params: { id: userId } }),
-    enabled: !!userId,
-  });
+  } = useInfiniteMovies();
+  const { data: user } = useCurrentUser();
   const filteredMovieList = movieList?.pages.flatMap((page) =>
     page.data.filter((item) => !item.adult),
   );
