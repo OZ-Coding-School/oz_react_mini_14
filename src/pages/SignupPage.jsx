@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import InputField from "../components/common/InputField";
+import Button from "../components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useSupabaseAuth } from "../supabase";
+import { UserContext } from "../supabase/context/UserContext";
 
 export default function SignupPage() {
   const [form, setForm] = useState({
@@ -11,9 +13,11 @@ export default function SignupPage() {
     passwordConfirm: "",
   });
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const { signUp } = useSupabaseAuth();
+  const { setUser } = useContext(UserContext);
 
   const validate = () => {
     const newErrors = {};
@@ -44,33 +48,39 @@ export default function SignupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const newErrors = validate();
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length !== 0) return;
 
-    try {
-      const response = await signUp({
-        email: form.email,
-        password: form.password,
-        userName: form.name,
-      });
+    setLoading(true);
 
-      if (response.error) {
-        setErrors({ form: response.error.message });
-        return;
-      }
-      alert("회원가입이 완료되었습니다!");
-      navigate("/login");
-    } catch (err) {
-      console.error(err);
-      setErrors({ form: "회원가입 중 오류가 발생했습니다." });
+    const response = await signUp({
+      email: form.email,
+      password: form.password,
+      userName: form.name,
+    });
+
+    if (response.error) {
+      setLoading(false);
+      setErrors({ form: response.error.message });
+      return;
     }
+
+    setUser(response.user);
+
+    navigate("/");
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-8">
       <h2 className="text-2xl font-bold mb-6">회원가입</h2>
+
+      {loading && (
+        <p className="text-blue-500 mb-4">회원가입 진행 중입니다...</p>
+      )}
+
       <form
         className="w-full max-w-md flex flex-col gap-4"
         onSubmit={handleSubmit}
@@ -110,12 +120,12 @@ export default function SignupPage() {
 
         {errors.form && <p className="text-red-500 text-sm">{errors.form}</p>}
 
-        <button
+        <Button
           className="bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
           type="submit"
         >
           회원가입
-        </button>
+        </Button>
       </form>
       <p className="mt-4 text-sm">
         이미 계정이 있으신가요?{" "}

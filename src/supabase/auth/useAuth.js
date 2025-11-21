@@ -2,48 +2,40 @@ import { useSupabase } from "../context";
 import {
   changeFromDto,
   DTO_TYPE,
-  localStorageUtils,
+  getItemFromLocalStorage,
+  removeItemFromLocalStorage,
+  setItemToLocalStorage,
   USER_INFO_KEY,
 } from "../utilities";
 
 export const useAuth = () => {
   const supabase = useSupabase();
-  const {
-    getItemFromLocalStorage,
-    removeItemFromLocalStorage,
-    setItemToLocalStorage,
-  } = localStorageUtils();
 
-  // 로그아웃
-  const logout = async () => {
+  //OAuth Callback 처리
+  const handleOAuthCallback = async () => {
     try {
-      const supabaseUser = getItemFromLocalStorage(USER_INFO_KEY.sbKey);
-      const customUser = getItemFromLocalStorage(USER_INFO_KEY.customKey);
+      const { data, error } = await supabase.auth.getUser();
 
-      if (!supabaseUser && !customUser) return;
+      const userInfo = changeFromDto({
+        type: !error ? DTO_TYPE.user : DTO_TYPE.error,
+        dto: { user: data?.user, error },
+      });
 
-      const { error } = await supabase.auth.signOut();
-
-      if (error) {
-        throw new Error(error.message);
+      if (userInfo.user) {
+        setItemToLocalStorage(USER_INFO_KEY.customKey, userInfo);
       }
 
-      removeItemFromLocalStorage(USER_INFO_KEY.sbKey);
-      removeItemFromLocalStorage(USER_INFO_KEY.customKey);
+      return userInfo;
     } catch (error) {
-      console.error(error);
+      throw new Error(error.message);
     }
   };
 
-  // user 정보 가져오기
+  //유저정보 가져오기
   const getUserInfo = async () => {
     try {
-      const localUserInfo = getItemFromLocalStorage(USER_INFO_KEY.customKey);
-      if (localUserInfo) {
-        return localUserInfo;
-      }
-      const supabaseUser = getItemFromLocalStorage(USER_INFO_KEY.sbKey);
-      if (!supabaseUser) return;
+      const localUser = getItemFromLocalStorage(USER_INFO_KEY.customKey);
+      if (localUser?.user) return localUser;
 
       const { data, error } = await supabase.auth.getUser();
 
@@ -62,5 +54,15 @@ export const useAuth = () => {
     }
   };
 
-  return { logout, getUserInfo };
+  //로그아웃
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+      removeItemFromLocalStorage(USER_INFO_KEY.customKey);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { handleOAuthCallback, logout, getUserInfo };
 };

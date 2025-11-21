@@ -1,7 +1,9 @@
 import InputField from "../components/common/InputField";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useSupabaseAuth } from "../supabase";
+import { UserContext } from "../supabase/context/UserContext";
+import Button from "@/components/common/Button";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -11,6 +13,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const { login, loginWithKakao, loginWithGoogle } = useSupabaseAuth();
+  const { setUser } = useContext(UserContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +51,7 @@ export default function LoginPage() {
         setErrors({ form: response.error.message });
         return;
       }
-
+      setUser(response.user);
       navigate("/");
     } catch {
       setLoading(false);
@@ -58,12 +61,20 @@ export default function LoginPage() {
   // 카카오 로그인 핸들러
   const handleKakaoLogin = async () => {
     setLoading(true);
-    await loginWithKakao();
+    const res = await loginWithKakao();
+
+    if (!res.error) {
+      setUser(res.user);
+    }
   };
   // Google 로그인 핸들러
   const handleGoogleLogin = async () => {
     setLoading(true);
-    await loginWithGoogle();
+    const res = await loginWithGoogle();
+
+    if (!res.error) {
+      setUser(res.user);
+    }
   };
 
   return (
@@ -95,27 +106,27 @@ export default function LoginPage() {
           onChange={handleChange}
           error={errors.password}
         />
-        <button
+        <Button
           type="submit"
           className="bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
         >
           이메일로 로그인
-        </button>
+        </Button>
       </form>
 
       <div className="w-full max-w-md mt-6 flex flex-col gap-3">
-        <button
+        <Button
           onClick={handleKakaoLogin}
           className="w-full bg-yellow-300 text-black py-2 rounded-lg hover:bg-yellow-400 transition"
         >
           카카오로 로그인
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={handleGoogleLogin}
           className="w-full bg-white text-gray-800 border py-2 rounded-lg hover:bg-gray-100 transition"
         >
           구글로 로그인
-        </button>
+        </Button>
       </div>
 
       <p className="mt-4 text-sm">

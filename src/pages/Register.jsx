@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSupabaseAuth } from "../supabase/auth/useSupabaseAuth";
+import { useSupabaseAuth } from "../supabase/auth";
 
 export default function Register() {
   const { signUp } = useSupabaseAuth();

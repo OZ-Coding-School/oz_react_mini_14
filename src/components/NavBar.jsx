@@ -3,13 +3,14 @@ import useDebounce from "../hooks/useDebounce";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../supabase/context/UserContext";
 import { useSupabaseAuth } from "../supabase";
+import { Button } from "@/components";
 
 export default function NavBar() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
   const navigate = useNavigate();
 
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const { logout } = useSupabaseAuth();
 
   const [showMenu, setShowMenu] = useState(false);
@@ -22,6 +23,8 @@ export default function NavBar() {
 
   const handleLogout = async () => {
     await logout();
+    setUser(null);
+    localStorage.removeItem("userInfo");
     setShowMenu(false);
     navigate("/");
   };
@@ -34,6 +37,7 @@ export default function NavBar() {
         <h1 className="text-2xl font-bold">
           <Link to="/">MovieApp</Link>
         </h1>
+
         <input
           type="text"
           value={search}
@@ -74,12 +78,12 @@ export default function NavBar() {
                     >
                       마이페이지
                     </Link>
-                    <button
+                    <Button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 hover:bg-gray-100"
                     >
                       로그아웃
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>
