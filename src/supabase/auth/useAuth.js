@@ -1,4 +1,4 @@
-import { useSupabase } from "../context";
+import { useSupabase } from "@supabase/context";
 import {
   changeFromDto,
   DTO_TYPE,
@@ -6,7 +6,7 @@ import {
   removeItemFromLocalStorage,
   setItemToLocalStorage,
   USER_INFO_KEY,
-} from "../utilities";
+} from "@utils";
 
 export const useAuth = () => {
   const supabase = useSupabase();

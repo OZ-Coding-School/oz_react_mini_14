@@ -6,13 +6,13 @@ import {
   SearchResults,
   LoginPage,
   SignupPage,
-} from "./pages";
-import Layout from "./components/Layout";
+} from "@pages";
+import Layout from "@components/Layout";
 
-import { useSupabaseAuth } from "./supabase";
-import { UserContext } from "./supabase/context/UserContext";
+import { useSupabaseAuth } from "@supabase";
+import { UserContext } from "@context/UserContext";
 
-import OAuthCallback from "./components/OAuthCallback";
+import OAuthCallback from "@components/OAuthCallback";
 
 export default function App() {
   const { getUserInfo } = useSupabaseAuth();

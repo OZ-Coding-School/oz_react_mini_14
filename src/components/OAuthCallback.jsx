@@ -21,7 +21,7 @@ export default function OAuthCallback() {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      소셜 로그인 처리 중입니다...
+      로그인 처리 중입니다...
     </div>
   );
 }
