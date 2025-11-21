@@ -3,7 +3,7 @@ import { useEmailAuth } from "./useEmail.auth";
 import { useOAuth } from "./useOauth.auth";
 
 export const useSupabaseAuth = () => {
-  const { getUserInfo, logout } = useAuth();
+  const { getUserInfo, logout, handleOAuthCallback } = useAuth();
   const { login, signUp } = useEmailAuth();
   const { loginWithGoogle, loginWithKakao } = useOAuth();
 
@@ -14,5 +14,6 @@ export const useSupabaseAuth = () => {
     logout,
     loginWithKakao,
     loginWithGoogle,
+    handleOAuthCallback,
   };
 };

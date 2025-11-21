@@ -1,30 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import useDebounce from "../hooks/useDebounce";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../supabase/context/UserContext";
+import { useSupabaseAuth } from "../supabase";
+import { Button } from "@/components";
 
 export default function NavBar() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
   const navigate = useNavigate();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  const { logout } = useSupabaseAuth();
+
   const [showMenu, setShowMenu] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
   useEffect(() => {
     if (debouncedSearch.trim()) {
       navigate(`/search?query=${encodeURIComponent(debouncedSearch)}`);
     }
   }, [debouncedSearch, navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    await logout();
+    setUser(null);
+    localStorage.removeItem("userInfo");
+    setShowMenu(false);
     navigate("/");
   };
+
+  const isLoggedIn = !!user;
 
   return (
     <nav className="bg-blue-300 text-white py-4 shadow-md sticky top-0 z-50">
@@ -32,6 +37,7 @@ export default function NavBar() {
         <h1 className="text-2xl font-bold">
           <Link to="/">MovieApp</Link>
         </h1>
+
         <input
           type="text"
           value={search}
@@ -57,7 +63,9 @@ export default function NavBar() {
                 onClick={() => setShowMenu((prev) => !prev)}
               >
                 <img
-                  src="https://via.placeholder.com/40"
+                  src={
+                    user?.profileImageUrl || "https://via.placeholder.com/40"
+                  }
                   alt="profile"
                   className="w-10 h-10 rounded-full border-2 border-white"
                 />
@@ -70,12 +78,12 @@ export default function NavBar() {
                     >
                       마이페이지
                     </Link>
-                    <button
+                    <Button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 hover:bg-gray-100"
                     >
                       로그아웃
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>

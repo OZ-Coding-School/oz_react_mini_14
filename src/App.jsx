@@ -1,12 +1,33 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import MovieDetail from "./pages/MovieDetail";
+import { useEffect, useContext } from "react";
+import {
+  Home,
+  MovieDetail,
+  SearchResults,
+  LoginPage,
+  SignupPage,
+} from "./pages";
 import Layout from "./components/Layout";
-import SearchResults from "./pages/SearchResults";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
+
+import { useSupabaseAuth } from "./supabase";
+import { UserContext } from "./supabase/context/UserContext";
+
+import OAuthCallback from "./components/OAuthCallback";
 
 export default function App() {
+  const { getUserInfo } = useSupabaseAuth();
+  const { setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    const initUser = async () => {
+      const userInfo = await getUserInfo();
+      if (userInfo && userInfo.user) {
+        setUser(userInfo.user);
+      }
+    };
+    initUser();
+  }, [getUserInfo, setUser]);
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -14,8 +35,11 @@ export default function App() {
         <Route path="details/:id" element={<MovieDetail />} />
         <Route path="search" element={<SearchResults />} />
       </Route>
+
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
+
+      <Route path="/oauth-callback" element={<OAuthCallback />} />
     </Routes>
   );
 }

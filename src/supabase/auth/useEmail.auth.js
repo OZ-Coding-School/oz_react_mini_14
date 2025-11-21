@@ -1,67 +1,60 @@
-import { useSupabase } from "..";
+import { useSupabase } from "../context";
 import {
   changeFromDto,
   DTO_TYPE,
-  localStorageUtils,
+  setItemToLocalStorage,
   USER_INFO_KEY,
 } from "../utilities";
 
 export const useEmailAuth = () => {
   const supabase = useSupabase();
-  const { setItemToLocalStorage } = localStorageUtils();
 
-  const signUp = async ({ email, password, ...userData }) => {
+  //회원가입
+  const signUp = async ({ email, password, userName }) => {
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          data: {
-            avatar_url:
-              "https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295396_1280.png",
-            ...userData,
-          },
+          data: { userName },
         },
       });
 
       const userInfo = changeFromDto({
         type: !error ? DTO_TYPE.user : DTO_TYPE.error,
-        dto: { user: data.user, error },
+        dto: { user: data?.user, error },
       });
 
       if (userInfo.user) {
         setItemToLocalStorage(USER_INFO_KEY.customKey, userInfo);
-      } else {
-        throw new Error(
-          `status: ${userInfo.error.status}, message: ${userInfo.error.message}`
-        );
       }
+
       return userInfo;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   };
 
+  //로그인
   const login = async ({ email, password }) => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
+
       const userInfo = changeFromDto({
         type: !error ? DTO_TYPE.user : DTO_TYPE.error,
-        dto: { user: data.user, error },
+        dto: { user: data?.user, error },
       });
+
       if (userInfo.user) {
         setItemToLocalStorage(USER_INFO_KEY.customKey, userInfo);
-        return userInfo;
-      } else {
-        throw new Error(
-          `status: ${userInfo.error.status}, message: ${userInfo.error.message}`
-        );
       }
+
+      return userInfo;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   };
 

@@ -1,19 +1,26 @@
 // 로컬 스토리지 사용 함수
+export const setItemToLocalStorage = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const getItemFromLocalStorage = (key) => {
+  const stored = localStorage.getItem(key);
+  if (!stored) return null;
+
+  try {
+    return JSON.parse(stored);
+  } catch {
+    return null;
+  }
+};
+
+export const removeItemFromLocalStorage = (key) => {
+  localStorage.removeItem(key);
+};
 export const localStorageUtils = () => {
-  const setItemToLocalStorage = (itemKey, item) => {
-    const strItem = JSON.stringify(item);
-    localStorage.setItem(itemKey, strItem);
-  };
-  const removeItemFromLocalStorage = (itemKey) => {
-    localStorage.removeItem(itemKey);
-  };
-  const getItemFromLocalStorage = (itemKey) => {
-    const strItem = localStorage.getItem(itemKey);
-    return JSON.parse(strItem);
-  };
   return {
     setItemToLocalStorage,
-    removeItemFromLocalStorage,
     getItemFromLocalStorage,
+    removeItemFromLocalStorage,
   };
 };
