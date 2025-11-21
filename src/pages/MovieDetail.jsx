@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchMovieDetails } from "../api/tmdb";
+import { fetchMovieDetails } from "@api/tmdb";
 
 const baseUrl = "https://image.tmdb.org/t/p/original";
 

@@ -8,12 +8,10 @@ import {
   SignupPage,
 } from "@pages";
 import Layout from "@components/Layout";
-
-import { useSupabaseAuth } from "@supabase";
-import { UserContext } from "@context/UserContext";
-
 import OAuthCallback from "@components/OAuthCallback";
 
+import { useSupabaseAuth } from "@sb";
+import { UserContext } from "@sbCtx/UserContext";
 export default function App() {
   const { getUserInfo } = useSupabaseAuth();
   const { setUser } = useContext(UserContext);

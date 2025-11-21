@@ -16,9 +16,9 @@ export default defineConfig({
       "@common": path.resolve(__dirname, "src/components/common"),
       "@hooks": path.resolve(__dirname, "src/hooks"),
       "@api": path.resolve(__dirname, "src/api"),
-      "@supabase": path.resolve(__dirname, "src/supabase"),
-      "@context": path.resolve(__dirname, "src/supabase/context"),
-      "@utils": path.resolve(__dirname, "src/utilities"),
+      "@sb": path.resolve(__dirname, "src/supabase"),
+      "@sbCtx": path.resolve(__dirname, "src/supabase/context"),
+      "@utils": path.resolve(__dirname, "src/supabase/utilities"),
     },
   },
 });

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "@components/MovieCard";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import { fetchPopularMovies } from "../api/tmdb";
+import { fetchPopularMovies } from "@api/tmdb";
 
 export default function Home() {
   const [movies, setMovies] = useState([]);

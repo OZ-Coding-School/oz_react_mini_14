@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { getItemFromLocalStorage } from "../utilities";
+import { getItemFromLocalStorage } from "@utils";
 
 export const UserContext = createContext(null);
 

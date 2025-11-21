@@ -6,8 +6,8 @@ import "@/index.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { SupabaseProvider } from "@supabase/context";
-import { UserProvider } from "@context/UserContext";
+import { SupabaseProvider } from "@sbCtx";
+import { UserProvider } from "@sbCtx/UserContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

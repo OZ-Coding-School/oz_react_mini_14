@@ -8,8 +8,8 @@
       "@common/*": ["src/components/common/*"],
       "@hooks/*": ["src/hooks/*"],
       "@api/*": ["src/api/*"],
-      "@supabase/*": ["src/supabase/*"],
-      "@context/*": ["src/supabase/context/*"],
+      "@sb/*": ["src/supabase/*"],
+      "@sbCtx/*": ["src/supabase/context/*"],
       "@utils/*": ["src/utilities/*"]
     }
   },
