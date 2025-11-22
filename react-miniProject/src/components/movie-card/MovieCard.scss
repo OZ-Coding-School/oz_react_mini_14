@@ -29,10 +29,15 @@
     white-space: normal;
     word-break: break-word;
   }
-
   .vote_average {
     text-align: left;
     font-weight: bold;
     font-size: large;
+  }
+
+  .vote-bookMark {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 북마크 아이콘 수직 가운데 정렬 */
   }
 }

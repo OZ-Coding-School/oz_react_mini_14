@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logInState, setUserName } from "@store/slice";
+import { logInState, setUserName, setUserId } from "@store/slice";
 import { useSupabaseAuth } from "@supabase_path";
 import { toast } from "react-toastify";
 import { useForm, useInputValidation } from "./index.js";
@@ -38,15 +38,22 @@ export function useLoginController() {
       if (error) throw error;
 
       if (user) {
+        const userName = user.name || "";
+        const userId = user.id || "";
         setItemToLocalStorage(USER_INFO_KEY.customKey, user);
         dispatch(logInState(true)); // Redux 상태 업데이트
-        dispatch(setUserName(user.user_metadata?.name || user.name || "")); //userName 추가 전역관리
+        dispatch(setUserName(userName)); //userName 추가 전역관리user.user_metadata?.name || user.name || ""
+        dispatch(setUserId(userId));
+
+        toast.success(`${userName}로그인 성공!`);
+        dispatch(logInState(true));
+        navigate("/");
+      } else {
+        // 세션 없음 → 로그인 실패
+        toast.error(`로그인 실패`);
+        navigate("/login");
+        return false;
       }
-
-      toast.success("로그인 성공!");
-      dispatch(logInState(true));
-      navigate("/");
-
       return true;
     } catch (error) {
       if (error.message.includes("Invalid login credentials")) {

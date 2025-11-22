@@ -1,8 +1,8 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSupabase } from "@supabase_path";
 import { useEffect } from "react";
-import { logInState, setUserName } from "@store/slice";
+import { logInState, setUserName, setUserId } from "@store/slice";
 import { localStorageUtils, USER_INFO_KEY } from "@supabase_path/utilities";
 import { toast } from "react-toastify";
 
@@ -11,6 +11,7 @@ export default function AuthCallback() {
   const dispatch = useDispatch();
   const supabase = useSupabase();
   const { setItemToLocalStorage } = localStorageUtils();
+  const userName = useSelector((state) => state.logIn.userName);
 
   useEffect(() => {
     const handleOAuthCallback = async () => {
@@ -26,17 +27,16 @@ export default function AuthCallback() {
 
         // 2) 세션이 있으면 로그인 완료된 것
         if (data.session?.user) {
-          setItemToLocalStorage(USER_INFO_KEY.customKey, data.session.user);
-          dispatch(logInState(true)); // Redux 로그인 상태 변경
-          dispatch(
-            setUserName(
-              data.session.user.user_metadata?.name ||
-                data.session.user.name ||
-                ""
-            )
-          ); //userName 추가 전역관리
+          const sessionUser = data.session.user;
+          const userName = sessionUser.user_metadata?.name || "";
+          const userId = sessionUser.id || "";
 
-          toast.success(`로그인 성공`);
+          // 3) 로컬 스토리지 및 Redux 상태 업데이트
+          setItemToLocalStorage(USER_INFO_KEY.customKey, sessionUser);
+          dispatch(logInState(true)); // Redux 로그인 상태 변경
+          dispatch(setUserName(userName)); //userName 추가 전역관리
+          dispatch(setUserId(userId));
+          toast.success(`${userName}로그인 성공`);
           navigate("/");
         } else {
           // 세션 없음 → 로그인 실패

@@ -3,8 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { store } from "@store/index.js";
 import { Provider } from "react-redux";
-import { SupabaseProvider } from "@supabase_path/index.js";
 import { Layout, LoadingSkeleton } from "@components";
+import { SupabaseProvider } from "@supabase_path";
+
 import {
   MovieMain,
   LoginPage,
