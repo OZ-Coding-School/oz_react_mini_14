@@ -13,7 +13,7 @@ function App() {
   const bottomRef = useRef(null);
   const [isCarousel, setIsCarousel] = useState(false);
   const {
-    data: movieList,
+    data,
     isLoading: isMovieLoading,
     error: movieError,
     hasNextPage,
@@ -21,9 +21,7 @@ function App() {
     isFetchingNextPage,
   } = useInfiniteMovies();
   const { data: user } = useCurrentUser();
-  const filteredMovieList = movieList?.pages.flatMap((page) =>
-    page.data.filter((item) => !item.adult),
-  );
+  const movieList = data?.pages?.flatMap((page) => page.data);
 
   useEffect(() => {
     const hasJustLoggedIn = getHasJustLoggedIn();
@@ -66,10 +64,10 @@ function App() {
         {isCarousel ? 'View List' : 'View Carousel'}
       </Button>
       {isCarousel ? (
-        <Carousel movieList={filteredMovieList} />
+        <Carousel movieList={movieList} />
       ) : (
         <>
-          <MovieList movieList={filteredMovieList} />
+          <MovieList movieList={movieList} />
           <div className="h-5" ref={bottomRef}></div>
           {isFetchingNextPage && <Indicator />}
         </>
