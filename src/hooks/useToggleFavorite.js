@@ -11,8 +11,10 @@ function useToggleFavorite() {
       toggleMovieFavorite({
         params: { userId, movieId, title, posterPath, voteAverage, isFavorite },
       }),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ['favorite', userId] }),
+    onSuccess: () => {
+      if (userId)
+        queryClient.invalidateQueries({ queryKey: ['favorite', userId] });
+    },
   });
 }
 

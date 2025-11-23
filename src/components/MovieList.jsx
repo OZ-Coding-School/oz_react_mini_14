@@ -1,20 +1,11 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAuth, useFavoriteMovies } from '@/hooks';
-import { toggleMovieFavorite } from '@/apis';
+import { useAuth, useFavoriteMovies, useToggleFavorite } from '@/hooks';
 import { Error, Indicator, MovieCard } from '@/components';
 
 function MovieList({ movieList }) {
   const { userId } = useAuth();
-  const queryClient = useQueryClient();
   const { data: favoriteMovies, isLoading, error } = useFavoriteMovies();
-  const { mutate } = useMutation({
-    mutationFn: ({ movieId, title, posterPath, voteAverage, isFavorite }) =>
-      toggleMovieFavorite({
-        params: { userId, movieId, title, posterPath, voteAverage, isFavorite },
-      }),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ['favorite', userId] }),
-  });
+  const { mutate } = useToggleFavorite();
+  const isFavoriteEnabled = !!userId;
   const favoriteMovieIds = new Set(favoriteMovies?.map((item) => item.id));
 
   const onFavoriteClick = ({
@@ -23,7 +14,10 @@ function MovieList({ movieList }) {
     posterPath,
     voteAverage,
     isFavorite,
-  }) => mutate({ movieId, title, posterPath, voteAverage, isFavorite });
+  }) => {
+    if (isFavoriteEnabled)
+      mutate({ movieId, title, posterPath, voteAverage, isFavorite });
+  };
 
   if (isLoading) return <Indicator />;
   if (error) return <Error message={error.message} />;
@@ -33,6 +27,7 @@ function MovieList({ movieList }) {
         <MovieCard
           key={movie.id}
           movie={movie}
+          isFavoriteEnabled={isFavoriteEnabled}
           isFavorite={favoriteMovieIds.has(movie.id)}
           onFavoriteClick={onFavoriteClick}
         />

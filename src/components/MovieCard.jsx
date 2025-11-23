@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components';
 import { IMAGE_BASE_URL } from '@/constants';
 
-const MovieCard = memo(function ({ movie, isFavorite, onFavoriteClick }) {
+const MovieCard = memo(function ({
+  movie,
+  isFavoriteEnabled,
+  isFavorite,
+  onFavoriteClick,
+}) {
   const { id, title, poster_path, vote_average } = movie;
   const posterImgUrl = `${IMAGE_BASE_URL}${poster_path}`;
   const voteAverage = parseFloat(vote_average.toFixed(2));
@@ -23,15 +28,17 @@ const MovieCard = memo(function ({ movie, isFavorite, onFavoriteClick }) {
   return (
     <Link to={`/details/${id}`}>
       <article className="relative mx-auto w-40 shrink-0 grow-0 overflow-hidden rounded-md border border-stone-300 bg-stone-50 shadow-sm transition-all hover:scale-[102%] hover:border-stone-950 md:w-54 dark:border-stone-500 dark:bg-stone-500 hover:dark:border-stone-50">
-        <Button
-          variant="icon"
-          type="button"
-          aria-label={isFavorite ? '영화 찜하기' : '영화 찜하기 해제'}
-          onClick={handleBtnClick}
-          className="absolute top-1 right-1"
-        >
-          {isFavorite ? '❤️' : '🩶'}
-        </Button>
+        {isFavoriteEnabled && (
+          <Button
+            variant="icon"
+            type="button"
+            aria-label={isFavorite ? '영화 찜하기' : '영화 찜하기 해제'}
+            onClick={handleBtnClick}
+            className="absolute top-1 right-1"
+          >
+            {isFavorite ? '❤️' : '🩶'}
+          </Button>
+        )}
         <img
           src={posterImgUrl}
           alt={title}

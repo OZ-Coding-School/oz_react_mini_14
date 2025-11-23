@@ -8,6 +8,7 @@ function useFavoriteMovies() {
   return useQuery({
     queryKey: ['favorite', userId],
     queryFn: () => getFavoriteMovieList({ params: { userId } }),
+    enabled: !!userId,
   });
 }
 
