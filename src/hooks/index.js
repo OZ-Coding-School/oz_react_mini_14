@@ -4,3 +4,4 @@ export { default as useAuth } from '@/hooks/useAuth';
 export { default as useInfiniteMovies } from '@/hooks/useInfiniteMovies';
 export { default as useCurrentUser } from '@/hooks/useCurrentUser';
 export { default as useFavoriteMovies } from '@/hooks/useFavoriteMovies';
+export { default as useToggleFavorite } from '@/hooks/useToggleFavorite';
