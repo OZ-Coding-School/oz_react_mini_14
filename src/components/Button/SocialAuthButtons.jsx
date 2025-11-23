@@ -1,26 +1,6 @@
-import {
-  cn,
-  logInWithGoogle,
-  logInWithKakao,
-  setHasJustLoggedIn,
-} from '@/utils';
+import { cn, setHasJustLoggedIn } from '@/utils';
 import { Button } from '@/components';
-import { SocialAuthButtonsMode } from '@/constants';
-
-const BUTTON_LIST = [
-  {
-    labelPrefix: '카카오계정으로',
-    variant: 'oauth-kakao',
-    iconSrc: '/images/oauth/kakao.svg',
-    onClick: logInWithKakao,
-  },
-  {
-    labelPrefix: '구글계정으로',
-    variant: 'oauth-google',
-    iconSrc: '/images/oauth/google.svg',
-    onClick: logInWithGoogle,
-  },
-];
+import { OAUTH_BUTTONS, SocialAuthButtonsMode } from '@/constants';
 
 function SocialAuthButtons({ mode, startAuthProcessing }) {
   const isSignUpMode = mode === SocialAuthButtonsMode.SIGNUP;
@@ -50,7 +30,7 @@ function SocialAuthButtons({ mode, startAuthProcessing }) {
         )}
       />
       <div className="mt-6 flex flex-col gap-3">
-        {BUTTON_LIST.map((btn) => (
+        {OAUTH_BUTTONS.map((btn) => (
           <Button
             key={btn.labelPrefix}
             variant={btn.variant}

@@ -1,4 +1,5 @@
-import { FORM_CONDITIONS } from './validationRules';
+import { logInWithGoogle, logInWithKakao } from '@/utils';
+import { FORM_CONDITIONS } from '@/constants/validationRules';
 
 const TOAST_DURATION = {
   default: 2000,
@@ -42,4 +43,25 @@ const SocialAuthButtonsMode = {
   LOGIN: 'login',
 };
 
-export { TOAST_DURATION, SIGNUP_FIELDS, LOGIN_FIELDS, SocialAuthButtonsMode };
+const OAUTH_BUTTONS = [
+  {
+    labelPrefix: '카카오계정으로',
+    variant: 'oauth-kakao',
+    iconSrc: '/images/oauth/kakao.svg',
+    onClick: logInWithKakao,
+  },
+  {
+    labelPrefix: '구글계정으로',
+    variant: 'oauth-google',
+    iconSrc: '/images/oauth/google.svg',
+    onClick: logInWithGoogle,
+  },
+];
+
+export {
+  TOAST_DURATION,
+  SIGNUP_FIELDS,
+  LOGIN_FIELDS,
+  SocialAuthButtonsMode,
+  OAUTH_BUTTONS,
+};
