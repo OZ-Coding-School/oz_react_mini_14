@@ -15,20 +15,22 @@ async function fetchMovieData({ fetchFn }) {
   return { data, error: null };
 }
 
-async function getMovieList({ params }) {
-  const { page } = params;
+async function getMovieListBase({ endpoint, params = {} }) {
+  const queryString = new URLSearchParams({
+    language: 'ko-KR',
+    page: 1,
+    ...params,
+  }).toString();
+
   const { data, error } = await fetchMovieData({
     fetchFn: () =>
-      fetch(
-        `${API_BASE_URL}${API_END_POINTS.POPULAR}?language=ko-KR&page=${page}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
-            accept: 'application/json',
-          },
+      fetch(`${API_BASE_URL}${endpoint}?${queryString}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
+          accept: 'application/json',
         },
-      ),
+      }),
   });
 
   if (error) throw error;
@@ -39,24 +41,20 @@ async function getMovieList({ params }) {
   };
 }
 
+async function getMovieList({ params }) {
+  const { page } = params;
+  return await getMovieListBase({
+    endpoint: API_END_POINTS.POPULAR,
+    params: { page },
+  });
+}
+
 async function getMovieListByKeyword({ params }) {
   const { keyword } = params;
-  const { data, error } = await fetchMovieData({
-    fetchFn: () =>
-      fetch(
-        `${API_BASE_URL}${API_END_POINTS.SEARCH}?query=${keyword}&language=ko-KR&page=1`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
-            accept: 'application/json',
-          },
-        },
-      ),
+  return await getMovieListBase({
+    endpoint: API_END_POINTS.SEARCH,
+    params: { query: keyword },
   });
-
-  if (error) throw error;
-  return data.results;
 }
 
 async function getMovieDetails({ params }) {

@@ -14,7 +14,7 @@ function Search() {
     queryKey: ['movie', keyword],
     queryFn: () => getMovieListByKeyword({ params: { keyword } }),
   });
-  const filteredMovieList = movieList?.filter((item) => !item.adult);
+  const filteredMovieList = movieList?.data?.filter((item) => !item.adult); // 수정
 
   if (isLoading) return <Indicator />;
   if (error) return <Error message={error.message} />;
