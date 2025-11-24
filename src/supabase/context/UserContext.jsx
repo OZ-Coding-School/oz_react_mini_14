@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { getItemFromLocalStorage } from "@utils";
 
 export const UserContext = createContext(null);
@@ -20,3 +20,5 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
+
+export const useUser = () => useContext(UserContext);

@@ -19,6 +19,7 @@ export default defineConfig({
       "@sb": path.resolve(__dirname, "src/supabase"),
       "@sbCtx": path.resolve(__dirname, "src/supabase/context"),
       "@utils": path.resolve(__dirname, "src/supabase/utilities"),
+      "@context": path.resolve(__dirname, "src/context"),
     },
   },
 });

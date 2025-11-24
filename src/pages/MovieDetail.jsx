@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchMovieDetails } from "@api/tmdb";
+import { useUser } from "@sbCtx/UserContext";
+import { useBookmarks } from "@/context/BookmarkContext";
 
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
 export default function Details() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+
+  const navigate = useNavigate();
+  const { user } = useUser();
+  const { toggleBookmark, isBookmarked } = useBookmarks();
 
   useEffect(() => {
     fetchMovieDetails(id).then((data) => setMovie(data));
@@ -18,6 +24,14 @@ export default function Details() {
         Loading...
       </div>
     );
+  const handleBookmark = () => {
+    if (!user) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+    toggleBookmark(movie);
+  };
 
   return (
     <main className="min-h-screen bg-gray-900 text-white">
@@ -41,8 +55,20 @@ export default function Details() {
             className="w-full h-full object-cover rounded-lg shadow-lg"
           />
         </div>
-        {/* 영화정보 */}
-        <div className="flex flex-col justify-start">
+        <div className="flex flex-col justify-start relative">
+          {/* 북마크 버튼 */}
+          <button
+            onClick={handleBookmark}
+            className={`absolute top-4 right-4 px-4 py-2 rounded-lg font-semibold transition
+    ${
+      isBookmarked(movie.id)
+        ? "bg-red-500 text-white"
+        : "bg-yellow-400 text-black"
+    }`}
+          >
+            {isBookmarked(movie.id) ? "북마크 취소" : "북마크"}
+          </button>
+          {/* 영화정보 */}
           <h2 className="text-3xl font-semibold mb-3">{movie.title}</h2>
           <p className="text-yellow-400 mb-3">⭐ {movie.vote_average}</p>
 

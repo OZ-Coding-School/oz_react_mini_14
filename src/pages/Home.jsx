@@ -101,6 +101,7 @@ export default function Home() {
           <SwiperSlide key={movie.id}>
             <div onClick={() => navigate(`/details/${movie.id}`)}>
               <MovieCard
+                id={movie.id}
                 title={movie.title}
                 poster_path={movie.poster_path}
                 vote_average={movie.vote_average}
@@ -121,6 +122,7 @@ export default function Home() {
         {movies.map((movie) => (
           <div key={movie.id} onClick={() => navigate(`/details/${movie.id}`)}>
             <MovieCard
+              id={movie.id}
               title={movie.title}
               poster_path={movie.poster_path}
               vote_average={movie.vote_average}

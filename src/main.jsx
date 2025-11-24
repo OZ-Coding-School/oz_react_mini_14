@@ -8,14 +8,17 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { SupabaseProvider } from "@sbCtx";
 import { UserProvider } from "@sbCtx/UserContext";
+import { BookmarkProvider } from "@context/BookmarkContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <SupabaseProvider>
       <UserProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <BookmarkProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </BookmarkProvider>
       </UserProvider>
     </SupabaseProvider>
   </React.StrictMode>
