@@ -16,6 +16,8 @@ import {
   WishlistButton,
   CenteredMessage,
 } from "./style";
+import SimilarMovies from "./MovieSimilar";
+import { showToast } from "@/utils";
 
 const Details = () => {
   useNoOverlay();
@@ -36,11 +38,11 @@ const Details = () => {
   const { isWishlisted, saving, toggleWishlist } = useWishlist(id);
 
   const handleWishlistClick = async () => {
-    if (!user) return alert("로그인이 필요합니다.");
+    if (!user) return showToast.error("로그인이 필요합니다.");
 
     const success = await toggleWishlist(detail);
     if (success) {
-      alert(
+      showToast.success(
         isWishlisted
           ? "찜 목록에서 제거되었습니다."
           : "찜 목록에 추가되었습니다!"
@@ -132,6 +134,7 @@ const Details = () => {
         movieId={id}
         movieData={detail}
       />
+      <SimilarMovies movieId={id} />
     </Container>
   );
 };

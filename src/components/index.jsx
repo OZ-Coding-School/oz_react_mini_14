@@ -4,6 +4,7 @@ export { default as Button } from "./common/Button";
 export { default as Carousel } from "./common/Carousel";
 export { PageContainer } from "./common/Container";
 export { default as Icon } from "./common/Icon";
+export { default as Star } from "./common/Star";
 export { default as StarRating } from "./common/StarRating";
 export { default as MovieCard } from "./common/MovieCard";
 export { default as MovieGrid } from "./common/MovieGrid";

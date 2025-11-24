@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 
 export const Content = styled.div`
   display: flex;
+
   justify-content: center;
   margin-top: 68px;
-  margin-bottom: 172px;
+  margin-bottom: 88px;
   padding: 0 80px;
 
   @media (max-width: 768px) {
@@ -19,10 +20,10 @@ export const ContentBox = styled.div`
   max-width: 1200px;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 24px;
 
   @media (max-width: 768px) {
-    gap: 32px;
+    gap: 24px;
   }
 `;
 

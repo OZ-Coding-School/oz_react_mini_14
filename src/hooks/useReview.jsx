@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/api";
 import { useAuth } from "@/hooks";
+import { showToast } from "@/utils";
 
 const useReview = (movieId) => {
   const { user } = useAuth();
@@ -8,6 +9,15 @@ const useReview = (movieId) => {
   const [myReview, setMyReview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+
+  //리뷰 최신순서로 정렬하기
+  const sortedReviews = useMemo(() => {
+    return [...reviews].sort((a, b) => {
+      if (a.user_id === user?.id) return -1;
+      if (b.user_id === user?.id) return 1;
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
+  }, [reviews, user?.id]);
 
   //전체 리뷰 불러오기
   useEffect(() => {
@@ -43,12 +53,12 @@ const useReview = (movieId) => {
   //리뷰 저장&수정
   const saveReview = async (reviewText, rating, movieData) => {
     if (!user) {
-      alert("로그인이 필요합니다.");
+      showToast.warning("로그인이 필요합니다.");
       return false;
     }
 
     if (!reviewText.trim()) {
-      alert("리뷰 내용을 입력해주세요.");
+      showToast.warning("리뷰 내용을 입력해주세요.");
       return false;
     }
 
@@ -84,7 +94,7 @@ const useReview = (movieId) => {
       return true;
     } catch (error) {
       console.error("Error saving review:", error);
-      alert("리뷰 저장에 실패했습니다.");
+      showToast.error("리뷰 저장에 실패했습니다.");
       return false;
     } finally {
       setSaving(false);
@@ -106,13 +116,12 @@ const useReview = (movieId) => {
 
       if (error) throw error;
 
-      setReviews(null);
       setReviews((prev) => prev.filter((r) => r.user_id !== user.id));
 
       return true;
     } catch (error) {
       console.error("Error deleting review:", error);
-      alert("리뷰 삭제에 실패했습니다.");
+      showToast.error("리뷰 삭제에 실패했습니다.");
       return false;
     } finally {
       setSaving(false);
@@ -120,7 +129,7 @@ const useReview = (movieId) => {
   };
 
   return {
-    reviews,
+    reviews: sortedReviews,
     myReview,
     loading,
     saving,

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/api/supabase";
 import { useAuth } from "@/hooks";
+import { showToast } from "@/utils";
 
 const useWishlist = (movieId) => {
   const { user } = useAuth();
@@ -43,7 +44,7 @@ const useWishlist = (movieId) => {
   // 찜 추가
   const addToWishlist = async (movieData) => {
     if (!user) {
-      alert("로그인이 필요합니다.");
+      showToast.warning("로그인이 필요합니다.");
       return false;
     }
 
@@ -68,7 +69,7 @@ const useWishlist = (movieId) => {
       return true;
     } catch (error) {
       console.error("Error adding to wishlist:", error);
-      alert("찜 추가에 실패했습니다.");
+      showToast.error("찜 추가에 실패했습니다.");
       return false;
     } finally {
       setSaving(false);
@@ -94,7 +95,7 @@ const useWishlist = (movieId) => {
       return true;
     } catch (error) {
       console.error("Error removing from wishlist:", error);
-      alert("찜 제거에 실패했습니다.");
+      showToast.error("찜 제거에 실패했습니다.");
       return false;
     } finally {
       setSaving(false);

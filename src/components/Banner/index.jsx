@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { useFetchData } from "@/hooks";
 import { SWIPER_CONFIG } from "./bannerConfig";
-import { truncateText } from "@/utils/text";
+import { truncateText } from "@/utils";
 import { getImageUrl } from "@/constants/images";
 import { Typography } from "@/components";
 
@@ -38,10 +38,8 @@ const Banner = () => {
                 </ImgWrapper>
                 {isActive && (
                   <Overlay>
-                    <Typography variant="h1" tag="h2">
-                      {movie.title}
-                    </Typography>
-                    <Typography variant="body" tag="p">
+                    <Typography variant="h1">{movie.title}</Typography>
+                    <Typography variant="body" as="p">
                       {truncateText(movie.overview, 20)}
                     </Typography>
                   </Overlay>
