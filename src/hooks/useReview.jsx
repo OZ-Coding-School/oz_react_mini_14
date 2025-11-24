@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/api";
 import { useAuth } from "@/hooks";
 
@@ -8,6 +8,15 @@ const useReview = (movieId) => {
   const [myReview, setMyReview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+
+  //리뷰 최신순서로 정렬하기
+  const sortedReviews = useMemo(() => {
+    return [...reviews].sort((a, b) => {
+      if (a.user_id === user?.id) return -1;
+      if (b.user_id === user?.id) return 1;
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
+  }, [reviews, user?.id]);
 
   //전체 리뷰 불러오기
   useEffect(() => {
@@ -120,7 +129,7 @@ const useReview = (movieId) => {
   };
 
   return {
-    reviews,
+    reviews: sortedReviews,
     myReview,
     loading,
     saving,
