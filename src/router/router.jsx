@@ -1,6 +1,7 @@
+import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '@/layouts/MainLayout';
 import { App, LogIn, MovieDetail, MyPage, Search, SignUp } from '@/pages';
-import { createBrowserRouter } from 'react-router-dom';
+import { ProtectedRoute } from '@/components';
 
 const router = createBrowserRouter([
   {
@@ -11,7 +12,14 @@ const router = createBrowserRouter([
       { path: '/search', Component: Search },
       { path: '/signup', Component: SignUp },
       { path: '/login', Component: LogIn },
-      { path: '/my-page', Component: MyPage },
+      {
+        path: '/my-page',
+        element: (
+          <ProtectedRoute>
+            <MyPage />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);

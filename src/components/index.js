@@ -10,3 +10,4 @@ export { default as AuthButtons } from '@/components/Button/AuthButtons';
 export { default as SocialAuthButtons } from '@/components/Button/SocialAuthButtons';
 export { default as FormField } from '@/components/FormField';
 export { default as UserMenu } from '@/components/UserMenu';
+export { default as ProtectedRoute } from '@/components/routes/ProtectedRoute';

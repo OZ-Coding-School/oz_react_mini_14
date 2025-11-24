@@ -1,9 +1,5 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useCurrentUser, useFavoriteMovies } from '@/hooks';
 import { Error, Indicator, MovieList } from '@/components';
-import { TOAST_DURATION } from '@/constants';
 
 function MyPage() {
   const {
@@ -16,17 +12,6 @@ function MyPage() {
     isLoading: isMovieLoading,
     error: movieError,
   } = useFavoriteMovies();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isUserLoading && !isMovieLoading && !user) {
-      toast.error('로그인이 필요한 페이지입니다.', {
-        autoClose: TOAST_DURATION.error,
-      });
-      navigate('/');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUserLoading, isMovieLoading, user]);
 
   if (isUserLoading || isMovieLoading) return <Indicator />;
   if (userError || movieError)

@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { Slide, ToastContainer } from 'react-toastify';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import router from '@/lib/router';
+import router from '@/router/router';
 import { ThemeProvider, AuthProvider } from '@/contexts';
 import { TOAST_DURATION } from '@/constants';
 import '@/index.css';
