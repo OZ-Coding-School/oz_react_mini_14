@@ -3,7 +3,7 @@ import useDebounce from "@hooks/useDebounce";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "@sbCtx/UserContext";
 import { useSupabaseAuth } from "@sb";
-import { Button } from "@components";
+import Button from "@common/Button";
 
 export default function NavBar() {
   const [search, setSearch] = useState("");
@@ -75,6 +75,7 @@ export default function NavBar() {
                     <Link
                       to="/mypage"
                       className="block px-4 py-2 hover:bg-gray-100"
+                      onClick={() => setShowMenu(false)}
                     >
                       마이페이지
                     </Link>

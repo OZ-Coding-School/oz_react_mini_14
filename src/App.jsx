@@ -6,6 +6,7 @@ import {
   SearchResults,
   LoginPage,
   SignupPage,
+  MyPage,
 } from "@pages";
 import Layout from "@components/Layout";
 import OAuthCallback from "@components/OAuthCallback";
@@ -32,6 +33,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="details/:id" element={<MovieDetail />} />
         <Route path="search" element={<SearchResults />} />
+        <Route path="mypage" element={<MyPage />} />
       </Route>
 
       <Route path="/login" element={<LoginPage />} />
