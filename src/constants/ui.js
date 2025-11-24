@@ -1,5 +1,5 @@
-import { logInWithGoogle, logInWithKakao } from '@/utils';
-import { FORM_CONDITIONS } from '@/constants/validationRules';
+import { logInWithProvider } from '@/utils';
+import { FORM_CONDITIONS, OAuthProviders } from '@/constants';
 
 const TOAST_DURATION = {
   default: 2000,
@@ -48,13 +48,13 @@ const OAUTH_BUTTONS = [
     labelPrefix: '카카오계정으로',
     variant: 'oauth-kakao',
     iconSrc: '/images/oauth/kakao.svg',
-    onClick: logInWithKakao,
+    onClick: () => logInWithProvider({ provider: OAuthProviders.KAKAO }),
   },
   {
     labelPrefix: '구글계정으로',
     variant: 'oauth-google',
     iconSrc: '/images/oauth/google.svg',
-    onClick: logInWithGoogle,
+    onClick: () => logInWithProvider({ provider: OAuthProviders.GOOGLE }),
   },
 ];
 

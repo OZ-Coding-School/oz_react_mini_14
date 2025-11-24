@@ -73,23 +73,11 @@ async function logIn({ email, password }) {
   });
 }
 
-async function logInWithKakao() {
+async function logInWithProvider({ provider }) {
   return await executeAuthAction({
     action: async () => {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'kakao',
-      });
-
-      if (error) throw error;
-    },
-  });
-}
-
-async function logInWithGoogle() {
-  return await executeAuthAction({
-    action: async () => {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
+        provider,
       });
 
       if (error) throw error;
@@ -114,7 +102,6 @@ export {
   getHasJustLoggedOut,
   signUp,
   logIn,
-  logInWithKakao,
-  logInWithGoogle,
+  logInWithProvider,
   logOut,
 };

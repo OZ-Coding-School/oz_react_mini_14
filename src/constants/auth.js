@@ -3,4 +3,9 @@ const SESSION_STORAGE_KEYS = {
   HAS_JUST_LOGGED_OUT: 'hasJustLoggedOut',
 };
 
-export { SESSION_STORAGE_KEYS };
+const OAuthProviders = {
+  KAKAO: 'kakao',
+  GOOGLE: 'google',
+};
+
+export { SESSION_STORAGE_KEYS, OAuthProviders };
