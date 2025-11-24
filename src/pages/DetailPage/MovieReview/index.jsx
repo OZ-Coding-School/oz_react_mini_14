@@ -1,9 +1,14 @@
 import { Typography } from "@/components";
 import { useReview, useAuth } from "@/hooks";
-import { EmptyState, Content, ContentBox, ReviewList } from "./style";
-import ReviewForm from "./ReviewForm";
-import ReviewItem from "./ReviewItem";
-import { getDisplayName } from "@/utils/formatUser";
+import { ReviewForm, ReviewItem } from "@/pages";
+import { getDisplayName } from "@/utils";
+import {
+  TitleSection,
+  EmptyState,
+  Content,
+  ContentBox,
+  ReviewList,
+} from "./style";
 
 const MovieReview = ({ movieId, movieData, currentRating }) => {
   const { user } = useAuth();
@@ -21,7 +26,9 @@ const MovieReview = ({ movieId, movieData, currentRating }) => {
   return (
     <Content>
       <ContentBox>
-        <Typography variant="h3">실관람객 한줄평</Typography>
+        <TitleSection>
+          <Typography variant="h3">관람평을 남겨보세요.</Typography>
+        </TitleSection>
 
         {reviews.length > 0 ? (
           <ReviewList>
@@ -37,14 +44,13 @@ const MovieReview = ({ movieId, movieData, currentRating }) => {
         ) : (
           <EmptyState>
             <Typography
-              variant="caption"
+              variant="body"
               style={{ color: "rgba(255, 255, 255, 0.6)" }}
             >
               아직 작성된 관람평이 없습니다.
             </Typography>
           </EmptyState>
         )}
-
         <ReviewForm
           myReview={myReview}
           saving={saving}
@@ -57,4 +63,5 @@ const MovieReview = ({ movieId, movieData, currentRating }) => {
     </Content>
   );
 };
+
 export default MovieReview;

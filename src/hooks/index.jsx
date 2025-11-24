@@ -4,5 +4,6 @@ export { default as useFetchData } from "./useFetchData";
 export { default as useInfiniteMovies } from "./useInfiniteMovies";
 export { default as useIntersectionObserver } from "./useIntersectionObserver";
 export { default as useRating } from "./useRating";
+export { default as useReview } from "./useReview";
 export { default as useWishlist } from "./useWishlist";
 export { default as useNoOverlay } from "./useNoOverlay";
