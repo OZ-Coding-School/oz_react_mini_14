@@ -17,10 +17,3 @@ export const getItemFromLocalStorage = (key) => {
 export const removeItemFromLocalStorage = (key) => {
   localStorage.removeItem(key);
 };
-export const localStorageUtils = () => {
-  return {
-    setItemToLocalStorage,
-    getItemFromLocalStorage,
-    removeItemFromLocalStorage,
-  };
-};

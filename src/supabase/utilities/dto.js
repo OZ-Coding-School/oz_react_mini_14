@@ -3,7 +3,7 @@ import { DTO_TYPE } from "./config";
 // User data 매핑용 함수
 export const changeFromDto = ({ type, dto }) => {
   switch (type) {
-    case DTO_TYPE.user:
+    case DTO_TYPE.user: {
       const { user_metadata: userInfo } = dto?.user;
       return {
         user: {
@@ -15,7 +15,8 @@ export const changeFromDto = ({ type, dto }) => {
           profileImageUrl: userInfo.avatar_url,
         },
       };
-    case DTO_TYPE.error:
+    }
+    case DTO_TYPE.error: {
       if (!dto.error) {
         return {
           error: {
@@ -33,7 +34,7 @@ export const changeFromDto = ({ type, dto }) => {
           message: rawError.message,
         },
       };
-
+    }
     default:
       new Error("wrong type accessed");
       return;
