@@ -2,6 +2,8 @@ import { useRating, useAuth } from "@/hooks";
 import { useNavigate } from "react-router-dom";
 import { Typography, StarRating } from "@/components";
 import { MovieReview } from "@/pages";
+import { showToast } from "@/utils";
+
 import {
   Content,
   ContentBox,
@@ -25,14 +27,14 @@ const MovieRating = ({ movieId, detail, movieData }) => {
 
   const handleStarClick = async (newRating) => {
     if (!user) {
-      alert("로그인이 필요한 서비스입니다.");
+      showToast.warning("로그인이 필요한 서비스입니다.");
       navigate("/login");
       return;
     }
 
     const success = await saveRating(newRating);
     if (success) {
-      alert("평점이 저장되었습니다!");
+      showToast.success("평점이 저장되었습니다!");
     }
   };
 
@@ -40,7 +42,7 @@ const MovieRating = ({ movieId, detail, movieData }) => {
     if (window.confirm("평점을 삭제하시겠습니까?")) {
       const success = await deleteRating();
       if (success) {
-        alert("평점이 삭제되었습니다.");
+        showToast.success("평점이 삭제되었습니다.");
       }
     }
   };

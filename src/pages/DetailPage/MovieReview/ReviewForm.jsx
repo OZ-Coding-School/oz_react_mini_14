@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Typography, Button } from "@/components";
+import { showToast } from "@/utils";
 import {
   FormContainer,
   TextArea,
@@ -27,16 +28,18 @@ const ReviewForm = ({
 
   const handleSubmit = async () => {
     if (!reviewText.trim()) {
-      alert("리뷰 내용을 입력해주세요!");
+      showToast.warning("리뷰 내용을 입력해주세요!");
       return;
     }
     const success = await onSave(reviewText, currentRating, movieData);
 
     if (success) {
       setIsEditing(false);
-      alert(myReview ? "리뷰가 수정되었습니다!" : "리뷰가 작성되었습니다!");
+      showToast.success(
+        myReview ? "리뷰가 수정되었습니다!" : "리뷰가 작성되었습니다!"
+      );
     } else {
-      alert("리뷰 저장 실패!");
+      showToast.error("리뷰 저장 실패!");
     }
   };
 
@@ -46,9 +49,9 @@ const ReviewForm = ({
       if (success) {
         setReviewText("");
         setIsEditing(false);
-        alert("리뷰가 삭제되었습니다.");
+        showToast.success("리뷰가 삭제되었습니다.");
       } else {
-        alert("리뷰 삭제 실패!");
+        showToast.error("리뷰 삭제 실패!");
       }
     }
   };

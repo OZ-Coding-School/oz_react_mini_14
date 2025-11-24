@@ -1,6 +1,8 @@
 import { useFetchData } from "@/hooks";
 import { getImageUrl } from "@/constants/images";
 import { Typography, Button } from "@/components";
+import { showToast } from "@/utils";
+
 import {
   Content,
   ContentBox,
@@ -22,7 +24,7 @@ const MovieOTT = ({ movieId }) => {
   const krStreaming = providers?.results?.KR?.flatrate;
 
   const handleWatch = (providerName) => {
-    alert(`${providerName}에서 시청하기`);
+    showToast(`${providerName}에서 시청하기`);
   };
 
   if (loading) {

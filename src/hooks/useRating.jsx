@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/api/supabase";
 import { useAuth } from "@/hooks";
+import { showToast } from "@/utils";
 
 const useRating = ({ movieId, movieTitle, moviePoster, voteAverage }) => {
   const { user } = useAuth();
@@ -45,12 +46,12 @@ const useRating = ({ movieId, movieTitle, moviePoster, voteAverage }) => {
   // 평점 저장/업데이트
   const saveRating = async (newRating) => {
     if (!user) {
-      alert("로그인이 필요합니다.");
+      showToast.warning("로그인이 필요합니다.");
       return false;
     }
 
     if (newRating < 1 || newRating > 5) {
-      alert("1~5점 사이의 평점을 선택해주세요.");
+      showToast.warning("1~5점 사이의 평점을 선택해주세요.");
       return false;
     }
 
@@ -77,7 +78,7 @@ const useRating = ({ movieId, movieTitle, moviePoster, voteAverage }) => {
       return true;
     } catch (error) {
       console.error("Error saving rating:", error);
-      alert("평점 저장에 실패했습니다.");
+      showToast.error("평점 저장에 실패했습니다.");
       return false;
     } finally {
       setSaving(false);
@@ -103,7 +104,7 @@ const useRating = ({ movieId, movieTitle, moviePoster, voteAverage }) => {
       return true;
     } catch (error) {
       console.error("Error deleting rating:", error);
-      alert("평점 삭제에 실패했습니다.");
+      showToast.error("평점 삭제에 실패했습니다.");
       return false;
     } finally {
       setSaving(false);
