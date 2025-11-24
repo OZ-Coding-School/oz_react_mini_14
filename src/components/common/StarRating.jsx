@@ -1,112 +1,62 @@
 import { useState } from "react";
-import { Icon } from "@/components";
+import { Star } from "@/components";
 import styled from "@emotion/styled";
 
 const StarRating = ({
-  rating,
-  onRatingChange,
-  size = "30px",
-  activeColor = "#ff1a66",
-  inactiveColor = "#d9d9d9",
-  interactive = false,
+  rating = 0,
+  onChange,
+  size = "44px",
+  readOnly = false,
 }) => {
-  const [hoverRating, setHoverRating] = useState(0);
+  const [hoverRatings, setHoverRatings] = useState(0);
 
-  const handleClick = (star) => {
-    if (interactive && onRatingChange) {
-      onRatingChange(star);
-    }
+  const calculateRating = (e, index) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const isLeftHlaf = x < rect.width / 2;
+    return isLeftHlaf ? index + 0.5 : index + 1;
   };
 
-  const handleMouseEnter = (star) => {
-    if (interactive) {
-      setHoverRating(star);
-    }
+  const handleStarClick = (e, index) => {
+    if (readOnly || !onChange) return;
+    onChange(calculateRating(e, index));
   };
 
-  const handleMouseLeave = () => {
-    if (interactive) {
-      setHoverRating(0);
-    }
+  const handleMove = (e, index) => {
+    if (readOnly) return;
+    setHoverRatings(calculateRating(e, index));
+  };
+
+  const getStarValue = (index) => {
+    const activeRating = hoverRatings || rating;
+    if (index >= activeRating) return 0;
+    if (index + 1 <= activeRating) return 1;
+    return activeRating - index;
   };
 
   return (
-    <StarContainer interactive={interactive} size={size}>
-      {[1, 2, 3, 4, 5].map((star) => (
-        <StarButton
-          key={star}
-          onClick={() => handleClick(star)}
-          onMouseEnter={() => handleMouseEnter(star)}
-          onMouseLeave={handleMouseLeave}
-          interactive={interactive}
-          disabled={!interactive}
+    <RatingsWrapper onMouseLeave={() => setHoverRatings(0)} readOnly={readOnly}>
+      {[0, 1, 2, 3, 4].map((index) => (
+        <span
+          key={index}
+          onClick={(e) => handleStarClick(e, index)}
+          onMouseMove={(e) => handleMove(e, index)}
         >
-          <Icon
-            name="starSolid"
-            size={size}
-            color={
-              star <= (hoverRating || rating) ? activeColor : inactiveColor
-            }
-          />
-        </StarButton>
+          <Star value={getStarValue(index)} size={size} />
+        </span>
       ))}
-    </StarContainer>
+    </RatingsWrapper>
   );
 };
 
 export default StarRating;
 
-const StarContainer = styled.div`
-  display: flex;
-  gap: ${({ interactive }) => (interactive ? "12px" : "8px")};
+const RatingsWrapper = styled.div`
+  display: inline-flex;
+  gap: 4px;
+  cursor: ${(props) => (props.readOnly ? "default" : "pointer")};
 
-  ${({ interactive }) =>
-    !interactive &&
-    `
-  svg {
-    font-size: ${({ size }) => size} !important;
-    width: ${({ size }) => size};
-    height: ${({ size }) => size};
-  }
-  `}
-
-  @media (max-width: 768px) {
-    gap: ${({ interactive }) => (interactive ? "8px" : "4px")};
-
-    svg {
-      font-size: 30px !important;
-      width: 30px;
-      height: 30px;
-    }
-  }
-`;
-
-const StarButton = styled.button`
-  background: transparent;
-  border: none;
-  cursor: ${({ interactive }) => (interactive ? "pointer" : "default")};
-  padding: 0;
-  margin-top: 12px;
-  transition: ${({ interactive }) =>
-    interactive ? "transform 0.2s ease" : "none"};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  ${({ interactive }) =>
-    interactive &&
-    `
-    &:hover:not(:disabled) {
-      transform: scale(1.15);
-    }
-  `}
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: ${({ interactive }) => (interactive ? "0.6" : "1")};
-  }
-
-  @media (max-width: 768px) {
-    margin-top: 8px;
+  & > span {
+    display: inline-block;
   }
 `;

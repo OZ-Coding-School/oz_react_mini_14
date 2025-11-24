@@ -20,10 +20,10 @@ export const ContentBox = styled.div`
   max-width: 1200px;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 24px;
 
   @media (max-width: 768px) {
-    gap: 32px;
+    gap: 24px;
   }
 `;
 

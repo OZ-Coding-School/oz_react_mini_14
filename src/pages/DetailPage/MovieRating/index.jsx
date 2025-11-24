@@ -1,7 +1,7 @@
 import { useRating, useAuth } from "@/hooks";
 import { useNavigate } from "react-router-dom";
 import { Typography, StarRating } from "@/components";
-import MovieReview from "../MovieReview";
+import { MovieReview } from "@/pages";
 import {
   Content,
   ContentBox,
@@ -18,13 +18,10 @@ import {
 const MovieRating = ({ movieId, detail, movieData }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { rating, saveRating, deleteRating, loading, saving } =
-    useRating(movieId);
 
-  // TMDB 평점을 5점 만점으로 변환
-  const tmdbRating = detail.vote_average
-    ? Math.round(detail.vote_average / 2)
-    : 0;
+  const { vote_average: voteAverage } = detail;
+  const { rating, saveRating, deleteRating, loading, saving, tmdbRating } =
+    useRating({ movieId, voteAverage });
 
   const handleStarClick = async (newRating) => {
     if (!user) {
@@ -32,9 +29,8 @@ const MovieRating = ({ movieId, detail, movieData }) => {
       navigate("/login");
       return;
     }
-    console.log("🔍 saveRating 호출 전");
+
     const success = await saveRating(newRating);
-    console.log("🔍 saveRating 결과:", success);
     if (success) {
       alert("평점이 저장되었습니다!");
     }
@@ -76,10 +72,9 @@ const MovieRating = ({ movieId, detail, movieData }) => {
           {/* 상단: 별점 선택 섹션 */}
           <RatingSelectSection>
             <StarRating
-              size="44px"
               rating={rating}
-              onRatingChange={handleStarClick}
-              interactive={true}
+              onChange={handleStarClick}
+              size="44px"
             />
 
             {!user && (
@@ -99,9 +94,14 @@ const MovieRating = ({ movieId, detail, movieData }) => {
               <Typography variant="h4">실관람객평점</Typography>
               <AverageBox>
                 <Typography variant="body">
-                  {detail.vote_average?.toFixed(1) || 0} / 10점
+                  {voteAverage?.toFixed(1) || 0} / 10점
                 </Typography>
-                <StarRating rating={tmdbRating} />
+                <StarRating
+                  rating={tmdbRating}
+                  onChange={() => {}}
+                  size="30px"
+                  readOnly
+                />
               </AverageBox>
             </InfoBox>
 
@@ -112,7 +112,12 @@ const MovieRating = ({ movieId, detail, movieData }) => {
                 <Typography variant="bodyMedium">
                   {getRatingMessage()}
                 </Typography>
-                <StarRating rating={rating} />
+                <StarRating
+                  rating={rating}
+                  onChange={() => {}}
+                  size="30px"
+                  readOnly
+                />
               </AverageBox>
 
               {rating > 0 && user && (

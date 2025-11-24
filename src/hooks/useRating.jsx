@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/api/supabase";
 import { useAuth } from "@/hooks";
 
-const useRating = (movieId, movieTitle, moviePoster) => {
+const useRating = ({ movieId, movieTitle, moviePoster, voteAverage }) => {
   const { user } = useAuth();
+
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -15,7 +16,6 @@ const useRating = (movieId, movieTitle, moviePoster) => {
         setLoading(false);
         return;
       }
-
       try {
         const { data, error } = await supabase
           .from("ratings")
@@ -116,6 +116,7 @@ const useRating = (movieId, movieTitle, moviePoster) => {
     saving,
     saveRating,
     deleteRating,
+    tmdbRating: voteAverage ? Math.round(voteAverage / 2) : 0, // TMDB 평점 5점으로 반환
   };
 };
 
