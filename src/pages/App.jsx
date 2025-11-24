@@ -1,38 +1,57 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useAuth, useAuthActions, useFetch } from '@/hooks';
-import { getMovieList } from '@/apis';
-import { getHasJustLoggedIn, setHasJustLoggedIn } from '@/utils/auth';
+import { useCurrentUser, useInfiniteMovies } from '@/hooks';
+import {
+  getHasJustLoggedIn,
+  getHasJustLoggedOut,
+  setHasJustLoggedIn,
+  setHasJustLoggedOut,
+} from '@/utils/auth';
 import { Indicator, Error, MovieList, Carousel, Button } from '@/components';
-import { TOAST_DURATION } from '@/constants';
 
 function App() {
+  const bottomRef = useRef(null);
   const [isCarousel, setIsCarousel] = useState(false);
-  const { data: movieList, loading, error } = useFetch({ api: getMovieList });
-  const { user, loading: authLoading, error: authError } = useAuth();
-  const { clearError } = useAuthActions();
-  const filteredMovieList = movieList.filter((item) => !item.adult);
+  const {
+    data,
+    isLoading: isMovieLoading,
+    error: movieError,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteMovies();
+  const { data: user } = useCurrentUser();
+  const movieList = data?.pages?.flatMap((page) => page.data);
 
   useEffect(() => {
     const hasJustLoggedIn = getHasJustLoggedIn();
+    const hasJustLoggedOut = getHasJustLoggedOut();
+
     if (hasJustLoggedIn && user) {
       toast.success(`${user.name}님, 환영합니다!`);
       setHasJustLoggedIn(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authLoading]);
+    if (hasJustLoggedOut && !user) {
+      toast.success('로그아웃 되었습니다.');
+      setHasJustLoggedOut(false);
+    }
+  }, [user]);
 
   useEffect(() => {
-    const hasJustLoggedIn = getHasJustLoggedIn();
-    if (hasJustLoggedIn && authError) {
-      toast.error(authError.message, { autoClose: TOAST_DURATION.error });
-      clearError();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authError]);
+    if (!bottomRef.current) return;
 
-  if (loading || !movieList) return <Indicator />;
-  if (error) return <Error message={error.message} />;
+    const observer = new IntersectionObserver((entries) => {
+      const isInView = entries[0].isIntersecting;
+      if (isInView && hasNextPage) fetchNextPage();
+    });
+
+    observer.observe(bottomRef.current);
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasNextPage]);
+
+  if (isMovieLoading) return <Indicator />;
+  if (movieError) return <Error message={movieError.message} />;
   return (
     <>
       <Button
@@ -45,9 +64,13 @@ function App() {
         {isCarousel ? 'View List' : 'View Carousel'}
       </Button>
       {isCarousel ? (
-        <Carousel movieList={filteredMovieList} />
+        <Carousel movieList={movieList} />
       ) : (
-        <MovieList movieList={filteredMovieList} />
+        <>
+          <MovieList movieList={movieList} />
+          <div className="h-5" ref={bottomRef}></div>
+          {isFetchingNextPage && <Indicator />}
+        </>
       )}
     </>
   );

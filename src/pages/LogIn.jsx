@@ -1,39 +1,58 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth, useAuthActions, useForm } from '@/hooks';
-import { setHasJustLoggedIn } from '@/utils';
-import { Button, FormField, Indicator } from '@/components';
-import { LOGIN_FIELDS } from '@/constants';
+import { toast } from 'react-toastify';
+import { useForm } from '@/hooks';
+import { logIn, setHasJustLoggedIn } from '@/utils';
+import { Button, FormField, Indicator, SocialAuthButtons } from '@/components';
+import {
+  LOGIN_FIELDS,
+  SocialAuthButtonsMode,
+  TOAST_DURATION,
+} from '@/constants';
 
 function LogIn() {
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const { formState, isFormValid, handleFormChange } = useForm({
     initialState: {
       email: { value: '', valid: false },
       password: { value: '', valid: false },
     },
   });
-  const { loading } = useAuth();
-  const { logIn } = useAuthActions();
   const navigate = useNavigate();
+
+  const startLoggingIn = () => setIsLoggingIn(true);
+  const endLoggingIn = () => setIsLoggingIn(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { success } = await logIn({
+    startLoggingIn();
+    const { success, error } = await logIn({
       email: formState.email.value,
       password: formState.password.value,
     });
+    endLoggingIn();
 
     if (success) {
       setHasJustLoggedIn(true);
       navigate('/');
     }
+    if (error) {
+      toast.error(error.message, { autoClose: TOAST_DURATION.error });
+    }
   };
 
-  if (loading) return <Indicator />;
+  if (isLoggingIn) return <Indicator />;
   return (
     <section className="mx-4 my-12 flex flex-col justify-center rounded-md bg-stone-300 p-4 shadow-md md:mx-14 md:p-10 lg:mx-80 dark:bg-stone-600 dark:text-stone-50">
       <h1 className="mt-10 self-center text-3xl font-bold md:text-4xl">
         로그인
       </h1>
+      <div className="mt-4 flex gap-2 self-center text-sm">
+        <p>오즈무비가 처음이신가요?</p>
+        <Link to="/signup" className="underline">
+          회원가입
+        </Link>
+      </div>
       <form
         className="mt-10 flex flex-col items-stretch gap-4"
         onSubmit={handleSubmit}
@@ -60,12 +79,10 @@ function LogIn() {
           로그인
         </Button>
       </form>
-      <div className="mt-4 flex gap-2 self-center text-sm">
-        <p>오즈무비가 처음이신가요?</p>
-        <Link to="/social-login" className="underline">
-          간편 가입
-        </Link>
-      </div>
+      <SocialAuthButtons
+        mode={SocialAuthButtonsMode.LOGIN}
+        startAuthProcessing={startLoggingIn}
+      />
     </section>
   );
 }

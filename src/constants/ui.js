@@ -1,4 +1,5 @@
-import { FORM_CONDITIONS } from './validationRules';
+import { logInWithProvider } from '@/utils';
+import { FORM_CONDITIONS, OAuthProviders } from '@/constants';
 
 const TOAST_DURATION = {
   default: 2000,
@@ -37,4 +38,30 @@ const LOGIN_FIELDS = SIGNUP_FIELDS.filter((field) =>
   ['email', 'password'].includes(field.name),
 );
 
-export { TOAST_DURATION, SIGNUP_FIELDS, LOGIN_FIELDS };
+const SocialAuthButtonsMode = {
+  SIGNUP: 'signup',
+  LOGIN: 'login',
+};
+
+const OAUTH_BUTTONS = [
+  {
+    labelPrefix: '카카오계정으로',
+    variant: 'oauth-kakao',
+    iconSrc: '/images/oauth/kakao.svg',
+    onClick: () => logInWithProvider({ provider: OAuthProviders.KAKAO }),
+  },
+  {
+    labelPrefix: '구글계정으로',
+    variant: 'oauth-google',
+    iconSrc: '/images/oauth/google.svg',
+    onClick: () => logInWithProvider({ provider: OAuthProviders.GOOGLE }),
+  },
+];
+
+export {
+  TOAST_DURATION,
+  SIGNUP_FIELDS,
+  LOGIN_FIELDS,
+  SocialAuthButtonsMode,
+  OAUTH_BUTTONS,
+};

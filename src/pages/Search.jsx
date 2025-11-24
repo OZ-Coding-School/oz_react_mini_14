@@ -1,24 +1,22 @@
-import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useFetch } from '@/hooks';
 import { getMovieListByKeyword } from '@/apis';
 import { Indicator, Error, MovieList } from '@/components';
+import { useQuery } from '@tanstack/react-query';
 
 function Search() {
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get('keyword') ?? '';
-  const fetchOptions = useMemo(() => ({ params: { keyword } }), [keyword]);
   const {
     data: movieList,
-    loading,
+    isLoading,
     error,
-  } = useFetch({
-    api: getMovieListByKeyword,
-    options: fetchOptions,
+  } = useQuery({
+    queryKey: ['movie', keyword],
+    queryFn: () => getMovieListByKeyword({ params: { keyword } }),
   });
-  const filteredMovieList = movieList.filter((item) => !item.adult);
+  const filteredMovieList = movieList?.data?.filter((item) => !item.adult); // 수정
 
-  if (loading || !movieList) return <Indicator />;
+  if (isLoading) return <Indicator />;
   if (error) return <Error message={error.message} />;
   if (movieList.length === 0)
     return (
