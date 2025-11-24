@@ -36,14 +36,14 @@ function SocialAuthButtons({ mode, startAuthProcessing }) {
             variant={btn.variant}
             size="full"
             onClick={() => handleClick(btn.onClick)}
+            aria-label={`${btn.labelPrefix} ${labelText}`}
           >
             <img
               src={btn.iconSrc}
-              alt=""
-              aria-hidden={true}
+              alt={`${btn.labelPrefix.slice(0, -4)} 로고`}
               className="mr-2 h-5"
             />
-            <p>{`${btn.labelPrefix} ${labelText}`}</p>
+            <span>{`${btn.labelPrefix} ${labelText}`}</span>
           </Button>
         ))}
       </div>
