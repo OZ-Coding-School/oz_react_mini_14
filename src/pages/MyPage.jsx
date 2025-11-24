@@ -1,13 +1,13 @@
 import { useContext, useEffect } from "react";
 import { UserContext } from "@sbCtx/UserContext";
 import { useNavigate } from "react-router-dom";
-import { useBookmarks } from "@/context/BookmarkContext";
+import { useBookmarks } from "@context/BookmarkContext";
 import MovieCard from "@components/MovieCard";
 
 export default function MyPage() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  const { bookmarks, removeBookmark } = useBookmarks();
+  const { bookmarks = [], removeBookmark } = useBookmarks();
 
   useEffect(() => {
     if (!user) {
@@ -24,35 +24,43 @@ export default function MyPage() {
     );
 
   return (
-    <>
-      <div className="pt-28 max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">마이페이지</h1>
+    <main className="min-h-screen bg-gray-50 pt-28 pb-20 px-6">
+      <section className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+        <h1 className="text-2xl font-bold mb-6 text-gray-900 text-center">
+          마이페이지
+        </h1>
 
-        <div className="space-y-4 text-lg">
-          <p>
-            <span className="font-semibold">닉네임:</span> {user.userName}
+        <div className="space-y-4 text-gray-700 text-lg">
+          <p className="flex justify-between border-b pb-2">
+            <span className="font-medium text-gray-500">닉네임</span>
+            <span>{user.userName}</span>
           </p>
 
-          <p>
-            <span className="font-semibold">이메일:</span> {user.email}
+          <p className="flex justify-between border-b pb-2">
+            <span className="font-medium text-gray-500">이메일</span>
+            <span>{user.email}</span>
           </p>
         </div>
-      </div>
+      </section>
 
-      <div className="p-8">
-        <h1 className="text-3xl font-bold mb-6 text-center">내 북마크</h1>
+      <section className="max-w-6xl mx-auto mt-16">
+        <h2 className="text-2xl font-semibold mb-6 text-gray-900 text-center">
+          내가 북마크한 영화
+        </h2>
 
         {bookmarks.length === 0 ? (
-          <p className="text-center text-gray-500">북마크한 영화가 없습니다.</p>
+          <p className="text-center text-gray-500 mt-12">
+            북마크한 영화가 없습니다.
+          </p>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {bookmarks.map((movie) => (
-              <div key={movie.id} className="relative">
+              <div key={movie.id} className="relative group">
                 <MovieCard {...movie} />
 
                 <button
                   onClick={() => removeBookmark(movie.id)}
-                  className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm hover:bg-red-600 transition"
+                  className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-xs opacity-0 group-hover:opacity-100 transition"
                 >
                   삭제
                 </button>
@@ -60,7 +68,7 @@ export default function MyPage() {
             ))}
           </div>
         )}
-      </div>
-    </>
+      </section>
+    </main>
   );
 }
