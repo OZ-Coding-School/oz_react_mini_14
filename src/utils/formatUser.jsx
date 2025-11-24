@@ -1,4 +1,4 @@
-export const getDisplayName = (userId) => {
+const getDisplayName = (userId) => {
   if (!userId) return "익명";
 
   if (userId.includes("@")) {
@@ -7,3 +7,5 @@ export const getDisplayName = (userId) => {
   }
   return userId.substring(0, 4) + "****";
 };
+
+export default getDisplayName;
