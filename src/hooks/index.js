@@ -7,3 +7,4 @@ export { default as useFavoriteMovies } from '@/hooks/useFavoriteMovies';
 export { default as useToggleFavorite } from '@/hooks/useToggleFavorite';
 export { default as useAuthToast } from '@/hooks/useAuthToast';
 export { default as useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+export { default as useLogOut } from '@/hooks/useLogOut';

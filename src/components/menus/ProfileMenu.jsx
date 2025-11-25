@@ -1,24 +1,8 @@
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { logOut, setHasJustLoggedOut } from '@/utils';
+import { useLogOut } from '@/hooks';
 import { Button, LinkButton } from '@/components';
-import { TOAST_DURATION } from '@/constants';
 
 function ProfileMenu({ onClose }) {
-  const navigate = useNavigate();
-
-  const handleLogOut = async () => {
-    const { success, error } = await logOut();
-
-    if (success) {
-      onClose();
-      setHasJustLoggedOut(true);
-      navigate('/');
-    }
-    if (error) {
-      toast.error(error.message, { autoClose: TOAST_DURATION.error });
-    }
-  };
+  const { handleLogOut } = useLogOut({ cleanUpFn: onClose });
 
   return (
     <div className="absolute right-6 -bottom-18 z-1000 w-30 md:right-13">
