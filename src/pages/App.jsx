@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { useAuthToast, useInfiniteMovies } from '@/hooks';
+import { useRef, useState } from 'react';
+import { useAuthToast, useInfiniteMovies, useInfiniteScroll } from '@/hooks';
 import { Indicator, Error, MovieList, Carousel, Button } from '@/components';
 
 function App() {
@@ -15,19 +15,7 @@ function App() {
   } = useInfiniteMovies();
   const movieList = data?.pages?.flatMap((page) => page.data);
   useAuthToast();
-
-  useEffect(() => {
-    if (!bottomRef.current) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      const isInView = entries[0].isIntersecting;
-      if (isInView && hasNextPage) fetchNextPage();
-    });
-
-    observer.observe(bottomRef.current);
-    return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasNextPage]);
+  useInfiniteScroll({ targetRef: bottomRef, hasNextPage, fetchNextPage });
 
   if (isMovieLoading) return <Indicator />;
   if (movieError) return <Error message={movieError.message} />;
