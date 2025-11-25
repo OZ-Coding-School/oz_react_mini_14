@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useCurrentUser } from '@/hooks';
 import { logOut, setHasJustLoggedOut } from '@/utils';
+import { AuthButtons, Button, LinkButton } from '@/components';
 import { TOAST_DURATION } from '@/constants';
-import { AuthButtons, Button, LinkButton } from '.';
 
 function UserMenu() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
