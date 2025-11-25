@@ -1,4 +1,4 @@
-import { API_BASE_URL, API_END_POINTS } from '@/constants';
+import { API_BASE_URL, API_END_POINTS, ERROR_MESSAGE } from '@/constants';
 
 async function fetchMovieData({ fetchFn }) {
   const response = await fetchFn();
@@ -7,7 +7,7 @@ async function fetchMovieData({ fetchFn }) {
     return {
       data: null,
       error: {
-        message: `${response.status}: 데이터를 받아오지 못했습니다.\n잠시 후에 다시 시도해 주세요.`,
+        message: `${response.status}: ${ERROR_MESSAGE.FETCH_FAILED}`,
       },
     };
 
