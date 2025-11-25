@@ -6,4 +6,5 @@
 
 - React
 - React Router
+- TanStack Query
 - Tailwind CSS
