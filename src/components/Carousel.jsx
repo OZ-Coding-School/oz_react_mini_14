@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useFavoriteController } from '@/hooks';
-import { Button, MovieCard } from '@/components';
+import { MovieCard, ScrollButtons } from '@/components';
 
 const SCROLL_AMOUNT = 500;
 
@@ -13,13 +13,6 @@ function Carousel({ movieList }) {
     onFavoriteClick,
   } = useFavoriteController();
   const carouselRef = useRef(null);
-
-  const handleLeftClick = () => {
-    carouselRef.current.scrollBy({ left: -SCROLL_AMOUNT, behavior: 'smooth' });
-  };
-  const handleRightClick = () => {
-    carouselRef.current.scrollBy({ left: SCROLL_AMOUNT, behavior: 'smooth' });
-  };
 
   if (isLoading) return <Indicator />;
   if (error) return <Error message={error.message} />;
@@ -39,24 +32,7 @@ function Carousel({ movieList }) {
           />
         ))}
       </div>
-      <Button
-        type="button"
-        variant="carousel"
-        className="left-2"
-        aria-label="영화 리스트 왼쪽으로 이동"
-        onClick={handleLeftClick}
-      >
-        &lt;
-      </Button>
-      <Button
-        type="button"
-        variant="carousel"
-        className="right-2"
-        aria-label="영화 리스트 오른쪽으로 이동"
-        onClick={handleRightClick}
-      >
-        &gt;
-      </Button>
+      <ScrollButtons targetRef={carouselRef} scrollAmount={SCROLL_AMOUNT} />
     </section>
   );
 }

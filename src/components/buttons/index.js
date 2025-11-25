@@ -4,3 +4,4 @@ export { default as LinkButton } from '@/components/buttons/LinkButton';
 export { default as MovieViewToggleButton } from '@/components/buttons/MovieViewToggleButton';
 export { default as ProfileButton } from '@/components/buttons/ProfileButton';
 export { default as SocialAuthButtons } from '@/components/buttons/SocialAuthButtons';
+export { default as ScrollButtons } from '@/components/buttons/ScrollButtons';
