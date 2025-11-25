@@ -1,35 +1,19 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useCurrentUser } from '@/hooks';
-import { logOut, setHasJustLoggedOut } from '@/utils';
-import { Button, GuestMenu, LinkButton, ProfileButton } from '@/components';
-import { TOAST_DURATION } from '@/constants';
+import { GuestMenu, ProfileButton, ProfileMenu } from '@/components';
 
 function UserMenu() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const { data: user, isLoading: isUserLoading } = useCurrentUser();
-  const navigate = useNavigate();
 
   const handleToggleProfileMenu = () => setIsProfileMenuOpen((prev) => !prev);
+  const handleCloseProfileMenu = () => setIsProfileMenuOpen(false);
   const handleToggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
-
-  const handleLogOut = async () => {
-    const { success, error } = await logOut();
-
-    if (success) {
-      setIsProfileMenuOpen(false);
-      setHasJustLoggedOut(true);
-      navigate('/');
-    }
-    if (error) {
-      toast.error(error.message, { autoClose: TOAST_DURATION.error });
-    }
-  };
+  const handleCloseMobileMenu = () => setIsMobileMenuOpen(false);
 
   useEffect(() => {
-    if (user) setIsMobileMenuOpen(false);
+    if (user) handleCloseMobileMenu();
   }, [user]);
 
   if (isUserLoading)
@@ -50,26 +34,7 @@ function UserMenu() {
           onToggle={handleToggleMobileMenu}
         />
       )}
-      {isProfileMenuOpen && (
-        <div className="absolute right-6 -bottom-18 z-1000 w-30 md:right-13">
-          <LinkButton
-            to="/my-page"
-            variant="stone"
-            size="full"
-            className="rounded-none"
-          >
-            마이페이지
-          </LinkButton>
-          <Button
-            variant="stone"
-            size="full"
-            className="rounded-none"
-            onClick={handleLogOut}
-          >
-            로그아웃
-          </Button>
-        </div>
-      )}
+      {isProfileMenuOpen && <ProfileMenu onClose={handleCloseProfileMenu} />}
     </>
   );
 }
