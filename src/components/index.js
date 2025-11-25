@@ -8,6 +8,7 @@ export { default as Button } from '@/components/Button/Button';
 export { default as LinkButton } from '@/components/Button/LinkButton';
 export { default as AuthButtons } from '@/components/Button/AuthButtons';
 export { default as SocialAuthButtons } from '@/components/Button/SocialAuthButtons';
+export { default as MovieViewToggleButton } from '@/components/Button/MovieViewToggleButton';
 export { default as FormField } from '@/components/FormField';
 export { default as UserMenu } from '@/components/UserMenu';
 export { default as ProtectedRoute } from '@/components/routes/ProtectedRoute';

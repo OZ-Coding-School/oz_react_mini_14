@@ -1,6 +1,12 @@
 import { useRef, useState } from 'react';
 import { useAuthToast, useInfiniteMovies, useInfiniteScroll } from '@/hooks';
-import { Indicator, Error, MovieList, Carousel, Button } from '@/components';
+import {
+  Indicator,
+  Error,
+  MovieList,
+  Carousel,
+  MovieViewToggleButton,
+} from '@/components';
 
 function App() {
   const bottomRef = useRef(null);
@@ -17,19 +23,13 @@ function App() {
   useAuthToast();
   useInfiniteScroll({ targetRef: bottomRef, hasNextPage, fetchNextPage });
 
+  const handleToggle = () => setIsCarousel((prev) => !prev);
+
   if (isMovieLoading) return <Indicator />;
   if (movieError) return <Error message={movieError.message} />;
   return (
     <>
-      <Button
-        type="button"
-        variant="stone"
-        size="xl"
-        className="mt-10 ml-22"
-        onClick={() => setIsCarousel((prev) => !prev)}
-      >
-        {isCarousel ? 'View List' : 'View Carousel'}
-      </Button>
+      <MovieViewToggleButton isCarousel={isCarousel} onToggle={handleToggle} />
       {isCarousel ? (
         <Carousel movieList={movieList} />
       ) : (
