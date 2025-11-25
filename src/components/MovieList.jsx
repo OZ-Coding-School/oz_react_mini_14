@@ -1,23 +1,14 @@
-import { useAuth, useFavoriteMovies, useToggleFavorite } from '@/hooks';
+import { useFavoriteController } from '@/hooks';
 import { Error, Indicator, MovieCard } from '@/components';
 
 function MovieList({ movieList }) {
-  const { userId } = useAuth();
-  const { data: favoriteMovies, isLoading, error } = useFavoriteMovies();
-  const { mutate } = useToggleFavorite();
-  const isFavoriteEnabled = !!userId;
-  const favoriteMovieIds = new Set(favoriteMovies?.map((item) => item.id));
-
-  const onFavoriteClick = ({
-    movieId,
-    title,
-    posterPath,
-    voteAverage,
-    isFavorite,
-  }) => {
-    if (isFavoriteEnabled)
-      mutate({ movieId, title, posterPath, voteAverage, isFavorite });
-  };
+  const {
+    isLoading,
+    error,
+    isFavoriteEnabled,
+    favoriteMovieIds,
+    onFavoriteClick,
+  } = useFavoriteController();
 
   if (isLoading) return <Indicator />;
   if (error) return <Error message={error.message} />;
