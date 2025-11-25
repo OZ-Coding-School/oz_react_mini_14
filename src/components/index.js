@@ -12,4 +12,5 @@ export { default as MovieViewToggleButton } from '@/components/Button/MovieViewT
 export { default as ProfileButton } from '@/components/Button/ProfileButton';
 export { default as FormField } from '@/components/FormField';
 export { default as UserMenu } from '@/components/UserMenu';
+export { default as GuestMenu } from '@/components/GuestMenu';
 export { default as ProtectedRoute } from '@/components/routes/ProtectedRoute';
