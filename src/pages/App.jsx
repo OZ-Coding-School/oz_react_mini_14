@@ -1,12 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
-import { useCurrentUser, useInfiniteMovies } from '@/hooks';
-import {
-  getHasJustLoggedIn,
-  getHasJustLoggedOut,
-  setHasJustLoggedIn,
-  setHasJustLoggedOut,
-} from '@/utils/auth';
+import { useAuthToast, useInfiniteMovies } from '@/hooks';
 import { Indicator, Error, MovieList, Carousel, Button } from '@/components';
 
 function App() {
@@ -20,22 +13,8 @@ function App() {
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteMovies();
-  const { data: user } = useCurrentUser();
   const movieList = data?.pages?.flatMap((page) => page.data);
-
-  useEffect(() => {
-    const hasJustLoggedIn = getHasJustLoggedIn();
-    const hasJustLoggedOut = getHasJustLoggedOut();
-
-    if (hasJustLoggedIn && user) {
-      toast.success(`${user.name}님, 환영합니다!`);
-      setHasJustLoggedIn(false);
-    }
-    if (hasJustLoggedOut && !user) {
-      toast.success('로그아웃 되었습니다.');
-      setHasJustLoggedOut(false);
-    }
-  }, [user]);
+  useAuthToast();
 
   useEffect(() => {
     if (!bottomRef.current) return;
