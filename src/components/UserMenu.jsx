@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useCurrentUser } from '@/hooks';
 import { logOut, setHasJustLoggedOut } from '@/utils';
-import { AuthButtons, Button, LinkButton } from '@/components';
+import { AuthButtons, Button, LinkButton, ProfileButton } from '@/components';
 import { TOAST_DURATION } from '@/constants';
 
 function UserMenu() {
@@ -11,6 +11,8 @@ function UserMenu() {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const { data: user, isLoading: isUserLoading } = useCurrentUser();
   const navigate = useNavigate();
+
+  const handleToggleProfileMenu = () => setIsProfileMenuOpen((prev) => !prev);
 
   const handleLogOut = async () => {
     const { success, error } = await logOut();
@@ -36,23 +38,11 @@ function UserMenu() {
   return (
     <>
       {user ? (
-        <Button
-          type="button"
-          variant="profile"
-          aria-label={
-            isProfileMenuOpen
-              ? '찜 목록 및 로그아웃 메뉴 닫기'
-              : '찜 목록 및 로그아웃 메뉴 열기'
-          }
-          onClick={() => setIsProfileMenuOpen((prev) => !prev)}
-        >
-          <img
-            src={user.profileImgUrl}
-            alt="유저의 프로필 이미지"
-            aria-hidden={true}
-            className="size-full object-cover object-center"
-          />
-        </Button>
+        <ProfileButton
+          profileImgUrl={user.profileImgUrl}
+          isProfileMenuOpen={isProfileMenuOpen}
+          onToggle={handleToggleProfileMenu}
+        />
       ) : (
         <>
           <Button
