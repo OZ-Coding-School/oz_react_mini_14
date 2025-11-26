@@ -1,16 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CommonButton } from "@common";
-import { useAuthActions, useSearchHandler, useThemeToggle } from "@hooks";
+import {
+  useAuthActions,
+  useSearchHandler,
+  useThemeToggle,
+  useDropdown,
+} from "@hooks";
 import "./NavBar.scss";
 
 export default function NavBar() {
   const navigate = useNavigate();
-
   const isLogIn = useSelector((state) => state.logIn.isLogIn);
-  const { login, signup, logout } = useAuthActions();
+  const userName = useSelector((state) => state.logIn.userName);
+  const { login, signup, logout, mypage } = useAuthActions();
   const { isDarkMode, toggleTheme } = useThemeToggle();
   const { inputValue, handleInputChange, resetSearch } = useSearchHandler();
+  const { openMenu, toggleDropdown, closeDropdown } = useDropdown();
 
   const handleLogoClick = () => {
     navigate("/");
@@ -40,14 +46,40 @@ export default function NavBar() {
         </CommonButton>
         {isLogIn ? (
           <>
-            <CommonButton>🧓</CommonButton>
-            <CommonButton
-              type="submit"
-              aria-label="로그아웃 진행"
-              onClick={logout}
-            >
-              로그아웃
-            </CommonButton>
+            <div className="profileWrapper">
+              {/* 프로필 아이콘 */}
+              <CommonButton
+                className="userName-btn"
+                type="button"
+                aria-label="로그인 이름"
+                onClick={toggleDropdown}
+              >
+                {userName}님
+              </CommonButton>
+              {/* 드롭다운 메뉴 */}
+              {openMenu && (
+                <div className="dropdownMenu">
+                  <div
+                    className="menuItem"
+                    onClick={() => {
+                      closeDropdown();
+                      mypage();
+                    }}
+                  >
+                    마이페이지
+                  </div>
+                  <div
+                    className="menuItem"
+                    onClick={() => {
+                      closeDropdown();
+                      logout();
+                    }}
+                  >
+                    로그아웃
+                  </div>
+                </div>
+              )}
+            </div>
           </>
         ) : (
           <>

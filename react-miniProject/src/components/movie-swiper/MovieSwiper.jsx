@@ -1,12 +1,12 @@
 // react에서 swiper 사용
 import { Swiper, SwiperSlide } from "swiper/react";
-import { MovieCard } from "../movie-card";
+import { MovieCard } from "@components";
 import "./MovieSwiper.scss";
 
 // 필요한 기능 모듈 불러오기
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
-export default function MovieSwuper({ movieData }) {
+export default function MovieSwiper({ movieData }) {
   return (
     <div className="swiper-Container">
       <Swiper

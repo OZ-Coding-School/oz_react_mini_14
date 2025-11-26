@@ -1,21 +1,29 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { logInState } from "@store/slice";
-import { useSupabaseAuth } from "@supabase_path";
+import { logInState, clearUserInfo } from "@store/slice";
+import {
+  useSupabaseAuth,
+  localStorageUtils,
+  USER_INFO_KEY,
+} from "@supabase_path";
 
 export const useAuthActions = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const supabaseAuth = useSupabaseAuth();
+  const { removeItemFromLocalStorage } = localStorageUtils();
 
   const login = () => navigate("/login");
   const signup = () => navigate("/signup");
+  const mypage = () => navigate("/mypage");
 
   const logout = async () => {
     try {
       await supabaseAuth.logout();
       dispatch(logInState(false));
+      removeItemFromLocalStorage(USER_INFO_KEY.customKey); //로그아웃 시 로컬스토리지 모두 제거
+      dispatch(clearUserInfo()); //로그아웃시 userinfo 클리어
       toast.success("로그아웃 되었습니다.");
       navigate("/");
     } catch (error) {
@@ -24,5 +32,5 @@ export const useAuthActions = () => {
     }
   };
 
-  return { login, signup, logout };
+  return { login, signup, logout, mypage };
 };
