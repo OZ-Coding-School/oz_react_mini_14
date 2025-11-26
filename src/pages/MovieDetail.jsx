@@ -1,53 +1,74 @@
+import "./MovieDetail.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./MovieDetail.css";
 
 const MovieDetail = () => {
   const { id } = useParams();
-  const [movie, setMovie] = useState(null);
-
+  const API_TOKEN = import.meta.env.VITE_TMDB_API_TOKEN;
   const baseUrl = "https://image.tmdb.org/t/p/w500";
 
+  const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchMovieDetail = async () => {
+    setLoading(true);
+
+    const res = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${API_TOKEN}`,
+        },
+      }
+    );
+
+    const data = await res.json();
+    setMovie(data);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchDetail = async () => {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`,
-        {
-          headers: {
-            accept: "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-          },
-        }
-      );
-
-      const data = await res.json();
-      setMovie(data);
-    };
-
-    fetchDetail();
+    fetchMovieDetail();
   }, [id]);
 
-  if (!movie) return <div>Loading...</div>;
+  if (loading || !movie) return <div className="loading">Loading...</div>;
 
   return (
-    <div className="Movie-Detail">
-      <div className="poster">
-        <img src={`${baseUrl}${movie.poster_path}`} alt="" />
-      </div>
+    <div className="movie-detail">
+      {/* 배경 이미지 */}
+      <div
+        className="movie-detail-backdrop"
+        style={{
+          backgroundImage: `url(${baseUrl}${movie.backdrop_path})`,
+        }}
+      ></div>
 
-      <div className="info">
-        <div className="title-rating">
-          <div className="title">{movie.title}</div>
-          <div className="rating">{movie.vote_average}</div>
+      <div className="movie-detail-content">
+        {/* 포스터 */}
+        <img
+          className="movie-detail-poster"
+          src={`${baseUrl}${movie.poster_path}`}
+          alt={movie.title}
+        />
+
+        {/* 정보 */}
+        <div className="movie-detail-info">
+          <h1>{movie.title}</h1>
+          <p>⭐ {movie.vote_average?.toFixed(1)}</p>
+
+          <div className="movie-detail-genres">
+            {movie.genres?.map((g) => (
+              <span key={g.id} className="genre-tag">
+                {g.name}
+              </span>
+            ))}
+          </div>
+
+          <h3>줄거리</h3>
+          <p className="overview">{movie.overview}</p>
         </div>
-
-        <div className="genre">
-          {movie.genres?.map((g) => (
-            <div key={g.id}>{g.name}</div>
-          ))}
-        </div>
-
-        <div className="summary">{movie.overview}</div>
       </div>
     </div>
   );
