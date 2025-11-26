@@ -4,7 +4,7 @@ import { BASE_URL } from "@constants/api.js";
 import "./MovieCard.scss";
 import MovieBookMarkButton from "./MovieBookMarkButton";
 
-function MovieCard({ data }) {
+function MovieCard({ data, refetch }) {
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
   const userId = useSelector((state) => state.logIn.userId);
 
@@ -22,7 +22,15 @@ function MovieCard({ data }) {
       <p className="title">{data.title}</p>
       <span className="vote-bookMark">
         <p className="vote_average">평점 : {data.vote_average}</p>
-        {userId ? <MovieBookMarkButton movieInfo={data} userId={userId} /> : ""}
+        {userId ? (
+          <MovieBookMarkButton
+            movieInfo={data}
+            userId={userId}
+            refetch={refetch}
+          />
+        ) : (
+          ""
+        )}
       </span>
     </div>
   );
