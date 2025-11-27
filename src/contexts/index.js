@@ -1,4 +1,4 @@
-export * from '@/contexts/ThemContext';
-export { default as ThemeProvider } from '@/contexts/ThemContext';
-export * from '@/contexts/AuthContext';
-export { default as AuthProvider } from '@/contexts/AuthContext';
+export * from '@/contexts/ThemeProvider';
+export { default as ThemeProvider } from '@/contexts/ThemeProvider';
+export * from '@/contexts/AuthProvider';
+export { default as AuthProvider } from '@/contexts/AuthProvider';
