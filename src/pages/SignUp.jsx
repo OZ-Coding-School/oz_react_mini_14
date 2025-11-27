@@ -6,7 +6,7 @@ import { setHasJustLoggedIn, signUp } from '@/utils';
 import { Button, FormField, Indicator, SocialAuthButtons } from '@/components';
 import {
   SIGNUP_FIELDS,
-  SocialAuthButtonsMode,
+  SocialAuthButtonModes,
   TOAST_DURATION,
 } from '@/constants';
 
@@ -84,7 +84,7 @@ function SignUp() {
         </Button>
       </form>
       <SocialAuthButtons
-        mode={SocialAuthButtonsMode.SIGNUP}
+        mode={SocialAuthButtonModes.SIGNUP}
         startAuthProcessing={startSigningUp}
       />
     </section>

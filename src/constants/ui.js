@@ -38,23 +38,28 @@ const LOGIN_FIELDS = SIGNUP_FIELDS.filter((field) =>
   ['email', 'password'].includes(field.name),
 );
 
-const SocialAuthButtonsMode = {
+const SocialAuthButtonModes = {
   SIGNUP: 'signup',
   LOGIN: 'login',
 };
+
+const handleKaKaoLogIn = () =>
+  logInWithProvider({ provider: OAuthProviders.KAKAO });
+const handleGoogleLogIn = () =>
+  logInWithProvider({ provider: OAuthProviders.GOOGLE });
 
 const OAUTH_BUTTONS = [
   {
     labelPrefix: '카카오계정으로',
     variant: 'oauth-kakao',
     iconSrc: '/images/oauth/kakao.svg',
-    onClick: () => logInWithProvider({ provider: OAuthProviders.KAKAO }),
+    onClick: handleKaKaoLogIn,
   },
   {
     labelPrefix: '구글계정으로',
     variant: 'oauth-google',
     iconSrc: '/images/oauth/google.svg',
-    onClick: () => logInWithProvider({ provider: OAuthProviders.GOOGLE }),
+    onClick: handleGoogleLogIn,
   },
 ];
 
@@ -62,6 +67,6 @@ export {
   TOAST_DURATION,
   SIGNUP_FIELDS,
   LOGIN_FIELDS,
-  SocialAuthButtonsMode,
+  SocialAuthButtonModes,
   OAUTH_BUTTONS,
 };

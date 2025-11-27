@@ -1,9 +1,9 @@
 import { cn, setHasJustLoggedIn } from '@/utils';
 import { Button } from '@/components';
-import { OAUTH_BUTTONS, SocialAuthButtonsMode } from '@/constants';
+import { OAUTH_BUTTONS, SocialAuthButtonModes } from '@/constants';
 
 function SocialAuthButtons({ mode, startAuthProcessing }) {
-  const isSignUpMode = mode === SocialAuthButtonsMode.SIGNUP;
+  const isSignUpMode = mode === SocialAuthButtonModes.SIGNUP;
   const labelText = isSignUpMode ? '회원가입' : '로그인';
 
   const handleClick = (action) => {
