@@ -5,6 +5,7 @@ import { useForm } from '@/hooks';
 import { logIn, setHasJustLoggedIn } from '@/utils';
 import { Button, FormField, Indicator, SocialAuthButtons } from '@/components';
 import {
+  INITIAL_FORM_STATE,
   LOGIN_FIELDS,
   SocialAuthButtonModes,
   TOAST_DURATION,
@@ -13,10 +14,7 @@ import {
 function LogIn() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const { formState, isFormValid, handleFormChange } = useForm({
-    initialState: {
-      email: { value: '', valid: false },
-      password: { value: '', valid: false },
-    },
+    initialState: INITIAL_FORM_STATE.LOGIN,
   });
   const navigate = useNavigate();
 
