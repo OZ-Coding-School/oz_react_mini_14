@@ -12,11 +12,11 @@ function Genre({ value }) {
 
 function MovieDetail() {
   const { movieId } = useParams();
-  const { movieDetailDatas, loading } = useMovieDetailInfo(movieId);
+  const { movieDetailInfo, loading } = useMovieDetailInfo(movieId);
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
 
   if (loading) return <LoadingSkeleton />;
-  if (!movieDetailDatas) return <p>로딩 중....</p>;
+  if (!movieDetailInfo) return <p>로딩 중....</p>;
 
   return (
     <div
@@ -24,7 +24,7 @@ function MovieDetail() {
       style={{
         backgroundImage: `
           linear-gradient(to right, rgba(15,32,39,0.8), rgba(32,58,67,0.6), rgba(44,83,100,0.8)), 
-          url(${BASE_URL}${movieDetailDatas.backdrop_path})
+          url(${BASE_URL}${movieDetailInfo.backdrop_path})
         `,
         backgroundSize: "cover", // 이미지가 화면 전체를 덮도록
         backgroundPosition: "center center", // 중앙 기준 배치
@@ -33,22 +33,20 @@ function MovieDetail() {
     >
       <div className="detail-poster">
         <img
-          src={`${BASE_URL}${movieDetailDatas.poster_path}`}
-          alt={`${movieDetailDatas.title}`}
+          src={`${BASE_URL}${movieDetailInfo.poster_path}`}
+          alt={`${movieDetailInfo.title}`}
         />
       </div>
-      <div className="detail-title">{movieDetailDatas.title}</div>
+      <div className="detail-title">{movieDetailInfo.title}</div>
       <div className="detail-vote_average">
-        평점 : {movieDetailDatas.vote_average}
+        평점 : {movieDetailInfo.vote_average}
       </div>
       <div className="detail-genre">
-        {movieDetailDatas.genres?.map((genre) => (
+        {movieDetailInfo.genres?.map((genre) => (
           <Genre key={genre.id} value={genre.name} />
         ))}
       </div>
-      <div className="detail-overview">
-        줄거리 : {movieDetailDatas.overview}
-      </div>
+      <div className="detail-overview">줄거리 : {movieDetailInfo.overview}</div>
     </div>
   );
 }
