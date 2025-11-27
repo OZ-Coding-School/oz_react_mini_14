@@ -10,7 +10,7 @@ export default function MyPage() {
   const supabaseAuth = useSupabaseAuth();
   const [userInfo, setUserInfo] = useState(null);
 
-  // useAuthGuard();
+  useAuthGuard();
 
   useEffect(() => {
     const fetchUser = async () => {

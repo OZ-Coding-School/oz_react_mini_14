@@ -7,14 +7,10 @@ export const useAuthGuard = () => {
   const isLogIn = useSelector((state) => state.logIn.isLogIn);
   const navigate = useNavigate();
 
-  useEffect(
-    () => {
-      if (!isLogIn) {
-        toast.warn("로그인이 필요합니다.");
-        navigate("/login");
-      }
-    },
-    [isLogIn],
-    [navigate]
-  );
+  useEffect(() => {
+    if (!isLogIn) {
+      toast.warn("로그인이 필요합니다.");
+      navigate("/login");
+    }
+  }, [isLogIn, navigate]);
 };
