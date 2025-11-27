@@ -8,7 +8,7 @@ export const useThemeToggle = () => {
 
   const toggleTheme = useCallback(() => {
     dispatch(themeToggleState());
-  });
+  }, [dispatch]);
 
   return { isDarkMode, toggleTheme };
 };
