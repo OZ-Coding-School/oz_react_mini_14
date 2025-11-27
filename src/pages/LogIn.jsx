@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useForm } from '@/hooks';
-import { logIn, setHasJustLoggedIn } from '@/utils';
+import { logIn, pickFormValues, setHasJustLoggedIn } from '@/utils';
 import { Button, FormField, Indicator, SocialAuthButtons } from '@/components';
 import {
   INITIAL_FORM_STATE,
@@ -24,10 +24,7 @@ function LogIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     startLoggingIn();
-    const { success, error } = await logIn({
-      email: formState.email.value,
-      password: formState.password.value,
-    });
+    const { success, error } = await logIn(pickFormValues({ formState }));
     endLoggingIn();
 
     if (success) {
