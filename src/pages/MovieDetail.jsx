@@ -43,7 +43,7 @@ function MovieDetail() {
           </p>
         </div>
         <p className="col-span-2 row-span-1 break-keep whitespace-pre-wrap md:text-lg lg:text-xl xl:col-span-1">
-          {movie.overview === '' ? '소개글이 없습니다.' : movie.overview}
+          {movie.overview || '소개글이 없습니다.'}
         </p>
       </div>
     </section>
