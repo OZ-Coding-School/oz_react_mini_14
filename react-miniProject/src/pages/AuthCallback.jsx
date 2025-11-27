@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSupabase } from "@supabase_path";
 import { useEffect } from "react";
@@ -11,7 +11,6 @@ export default function AuthCallback() {
   const dispatch = useDispatch();
   const supabase = useSupabase();
   const { setItemToLocalStorage } = localStorageUtils();
-  const userName = useSelector((state) => state.logIn.userName);
 
   useEffect(() => {
     const handleOAuthCallback = async () => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./SignUpPage.scss";
 import { useSupabaseAuth } from "@supabase_path";
 import { CommonButton, InputField } from "@components";
@@ -34,13 +34,12 @@ export default function SignUpPage() {
     try {
       setLoading(true);
 
-      const { data, error } = await supabaseAuth.signUp({
+      const { error } = await supabaseAuth.signUp({
         email: form.email,
         password: form.password,
         display_name: form.name,
         options: { data: {} },
       });
-
       if (error) throw error;
 
       toast.success(`회원가입 성공!`);

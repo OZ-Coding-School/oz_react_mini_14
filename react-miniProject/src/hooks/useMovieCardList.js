@@ -42,7 +42,7 @@ export default function useMovieCardList() {
       });
     } catch (error) {
       console.error("API 요청 에러 : ", error);
-      setError(err);
+      setError(error);
     } finally {
       setLoading(false);
     }
