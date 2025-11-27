@@ -35,7 +35,7 @@ export default function AuthCallback() {
           dispatch(logInState(true)); // Redux 로그인 상태 변경
           dispatch(setUserName(userName)); //userName 추가 전역관리
           dispatch(setUserId(userId));
-          toast.success(`${userName}로그인 성공`);
+          toast.success(`${userName}님 환영합니다!`);
           navigate("/");
         } else {
           // 세션 없음 → 로그인 실패
