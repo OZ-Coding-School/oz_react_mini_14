@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import "./SignUpPage.scss";
-import { useSupabaseAuth } from "@supabase_path";
 import { CommonButton, InputField } from "@components";
-import { useForm, useInputValidation } from "@hooks";
 import { signUpInputFields } from "@constants/signUpInputFields.js";
+import { useForm, useSignUp } from "@/hooks";
+import "./SignUpPage.scss";
 
 export default function SignUpPage() {
+  const navigate = useNavigate();
+  const { handleSignUp, errors, loading } = useSignUp();
   const { form, handleChange } = useForm({
     name: "",
     email: "",
@@ -15,41 +14,9 @@ export default function SignUpPage() {
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
-  const supabaseAuth = useSupabaseAuth();
-  const [loading, setLoading] = useState(false);
-  const { validateSignUp, isValid } = useInputValidation();
-
   async function handleSubmit(e) {
     e.preventDefault();
-
-    const newErrors = validateSignUp(form);
-    setErrors(newErrors);
-
-    if (!isValid(newErrors)) {
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      const { error } = await supabaseAuth.signUp({
-        email: form.email,
-        password: form.password,
-        display_name: form.name,
-        options: { data: {} },
-      });
-      if (error) throw error;
-
-      toast.success(`회원가입 성공!`);
-      navigate("/login");
-    } catch (error) {
-      toast.error(`회원가입 실패 : ${error.message}`);
-      console.log(error.message);
-    } finally {
-      setLoading(false);
-    }
+    await handleSignUp(form);
   }
 
   const inputFields = signUpInputFields;
