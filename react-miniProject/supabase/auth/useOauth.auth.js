@@ -1,5 +1,4 @@
-import { useSupabase } from "../context";
-
+import { useSupabase } from "@supabase_path/utilities";
 export const useOAuth = () => {
   const supabase = useSupabase();
   // 카카오 로그인

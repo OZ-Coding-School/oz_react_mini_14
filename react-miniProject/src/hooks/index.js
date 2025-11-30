@@ -10,6 +10,5 @@ export * from "./useSearchHandler";
 export * from "./useThemeToggle";
 export * from "./useAuthActions";
 export * from "./useAuthGuard";
-export * from "./useDropdown";
 export * from "./useMovieBookMark";
 export * from "./useWishListBookMark";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabaseClient } from "@supabase_path/context";
+import { supabaseClient } from "@supabase_path/utilities";
 
 export function useMovieBookMark(userId, movieInfo, refetch) {
   const [isBookMarked, setIsBookMarked] = useState(false);
