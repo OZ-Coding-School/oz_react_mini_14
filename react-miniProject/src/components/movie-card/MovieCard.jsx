@@ -22,14 +22,12 @@ function MovieCard({ data, refetch }) {
       <p className="title">{data.title}</p>
       <span className="vote-bookMark">
         <p className="vote_average">평점 : {data.vote_average}</p>
-        {userId ? (
+        {userId && (
           <MovieBookMarkButton
             movieInfo={data}
             userId={userId}
             refetch={refetch}
           />
-        ) : (
-          ""
         )}
       </span>
     </div>
