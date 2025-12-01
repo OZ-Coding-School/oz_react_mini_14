@@ -42,16 +42,17 @@
   .dropdownMenu {
     position: absolute;
     top: 90px;
-    background: #00bcd4;
-    color: black;
+    // background: #00bcd4;
+    // color: black;
     border-radius: 8px;
     padding: 12px 15px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    animation: fadeIn 10.2s ease;
+    animation: fadeIn 0.2s ease;
     height: 45px; // ⭐ 고정 높이 추가
     line-height: 20px; // 아이콘·텍스트 모두 수평 정렬됨
+    font-weight: bold;
   }
 
   .menuItem {
@@ -66,10 +67,30 @@
 
   &.dark {
     @include theme-dark;
+    .dropdownMenu {
+      background: #333;
+      color: #00bcd4;
+      border: 1px solid #555;
+
+      .menuItem:hover {
+        color: #00bcd4;
+        font-weight: bold;
+      }
+    }
   }
 
   &.light {
     @include theme-light;
+
+    .dropdownMenu {
+      background: #00bcd4;
+      color: black;
+
+      .menuItem:hover {
+        color: #203a43;
+        font-weight: bold;
+      }
+    }
   }
   // .hamburgerBtn {
   //   display: none;
