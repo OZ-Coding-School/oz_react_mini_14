@@ -1,17 +1,18 @@
-import { useContext, useEffect } from "react";
-import { UserContext } from "@sbCtx/UserContext";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useBookmarks } from "@context/BookmarkContext";
+import { useUser } from "@sbcontext/UserContext";
+import { useBookmarks } from "@contexts/BookmarkContext";
 import MovieCard from "@components/MovieCard";
+import { toast } from "react-toastify";
 
 export default function MyPage() {
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
+  const { bookmarks, removeBookmark } = useBookmarks();
   const navigate = useNavigate();
-  const { bookmarks = [], removeBookmark } = useBookmarks();
 
   useEffect(() => {
     if (!user) {
-      alert("로그인이 필요합니다.");
+      toast.info("로그인이 필요합니다.");
       navigate("/login");
     }
   }, [user, navigate]);

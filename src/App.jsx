@@ -12,7 +12,7 @@ import Layout from "@components/Layout";
 import OAuthCallback from "@components/OAuthCallback";
 
 import { useSupabaseAuth } from "@sb";
-import { UserContext } from "@sbCtx/UserContext";
+import { UserContext } from "@sbcontext/UserContext";
 export default function App() {
   const { getUserInfo } = useSupabaseAuth();
   const { setUser } = useContext(UserContext);

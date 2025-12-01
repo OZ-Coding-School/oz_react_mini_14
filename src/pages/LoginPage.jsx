@@ -3,7 +3,7 @@ import Button from "@common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { useSupabaseAuth } from "@sb";
-import { UserContext } from "@sbCtx/UserContext";
+import { UserContext } from "@sbcontext/UserContext";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });

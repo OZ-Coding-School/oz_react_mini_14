@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import useDebounce from "@hooks/useDebounce";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "@sbCtx/UserContext";
+import { UserContext } from "@sbcontext/UserContext";
 import { useSupabaseAuth } from "@sb";
 import Button from "@common/Button";
 

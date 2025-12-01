@@ -1,7 +1,7 @@
 import { useEffect, useContext } from "react";
 import { useSupabaseAuth } from "@sb";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "@sbCtx/UserContext";
+import { UserContext } from "@sbcontext/UserContext";
 
 export default function OAuthCallback() {
   const { handleOAuthCallback } = useSupabaseAuth();

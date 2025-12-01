@@ -17,9 +17,9 @@ export default defineConfig({
       "@hooks": path.resolve(__dirname, "src/hooks"),
       "@api": path.resolve(__dirname, "src/api"),
       "@sb": path.resolve(__dirname, "src/supabase"),
-      "@sbCtx": path.resolve(__dirname, "src/supabase/context"),
+      "@sbcontext": path.resolve(__dirname, "src/supabase/context"),
       "@utils": path.resolve(__dirname, "src/supabase/utilities"),
-      "@context": path.resolve(__dirname, "src/context"),
+      "@contexts": path.resolve(__dirname, "src/contexts"),
     },
   },
 });

@@ -9,8 +9,10 @@
       "@hooks/*": ["src/hooks/*"],
       "@api/*": ["src/api/*"],
       "@sb/*": ["src/supabase/*"],
-      "@sbCtx/*": ["src/supabase/context/*"],
-      "@utils/*": ["src/utilities/*"]
+      "@context/*": ["src/supabase/context/*"],
+      "@utils/*": ["src/utilities/*"],
+      "@sbcontext/*": ["src/supabase/context/*"],
+      "@contexts/*": ["src/contexts/*"]
     }
   },
   "include": ["src"]

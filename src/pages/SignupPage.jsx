@@ -3,7 +3,7 @@ import InputField from "@common/InputField";
 import Button from "@common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useSupabaseAuth } from "@sb";
-import { UserContext } from "@sbCtx/UserContext";
+import { UserContext } from "@sbcontext/UserContext";
 
 export default function SignupPage() {
   const [form, setForm] = useState({

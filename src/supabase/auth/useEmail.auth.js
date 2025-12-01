@@ -1,4 +1,4 @@
-import { useSupabase } from "@sbCtx";
+import { useSupabase } from "@sbcontext";
 import {
   changeFromDto,
   DTO_TYPE,

@@ -6,20 +6,29 @@ import "@/index.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { SupabaseProvider } from "@sbCtx";
-import { UserProvider } from "@sbCtx/UserContext";
-import { BookmarkProvider } from "@context/BookmarkContext";
+import { SupabaseProvider } from "@sbcontext";
+import { UserProvider } from "@sbcontext/UserContext";
+import { BookmarkProvider } from "@contexts/BookmarkContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { InfiniteMoviesProvider } from "./contexts/InfiniteMoviesContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <SupabaseProvider>
-      <UserProvider>
-        <BookmarkProvider>
+  <SupabaseProvider>
+    <UserProvider>
+      <BookmarkProvider>
+        <InfiniteMoviesProvider>
           <BrowserRouter>
             <App />
+            <ToastContainer
+              position="top-center"
+              autoClose={2000}
+              hideProgressBar
+              theme="dark"
+            />
           </BrowserRouter>
-        </BookmarkProvider>
-      </UserProvider>
-    </SupabaseProvider>
-  </React.StrictMode>
+        </InfiniteMoviesProvider>
+      </BookmarkProvider>
+    </UserProvider>
+  </SupabaseProvider>
 );
