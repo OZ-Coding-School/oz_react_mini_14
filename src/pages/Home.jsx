@@ -1,40 +1,50 @@
-import { useEffect, useState } from "react";
-import MovieCard from "../components/MovieCard";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import MovieCard from "@components/MovieCard";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import { fetchPopularMovies } from "../api/tmdb";
+import { useFeaturedMovies } from "@hooks/useFeaturedMovies";
+import { useInfiniteMoviesStore } from "@contexts/InfiniteMoviesContext";
 
 export default function Home() {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const loaderRef = useRef(null);
+
+  const { movies, loadMovies, loading, isEnd } = useInfiniteMoviesStore();
+  const { featuredMovies, loadingFeatured, error } = useFeaturedMovies();
 
   useEffect(() => {
-    fetchPopularMovies()
-      .then((data) => setMovies(data))
-      .finally(() => setLoading(false));
-  }, []);
+    if (movies.length === 0) {
+      loadMovies();
+    }
+  }, [movies, loadMovies]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-400"></div>
-      </div>
+  //무한 스크롤 옵저버
+  useEffect(() => {
+    if (!loaderRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && loadMovies(),
+      { threshold: 0.5 }
     );
-  }
+
+    observer.observe(loaderRef.current);
+    return () => observer.disconnect();
+  }, [loadMovies]);
+
+  const canLoop = featuredMovies.length > 6;
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">Movie List</h1>
-      {loading ? (
-        <div className="h-72 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-400"></div>
+      <h1 className="text-3xl font-bold mb-8 text-center">Movie List</h1>
+
+      {/* 에러 UI */}
+      {error && <p className="text-center text-red-500 mb-6">{error}</p>}
+
+      {/* 추천 영화 로딩 UI */}
+      {loadingFeatured ? (
+        <div className="h-60 flex items-center justify-center mb-10">
+          <div className="animate-spin h-12 w-12 border-t-4 border-yellow-400 rounded-full" />
         </div>
-      ) : (
+      ) : featuredMovies.length > 0 ? (
         <Swiper
           modules={[Navigation, Pagination]}
           spaceBetween={12}
@@ -48,53 +58,50 @@ export default function Home() {
           }}
           navigation
           pagination={{ clickable: true }}
-          loop
+          loop={canLoop}
           className="pb-8"
         >
-          {movies.map((movie) => (
+          {featuredMovies.map((movie) => (
             <SwiperSlide key={movie.id}>
-              <div onClick={() => navigate(`/details/${movie.id}`)}>
-                <MovieCard
-                  title={movie.title}
-                  poster_path={movie.poster_path}
-                  vote_average={movie.vote_average}
-                />
-              </div>
+              <MovieCard {...movie} />
             </SwiperSlide>
           ))}
         </Swiper>
+      ) : (
+        <p className="text-gray-500 text-center mb-10">
+          추천 영화를 불러올 수 없습니다.
+        </p>
       )}
 
-      <h2 className="text-2xl font-semibold mt-12 mb-4 text-center">
+      <h2 className="text-2xl font-semibold mt-12 mb-6 text-center">
         모든 영화 보기
       </h2>
-      {loading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 justify-items-center">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div
-              key={i}
-              className="w-full aspect-[2/3] bg-gray-300 animate-pulse rounded-lg"
-            />
-          ))}
+
+      {/* 전체 영화 리스트 */}
+      <div
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4
+        lg:grid-cols-6 xl:grid-cols-7 gap-4 justify-items-center"
+      >
+        {movies.map((movie) => (
+          <MovieCard key={movie.id} {...movie} />
+        ))}
+      </div>
+
+      {/* 로딩 스피너 */}
+      {loading && (
+        <div className="flex justify-center py-10">
+          <div className="animate-spin h-12 w-12 border-t-4 border-yellow-400 rounded-full" />
         </div>
-      ) : (
-        <div
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4
-      lg:grid-cols-6 xl:grid-cols-7 gap-4 justify-items-center"
-        >
-          {movies.map((movie) => (
-            <div
-              key={movie.id}
-              onClick={() => navigate(`/details/${movie.id}`)}
-            >
-              <MovieCard
-                title={movie.title}
-                poster_path={movie.poster_path}
-                vote_average={movie.vote_average}
-              />
-            </div>
-          ))}
-        </div>
+      )}
+
+      {/* 무한 스크롤 트리거 */}
+      <div ref={loaderRef} className="h-10" />
+
+      {/* 끝 안내 */}
+      {isEnd && (
+        <p className="text-center py-6 text-gray-500">
+          더 이상 불러올 영화가 없습니다.
+        </p>
       )}
     </div>
   );

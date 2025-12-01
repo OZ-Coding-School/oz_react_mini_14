@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@pages/*": ["src/pages/*"],
+      "@components/*": ["src/components/*"],
+      "@common/*": ["src/components/common/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@api/*": ["src/api/*"],
+      "@sb/*": ["src/supabase/*"],
+      "@context/*": ["src/supabase/context/*"],
+      "@utils/*": ["src/utilities/*"],
+      "@sbcontext/*": ["src/supabase/context/*"],
+      "@contexts/*": ["src/contexts/*"]
+    }
+  },
+  "include": ["src"]
+}

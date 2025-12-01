@@ -1,30 +1,73 @@
-const baseUrl = "https://image.tmdb.org/t/p/w500";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "@sbcontext/UserContext";
+import { useBookmarks } from "@/contexts/BookmarkContext";
+import Button from "@/components/common/Button";
+import { toast } from "react-toastify";
+import { IMAGE_BASE_URL } from "@/constants/urls";
 
-export default function MovieCard({
-  title,
-  poster_path,
-  vote_average,
-  size = "md",
-}) {
-  const sizeClass = size === "sm" ? "w-40" : size === "md" ? "w-52" : "w-64";
+export default function MovieCard({ id, title, poster_path, vote_average }) {
+  const navigate = useNavigate();
+  const { user } = useUser();
+  const { toggleBookmark, isBookmarked } = useBookmarks();
+
+  const numericRating =
+    typeof vote_average === "number"
+      ? vote_average
+      : vote_average
+      ? Number(vote_average)
+      : 0;
+
+  const displayRating =
+    Number.isFinite(numericRating) && numericRating > 0
+      ? numericRating.toFixed(1)
+      : "N/A";
+
+  const handleBookmark = (e) => {
+    e.stopPropagation();
+
+    if (!user) {
+      toast.info("로그인이 필요합니다!");
+      return;
+    }
+
+    toggleBookmark({
+      id,
+      title,
+      poster_path,
+      vote_average: numericRating,
+    });
+  };
+
   return (
-    <>
-      <div
-        className={`${sizeClass} bg-white shadow-md hover:shadow-xl rounded-lg
-        overflow-hidden cursor-pointer transform hover:scale-105 transition duration-300`}
+    <div
+      className="relative cursor-pointer group"
+      onClick={() => navigate(`/details/${id}`)}
+    >
+      {/* 이미지 */}
+      <img
+        src={`${IMAGE_BASE_URL}${poster_path}`}
+        alt={title}
+        className="rounded-lg shadow-md w-full group-hover:opacity-90 transition"
+      />
+
+      {/* 평점 */}
+      <span className="absolute bottom-2 left-2 bg-black/70 text-white text-sm px-2 py-1 rounded">
+        ⭐ {displayRating}
+      </span>
+
+      {/* 북마크 버튼 */}
+      <Button
+        onClick={handleBookmark}
+        className={`absolute top-2 right-2 px-2 py-1 rounded-full text-sm font-bold transition
+          ${
+            isBookmarked(id)
+              ? "bg-yellow-400 text-black"
+              : "bg-white/80 text-gray-700"
+          }
+        `}
       >
-        <div className="w-full aspect-[2/3]">
-          <img
-            src={poster_path ? `${baseUrl}${poster_path}` : "/placeholder.png"}
-            alt={title}
-            className="w-full h-72 object-cover"
-          />
-        </div>
-        <div className="p-4 flex flex-col justify-between h-28">
-          <h2 className="text-base font-semibold mb-1">{title}</h2>
-          <p className="text-sm text-gray-500">⭐ {vote_average}</p>
-        </div>
-      </div>
-    </>
+        {isBookmarked(id) ? "★" : "☆"}
+      </Button>
+    </div>
   );
 }

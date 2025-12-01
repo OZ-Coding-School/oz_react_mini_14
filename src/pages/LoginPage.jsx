@@ -1,9 +1,9 @@
-import InputField from "../components/common/InputField";
+import InputField from "@common/InputField";
+import Button from "@common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import { useSupabaseAuth } from "../supabase";
-import { UserContext } from "../supabase/context/UserContext";
-import Button from "@/components/common/Button";
+import { useSupabaseAuth } from "@sb";
+import { UserContext } from "@sbcontext/UserContext";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });

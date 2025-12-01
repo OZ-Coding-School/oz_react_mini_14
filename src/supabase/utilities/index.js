@@ -1,4 +1,8 @@
-export * from "./config";
-export * from "./dto";
-export * from "./env";
-export * from "./localStorage";
+export { supabaseEnv } from "./env";
+export { USER_INFO_KEY, DTO_TYPE } from "./config";
+export { changeFromDto } from "./dto";
+export {
+  setItemToLocalStorage,
+  getItemFromLocalStorage,
+  removeItemFromLocalStorage,
+} from "./localStorage";

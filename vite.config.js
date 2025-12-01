@@ -10,10 +10,16 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "@pages": path.resolve(__dirname, "./src/pages"),
-      "@components": path.resolve(__dirname, "./src/components"),
-      "@context": path.resolve(__dirname, "./src/context"),
+      "@": path.resolve(__dirname, "src"),
+      "@pages": path.resolve(__dirname, "src/pages"),
+      "@components": path.resolve(__dirname, "src/components"),
+      "@common": path.resolve(__dirname, "src/components/common"),
+      "@hooks": path.resolve(__dirname, "src/hooks"),
+      "@api": path.resolve(__dirname, "src/api"),
+      "@sb": path.resolve(__dirname, "src/supabase"),
+      "@sbcontext": path.resolve(__dirname, "src/supabase/context"),
+      "@utils": path.resolve(__dirname, "src/supabase/utilities"),
+      "@contexts": path.resolve(__dirname, "src/contexts"),
     },
   },
 });

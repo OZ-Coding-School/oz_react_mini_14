@@ -6,14 +6,13 @@ import {
   SearchResults,
   LoginPage,
   SignupPage,
-} from "./pages";
-import Layout from "./components/Layout";
+  MyPage,
+} from "@pages";
+import Layout from "@components/Layout";
+import OAuthCallback from "@components/OAuthCallback";
 
-import { useSupabaseAuth } from "./supabase";
-import { UserContext } from "./supabase/context/UserContext";
-
-import OAuthCallback from "./components/OAuthCallback";
-
+import { useSupabaseAuth } from "@sb";
+import { UserContext } from "@sbcontext/UserContext";
 export default function App() {
   const { getUserInfo } = useSupabaseAuth();
   const { setUser } = useContext(UserContext);
@@ -34,6 +33,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="details/:id" element={<MovieDetail />} />
         <Route path="search" element={<SearchResults />} />
+        <Route path="mypage" element={<MyPage />} />
       </Route>
 
       <Route path="/login" element={<LoginPage />} />
