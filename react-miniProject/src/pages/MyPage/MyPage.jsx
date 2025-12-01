@@ -8,8 +8,9 @@ import "./MyPage.scss";
 
 export default function MyPage() {
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
-  useAuthGuard();
   const { userInfo } = useUserInfo();
+
+  useAuthGuard();
 
   if (!userInfo)
     return (
