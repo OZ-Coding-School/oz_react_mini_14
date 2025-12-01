@@ -36,12 +36,11 @@ export default function MyWishlist() {
             <MovieCard
               key={bookmark.id}
               data={{
-                id: bookmark.id,
                 title: bookmark.movie_title,
                 poster_path: bookmark.movie_img,
                 vote_average: bookmark.movie_vote_average,
                 is_marked: bookmark.is_marked,
-                movie_id: bookmark.movie_id,
+                id: bookmark.movie_id,
                 user_id: bookmark.user_id,
               }}
               refetch={refetch}

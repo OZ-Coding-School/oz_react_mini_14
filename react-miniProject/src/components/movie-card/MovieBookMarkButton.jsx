@@ -3,9 +3,13 @@ import { toast } from "react-toastify";
 import { useMovieBookMark } from "@hooks/useMovieBookMark";
 import "./MovieBookMarkButton.scss";
 
-export default function MovieBookMarkButton({ movieInfo, userId }) {
+export default function MovieBookMarkButton({ movieInfo, userId, refetch }) {
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
-  const { isBookMarked, toggleBookmark } = useMovieBookMark(userId, movieInfo);
+  const { isBookMarked, toggleBookmark } = useMovieBookMark(
+    userId,
+    movieInfo,
+    refetch
+  );
 
   const handleClick = (e) => {
     e.stopPropagation();

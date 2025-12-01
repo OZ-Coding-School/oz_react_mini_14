@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { supabaseClient } from "@supabase_path/utilities";
 
 export const useWishListBookMark = (userId) => {
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isMountedRef = useRef(true);
 
-  const fetchBookmarks = async () => {
+  const fetchBookmarks = useCallback(async () => {
+    if (!userId) return;
+
     try {
       setLoading(true);
 
@@ -19,18 +22,24 @@ export const useWishListBookMark = (userId) => {
         throw error;
       }
 
-      setBookmarks(data);
+      if (isMountedRef.current) {
+        setBookmarks(data);
+      }
     } catch (error) {
       console.error("위시리스트 에러:", error);
     } finally {
-      setLoading(false);
+      if (isMountedRef.current) {
+        setLoading(false);
+      }
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
-    if (!userId) return;
     fetchBookmarks();
-  }, [userId]);
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, [fetchBookmarks]);
 
   return { bookmarks, loading, refetch: fetchBookmarks };
 };
