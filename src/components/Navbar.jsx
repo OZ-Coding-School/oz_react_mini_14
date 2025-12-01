@@ -32,44 +32,46 @@ function Navbar() {
       .then((data) => {
         setResults(data.results?.slice(0, 5) || []);
       });
+  }, [debounced]);
 
-    navigate(`/?query=${debounced}`);
-  }, [debounced, navigate]);
+  const handleSelectMovie = (movieId) => {
+    setSearchText("");
+    setResults([]);
+    navigate(`/detail/${movieId}`);
+  };
 
+  // 바깥 클릭 시 자동완성 닫기
   useEffect(() => {
-    function handleClickOutside(e) {
+    const handleClickOutside = (e) => {
       if (boxRef.current && !boxRef.current.contains(e.target)) {
         setResults([]);
       }
-    }
-    window.addEventListener("click", handleClickOutside);
-    return () => window.removeEventListener("click", handleClickOutside);
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   return (
     <nav className="navbar">
-      <Link className="logo" to="/">
+      <Link to="/" className="logo">
         Movie App
       </Link>
 
-      <div className="center-box" ref={boxRef}>
+      <div className="search-container" ref={boxRef}>
         <input
-          type="text"
           value={searchText}
-          placeholder="영화 검색..."
           onChange={(e) => setSearchText(e.target.value)}
+          className="search-input"
+          placeholder="검색..."
         />
 
         {results.length > 0 && (
-          <ul className="suggest-box">
+          <ul className="autocomplete-box">
             {results.map((m) => (
               <li
                 key={m.id}
-                onClick={() => {
-                  navigate(`/detail/${m.id}`);
-                  setResults([]);
-                  setSearchText(m.title);
-                }}
+                className="autocomplete-item"
+                onClick={() => handleSelectMovie(m.id)}
               >
                 {m.title}
               </li>
@@ -77,8 +79,6 @@ function Navbar() {
           </ul>
         )}
       </div>
-
-      <div className="right-box"></div>
     </nav>
   );
 }
