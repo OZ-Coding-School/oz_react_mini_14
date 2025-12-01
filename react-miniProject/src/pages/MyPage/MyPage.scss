@@ -1,8 +1,15 @@
 .mypage-wrapper {
   display: flex;
   min-height: 80vh;
-  background-color: #111;
-  color: #fff;
+  font-weight: bold;
+
+  &.light {
+    @include theme-light;
+  }
+
+  &.dark {
+    @include theme-dark;
+  }
 }
 
 .mypage-content {
