@@ -1,10 +1,10 @@
 // src/components/LoginForm.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 페이지 이동 훅(훅)
+import { useNavigate } from "react-router-dom"; // 페이지 이동 훅
 import { supabase } from "../api/supabase";
 import { validate } from "@/utils/validate";
 import FormInput from "./FormInput";
-import { useAuth } from "../contexts/AuthContext"; // 인증 콘텍스트 훅(훅)
+import { useAuth } from "../contexts/AuthContext"; // 인증 콘텍스트 훅
 import "./LoginForm.css";
 
 export default function LoginForm() {
@@ -14,8 +14,8 @@ export default function LoginForm() {
     error: "",
   });
 
-  const navigate = useNavigate(); // 페이지 이동용 훅(훅)
-  const { login } = useAuth(); // 전역 로그인 펑션(펑션)
+  const navigate = useNavigate(); // 페이지 이동용 훅
+  const { login } = useAuth(); // 전역 로그인 펑션
 
   const handleChange = (e) => {
     setState({
@@ -27,39 +27,32 @@ export default function LoginForm() {
   async function handleLogin(e) {
     e.preventDefault();
 
-    // 이메일 validation(밸리데이션)
+    // 이메일 validation
     if (!validate.Email.validate(state.email)) {
       setState({ ...state, error: "올바른 이메일을 입력하세요." });
       return;
     }
 
-    // 패스워드 validation(밸리데이션)
+    // 패스워드 validation
     if (!validate.Password.validate(state.password)) {
       setState({ ...state, error: "패스워드는 최소 6자 이상이어야 합니다." });
       return;
     }
 
-    // ----- 여기 핵심 구조 시작 -----
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.signInWithPassword({
+    // ✅ Supabase 로그인: data.user 안에 user_metadata 포함
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: state.email,
       password: state.password,
-    });
+    }); // data.user.user_metadata.name 에 "안지선" 이 들어 있음[web:114][web:83]
 
     if (error) {
       setState({ ...state, error: error.message });
       return;
     }
 
-    // 로그인 성공 시 전역 상태에 유저 정보 저장
-    if (user) {
-      login({
-        id: user.id,
-        email: user.email,
-        nickname: user.user_metadata?.nickname || "손님",
-      });
+    // ✅ Supabase user 객체 전체를 그대로 Context 에 저장
+    if (data?.user) {
+      login(data.user);
     }
 
     setState({ ...state, error: "" });
