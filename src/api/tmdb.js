@@ -1,7 +1,11 @@
 // src/api/tmdb.js
 
-// 환경변수에서 API 토큰 가져오기
 const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+console.log(
+  "[TMDB ACCESS_TOKEN]",
+  ACCESS_TOKEN ? ACCESS_TOKEN.slice(0, 10) : "undefined",
+); // ← 추가
+
 const BASE_URL = "https://api.themoviedb.org/3";
 
 // API 요청 옵션 (헤더 설정)
