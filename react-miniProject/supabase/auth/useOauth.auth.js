@@ -1,9 +1,9 @@
-import { useSupabase } from "../context";
-
+import { useSupabase } from "@supabase_path/utilities";
 export const useOAuth = () => {
   const supabase = useSupabase();
   // 카카오 로그인
-  const loginWithKakao = async (redirectTo = null, ...otherOptions) => {
+  const loginWithKakao = async () => {
+    //redirectTo = null, ...otherOptions
     try {
       await supabase.auth.signInWithOAuth({
         provider: "kakao",
@@ -18,7 +18,7 @@ export const useOAuth = () => {
   };
 
   // 구글 로그인
-  const loginWithGoogle = async (redirectTo = null, ...otherOptions) => {
+  const loginWithGoogle = async () => {
     try {
       await supabase.auth.signInWithOAuth({
         provider: "google",

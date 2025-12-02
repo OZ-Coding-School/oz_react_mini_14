@@ -1,10 +1,11 @@
-import { useSupabase } from "../context";
+// import  from "../utilities/useSupabase";
 import {
   changeFromDto,
   DTO_TYPE,
   localStorageUtils,
   USER_INFO_KEY,
-} from "../utilities";
+  useSupabase,
+} from "@supabase_path/utilities";
 
 export const useAuth = () => {
   const supabase = useSupabase();
@@ -45,7 +46,9 @@ export const useAuth = () => {
           setItemToLocalStorage(USER_INFO_KEY.customKey, userInfo);
         }
         return userInfo;
-      } catch (error) {}
+      } catch (error) {
+        console.error("유저 정보 가져오기 실패 : ", error);
+      }
     }
   };
   return { logout, getUserInfo };

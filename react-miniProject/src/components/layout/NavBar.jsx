@@ -1,13 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CommonButton } from "@common";
-import {
-  useAuthActions,
-  useSearchHandler,
-  useThemeToggle,
-  useDropdown,
-} from "@hooks";
+import { useAuthActions, useSearchHandler, useThemeToggle } from "@hooks";
 import "./NavBar.scss";
+import { useState } from "react";
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -16,7 +12,9 @@ export default function NavBar() {
   const { login, signup, logout, mypage } = useAuthActions();
   const { isDarkMode, toggleTheme } = useThemeToggle();
   const { inputValue, handleInputChange, resetSearch } = useSearchHandler();
-  const { openMenu, toggleDropdown, closeDropdown } = useDropdown();
+  const [openMenu, setOpenMenu] = useState(false);
+  const toggleDropdown = () => setOpenMenu((prev) => !prev);
+  const closeDropdown = () => setOpenMenu(false);
 
   const handleLogoClick = () => {
     navigate("/");

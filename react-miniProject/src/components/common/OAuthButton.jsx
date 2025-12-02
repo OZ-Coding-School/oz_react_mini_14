@@ -7,13 +7,21 @@ export default function OAuthButton({
   className = "",
   label,
 }) {
+  if (!logo || !children) {
+    return null;
+  }
+
   return (
     <button
       className={`oauth-btn ${className}`}
       onClick={onClick}
-      aria-label={label}
+      aria-label={label || children}
     >
-      <img src={logo} alt={`${children} logo`} className="oauth-logo" />
+      <img
+        src={logo}
+        alt={label ? label : `${children} logo`}
+        className="oauth-logo"
+      />
       <span className="btn-text">{children}</span>
     </button>
   );

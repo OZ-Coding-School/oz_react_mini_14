@@ -3,8 +3,8 @@ import { DTO_TYPE } from "./config";
 // User data 매핑용 함수
 export const changeFromDto = ({ type, dto }) => {
   switch (type) {
-    case DTO_TYPE.user:
-      const { user_metadata: userInfo } = dto?.user;
+    case DTO_TYPE.user: {
+      const { user_metadata: userInfo } = dto?.user ?? {};
 
       const displayName = //이름 필드 선언.
         userInfo.display_name || // 이메일 회원가입 시 직접 저장한 값
@@ -25,7 +25,9 @@ export const changeFromDto = ({ type, dto }) => {
           name: displayName, //displayName 이름 필드 추가. //userName은 닉네임
         },
       };
-    case DTO_TYPE.error:
+    }
+
+    case DTO_TYPE.error: {
       if (!dto.error) {
         return {
           error: {
@@ -35,7 +37,8 @@ export const changeFromDto = ({ type, dto }) => {
           },
         };
       }
-      const { error: rawError } = dto;
+
+      const rawError = dto.error;
 
       return {
         error: {
@@ -43,9 +46,10 @@ export const changeFromDto = ({ type, dto }) => {
           message: rawError.message,
         },
       };
-
-    default:
+    }
+    default: {
       new Error("wrong type accessed");
       return;
+    }
   }
 };

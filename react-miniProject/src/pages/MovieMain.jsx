@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react"; //usememo 사용 주석 테스트 주석테스트
+import { useRef } from "react"; //usememo 사용 주석 테스트 주석테스트
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import {
@@ -16,20 +16,12 @@ import "./MovieMain.scss";
 
 function MovieMain() {
   const movieTopRatedList = useMovieTopRatedList(); //평점이 제일 좋은 영화데이터 가져오기
-  const searchText = useSelector((state) => state.search.text);
   const isDarkMode = useSelector((state) => state.themeToggle.isDarkMode);
   const location = useLocation();
   const isAddMoiveBtn = location.pathname.includes("/detail");
-  const { movieList, addMovie, loading, hasMore } = useMovieCardList(); //인기있는 영화데이터 가져오기
-
-  const filteredMovies = useMemo(
-    () =>
-      movieList?.filter((movie) =>
-        movie.title.toLowerCase().includes(searchText.toLowerCase())
-      ),
-    [movieList, searchText]
-  );
   const sentinelRef = useRef(null);
+  const { movieList, addMovie, loading, hasMore, filteredMovies, searchText } =
+    useMovieCardList(); //인기있는 영화데이터 가져오기
 
   useInfiniteScroll({
     sentinelRef,
@@ -48,8 +40,6 @@ function MovieMain() {
     );
   }
 
-  //맨처음 und -> falsy
-  //0 === und => return null
   if (!movieList.length > 0) {
     return null;
   }

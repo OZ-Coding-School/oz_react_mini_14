@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabaseClient } from "@supabase_path/context";
+import { supabaseClient } from "@supabase_path/utilities";
 
 export function useMovieBookMark(userId, movieInfo, refetch) {
   const [isBookMarked, setIsBookMarked] = useState(false);
@@ -10,22 +10,32 @@ export function useMovieBookMark(userId, movieInfo, refetch) {
     if (!userId || !movieInfo.id) return;
 
     const fetchData = async () => {
-      const { data, error } = await supabaseClient
-        .from("bookmarks")
-        .select("*")
-        .eq("user_id", userId)
-        .eq("movie_id", movieInfo.id)
-        .maybeSingle();
+      try {
+        const { data, error } = await supabaseClient
+          .from("bookmarks")
+          .select("*")
+          .eq("user_id", userId)
+          .eq("movie_id", movieInfo.id)
+          .maybeSingle();
 
-      if (data) {
-        setIsBookMarked(data.is_marked === true);
-        setBookMarkId(data.id);
-      } else {
-        setIsBookMarked(movieInfo.is_marked || false);
+        if (error) {
+          console.error("테이블 조회 에러:", error.message);
+          throw error;
+        }
+
+        if (data) {
+          setIsBookMarked(data.is_marked === true);
+          setBookMarkId(data.id);
+        } else {
+          setIsBookMarked(movieInfo.is_marked || false);
+          setBookMarkId(null);
+        }
+      } catch (error) {
+        console.error("북마크 데이터 가져오기 실패:", error);
+        setIsBookMarked(false);
         setBookMarkId(null);
       }
     };
-
     fetchData();
   }, [movieInfo.id, userId, movieInfo.is_marked]);
 

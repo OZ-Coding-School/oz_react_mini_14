@@ -45,7 +45,7 @@ export function useLoginController() {
         dispatch(setUserName(userName)); //userName 추가 전역관리user.user_metadata?.name || user.name || ""
         dispatch(setUserId(userId));
 
-        toast.success(`${userName}로그인 성공!`);
+        toast.success(`${userName}님 환영합니다!`);
         dispatch(logInState(true));
         navigate("/");
       } else {
