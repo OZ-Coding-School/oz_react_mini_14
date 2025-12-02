@@ -1,7 +1,9 @@
+// src/pages/MovieList.jsx
 import "./MovieList.css";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
+import MovieSwiper from "../components/MovieSwiper";
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
@@ -18,7 +20,6 @@ const MovieList = () => {
     const res = await fetch(
       "https://api.themoviedb.org/3/movie/popular?language=ko-KR",
       {
-        method: "GET",
         headers: {
           accept: "application/json",
           Authorization: `Bearer ${API_TOKEN}`,
@@ -27,8 +28,7 @@ const MovieList = () => {
     );
 
     const data = await res.json();
-    const filtered = data.results.filter((m) => m.adult === false);
-    setMovies(filtered);
+    setMovies(data.results.filter((m) => !m.adult));
     setLoading(false);
   };
 
@@ -37,7 +37,6 @@ const MovieList = () => {
     const res = await fetch(
       `https://api.themoviedb.org/3/search/movie?query=${query}&language=ko-KR`,
       {
-        method: "GET",
         headers: {
           accept: "application/json",
           Authorization: `Bearer ${API_TOKEN}`,
@@ -46,21 +45,26 @@ const MovieList = () => {
     );
 
     const data = await res.json();
-    const filtered = data.results?.filter((m) => m.adult === false) || [];
-    setMovies(filtered);
+    setMovies((data.results || []).filter((m) => !m.adult));
     setLoading(false);
   };
 
   useEffect(() => {
-    if (query.length > 0) {
-      searchMovies();
-    } else {
-      fetchPopular();
-    }
+    if (query.trim()) searchMovies();
+    else fetchPopular();
   }, [query]);
 
   return (
     <div className="movie-list-page">
+      <div className="page-header">
+        <h2>🎬 Explore Your Next Favorite Movie</h2>
+        <p>최고 인기 영화들을 지금 만나보세요!</p>
+      </div>
+
+      <MovieSwiper />
+
+      <h2 className="section-title">🎬 All Movies</h2>
+
       {loading ? (
         <div className="loading">Loading...</div>
       ) : (
@@ -70,7 +74,7 @@ const MovieList = () => {
               <MovieCard
                 poster={`${baseUrl}${movie.poster_path}`}
                 title={movie.title}
-                rating={movie.vote_average?.toFixed(1)}
+                rating={movie.vote_average.toFixed(1)}
               />
             </Link>
           ))}

@@ -1,0 +1,45 @@
+.top-rated-section {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.top-rated-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 15px;
+  text-align: left;
+  padding-left: 40px;
+}
+
+/* 슬라이드 이미지 크기 업그레이드 */
+.swiper-slide {
+  width: 210px !important;
+  flex: 0 0 210px !important;
+}
+
+.swiper-movie-card {
+  width: 210px;
+  cursor: pointer;
+}
+
+.swiper-movie-card img {
+  width: 210px;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* 영화 제목 */
+.s-title {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #fff;
+  text-align: center;
+}
+
+/* 평점 */
+.s-rating {
+  font-size: 0.8rem;
+  color: #f5c518;
+  text-align: center;
+}
