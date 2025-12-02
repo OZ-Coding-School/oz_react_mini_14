@@ -9,6 +9,7 @@ function useCurrentUser() {
     queryKey: ['user', userId],
     queryFn: () => getUserInfo({ params: { id: userId } }),
     enabled: !!userId,
+    staleTime: Infinity,
   });
 }
 

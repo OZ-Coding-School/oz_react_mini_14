@@ -2,21 +2,19 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useForm } from '@/hooks';
-import { logIn, setHasJustLoggedIn } from '@/utils';
+import { logIn, pickFormValues, setHasJustLoggedIn } from '@/utils';
 import { Button, FormField, Indicator, SocialAuthButtons } from '@/components';
 import {
+  INITIAL_FORM_STATE,
   LOGIN_FIELDS,
-  SocialAuthButtonsMode,
+  SocialAuthButtonModes,
   TOAST_DURATION,
 } from '@/constants';
 
 function LogIn() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const { formState, isFormValid, handleFormChange } = useForm({
-    initialState: {
-      email: { value: '', valid: false },
-      password: { value: '', valid: false },
-    },
+    initialState: INITIAL_FORM_STATE.LOGIN,
   });
   const navigate = useNavigate();
 
@@ -26,10 +24,7 @@ function LogIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     startLoggingIn();
-    const { success, error } = await logIn({
-      email: formState.email.value,
-      password: formState.password.value,
-    });
+    const { success, error } = await logIn(pickFormValues({ formState }));
     endLoggingIn();
 
     if (success) {
@@ -80,7 +75,7 @@ function LogIn() {
         </Button>
       </form>
       <SocialAuthButtons
-        mode={SocialAuthButtonsMode.LOGIN}
+        mode={SocialAuthButtonModes.LOGIN}
         startAuthProcessing={startLoggingIn}
       />
     </section>

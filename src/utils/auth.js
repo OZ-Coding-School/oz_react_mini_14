@@ -1,5 +1,5 @@
 import supabase from '@/lib/supabaseClient';
-import { SESSION_STORAGE_KEYS } from '@/constants';
+import { ERROR_MESSAGE, SESSION_STORAGE_KEYS } from '@/constants';
 
 async function executeAuthAction({ action }) {
   try {
@@ -12,9 +12,7 @@ async function executeAuthAction({ action }) {
     return {
       success: false,
       error: {
-        message:
-          error?.message ??
-          '예기치 않은 오류가 발생했습니다.\n잠시 후에 다시 시도해 주세요.',
+        message: error?.message ?? ERROR_MESSAGE.UNEXPECTED_ERROR,
       },
     };
   }

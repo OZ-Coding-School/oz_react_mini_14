@@ -1,4 +1,4 @@
-import { useCurrentUser, useFavoriteMovies } from '@/hooks';
+import { useCurrentUser, useFavoriteController } from '@/hooks';
 import { Error, Indicator, MovieList } from '@/components';
 
 function MyPage() {
@@ -8,10 +8,10 @@ function MyPage() {
     error: userError,
   } = useCurrentUser();
   const {
-    data: favoriteMovies,
+    favoriteMovies,
     isLoading: isMovieLoading,
     error: movieError,
-  } = useFavoriteMovies();
+  } = useFavoriteController();
 
   if (isUserLoading || isMovieLoading) return <Indicator />;
   if (userError || movieError)

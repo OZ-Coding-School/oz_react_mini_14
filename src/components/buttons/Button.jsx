@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { cn } from '@/utils';
-import buttonVariants from '@/components/Button/buttonVariants';
+import buttonVariants from '@/components/buttons/buttonVariants';
 
 const Button = memo(function ({
   variant,

@@ -2,23 +2,19 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useForm } from '@/hooks';
-import { setHasJustLoggedIn, signUp } from '@/utils';
+import { pickFormValues, setHasJustLoggedIn, signUp } from '@/utils';
 import { Button, FormField, Indicator, SocialAuthButtons } from '@/components';
 import {
+  INITIAL_FORM_STATE,
   SIGNUP_FIELDS,
-  SocialAuthButtonsMode,
+  SocialAuthButtonModes,
   TOAST_DURATION,
 } from '@/constants';
 
 function SignUp() {
   const [isSigningUp, setIsSigningUp] = useState(false);
   const { formState, isFormValid, handleFormChange } = useForm({
-    initialState: {
-      email: { value: '', valid: false },
-      name: { value: '', valid: false },
-      password: { value: '', valid: false },
-      passwordConfirm: { value: '', valid: false, pair: 'password' },
-    },
+    initialState: INITIAL_FORM_STATE.SIGNUP,
   });
   const navigate = useNavigate();
 
@@ -28,11 +24,7 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     startSigningUp();
-    const { success, error } = await signUp({
-      email: formState.email.value,
-      password: formState.password.value,
-      name: formState.name.value,
-    });
+    const { success, error } = await signUp(pickFormValues({ formState }));
     endSigningUp();
 
     if (success) {
@@ -84,7 +76,7 @@ function SignUp() {
         </Button>
       </form>
       <SocialAuthButtons
-        mode={SocialAuthButtonsMode.SIGNUP}
+        mode={SocialAuthButtonModes.SIGNUP}
         startAuthProcessing={startSigningUp}
       />
     </section>
