@@ -1,8 +1,10 @@
 // src/components/LoginForm.jsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // 페이지 이동 훅(훅)
 import { supabase } from "../api/supabase";
 import { validate } from "@/utils/validate";
 import FormInput from "./FormInput";
+import { useAuth } from "../contexts/AuthContext"; // 인증 콘텍스트 훅(훅)
 import "./LoginForm.css";
 
 export default function LoginForm() {
@@ -11,6 +13,9 @@ export default function LoginForm() {
     password: "",
     error: "",
   });
+
+  const navigate = useNavigate(); // 페이지 이동용 훅(훅)
+  const { login } = useAuth(); // 전역 로그인 펑션(펑션)
 
   const handleChange = (e) => {
     setState({
@@ -34,16 +39,33 @@ export default function LoginForm() {
       return;
     }
 
-    const { error } = await supabase.auth.signInWithPassword({
+    // ----- 여기 핵심 구조 시작 -----
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.signInWithPassword({
       email: state.email,
       password: state.password,
     });
 
     if (error) {
       setState({ ...state, error: error.message });
-    } else {
-      setState({ ...state, error: "" });
+      return;
     }
+
+    // 로그인 성공 시 전역 상태에 유저 정보 저장
+    if (user) {
+      login({
+        id: user.id,
+        email: user.email,
+        nickname: user.user_metadata?.nickname || "손님",
+      });
+    }
+
+    setState({ ...state, error: "" });
+
+    // 마이페이지로 이동
+    navigate("/mypage");
   }
 
   return (
