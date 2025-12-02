@@ -9,6 +9,7 @@ function useFavoriteMovies() {
     queryKey: ['favorite', userId],
     queryFn: () => getFavoriteMovieList({ params: { userId } }),
     enabled: !!userId,
+    staleTime: Infinity,
   });
 }
 

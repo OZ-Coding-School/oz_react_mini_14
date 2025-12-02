@@ -13,6 +13,7 @@ function MovieDetail() {
   } = useQuery({
     queryKey: ['movie', id],
     queryFn: () => getMovieDetails({ params: { id } }),
+    staleTime: 1000 * 60 * 60 * 3,
   });
 
   if (isLoading) return <Indicator />;

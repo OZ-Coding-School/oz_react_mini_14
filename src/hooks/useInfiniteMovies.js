@@ -18,6 +18,8 @@ function useInfiniteMovies() {
 
       return { ...movieList, pages: newPages };
     },
+    staleTime: 1000 * 60 * 60 * 3,
+    gcTime: 0,
   });
 }
 

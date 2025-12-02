@@ -13,6 +13,7 @@ function Search() {
   } = useQuery({
     queryKey: ['movie', keyword],
     queryFn: () => getMovieListByKeyword({ params: { keyword } }),
+    gcTime: 0,
   });
   const filteredMovieList = movieList?.data?.filter((item) => !item.adult); // 수정
 
