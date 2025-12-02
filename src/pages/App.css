@@ -5,6 +5,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 32px 16px;
+  box-sizing: border-box;
 }
 
 /* 페이지 타이틀 */
@@ -12,6 +13,7 @@
   font-size: 2.2rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+  line-height: 1.3;
   color: #f9fafb;
   text-align: center;
   margin-bottom: 32px;
@@ -20,7 +22,7 @@
 /* 영화 카드 그리드 */
 .movie-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 24px;
   align-items: flex-start;
 }
@@ -28,8 +30,8 @@
 /* 카드 래퍼 */
 .movie-card {
   width: 100%;
-  max-width: 220px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
 }
 
 /* 반응형 - 태블릿 */
@@ -44,23 +46,24 @@
   }
 
   .movie-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 16px;
-  }
-
-  .movie-card {
-    max-width: 160px;
   }
 }
 
 /* 반응형 - 모바일 */
 @media (max-width: 480px) {
-  .movie-grid {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 12px;
+  .app-container {
+    padding: 20px 12px;
   }
 
-  .movie-card {
-    max-width: 130px;
+  .app-title {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
   }
 }
