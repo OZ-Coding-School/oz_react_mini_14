@@ -1,32 +1,15 @@
-import { Outlet, Link } from "react-router";
+import Navbar from "./Navbar";
+import { Outlet } from "react-router-dom";
 
 function Layout() {
   return (
-    <div>
-      {}
-      <nav
-        style={{
-          backgroundColor: "#222",
-          color: "white",
-          padding: "10px 20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <h2> Movie App</h2>
-        <div style={{ display: "flex", gap: "20px" }}>
-          <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-            Home
-          </Link>
-          <Link to="/detail" style={{ color: "white", textDecoration: "none" }}>
-            Detail
-          </Link>
-        </div>
-      </nav>
+    <div style={{ backgroundColor: "#000", minHeight: "100vh" }}>
+      <Navbar />
 
-      {}
-      <Outlet />
+      {/* navbar height 80px 이므로 padding-top도 80px */}
+      <div style={{ paddingTop: "80px", color: "white" }}>
+        <Outlet />
+      </div>
     </div>
   );
 }

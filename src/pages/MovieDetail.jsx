@@ -1,56 +1,46 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./MovieDetail.css";
+import { useEffect, useState } from "react";
 
-const MovieDetail = () => {
+const API_TOKEN = import.meta.env.VITE_TMDB_API_TOKEN;
+
+// 디테일 페이지
+function MovieDetail() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
 
-  const baseUrl = "https://image.tmdb.org/t/p/w500";
-
   useEffect(() => {
-    const fetchDetail = async () => {
+    async function getDetail() {
       const res = await fetch(
         `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`,
         {
+          method: "GET",
           headers: {
             accept: "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
+            Authorization: `Bearer ${API_TOKEN}`,
           },
         }
       );
-
       const data = await res.json();
       setMovie(data);
-    };
+    }
 
-    fetchDetail();
+    getDetail();
   }, [id]);
 
-  if (!movie) return <div>Loading...</div>;
+  if (!movie) return <div style={{ color: "white" }}>Loading...</div>;
 
   return (
-    <div className="Movie-Detail">
-      <div className="poster">
-        <img src={`${baseUrl}${movie.poster_path}`} alt="" />
-      </div>
-
-      <div className="info">
-        <div className="title-rating">
-          <div className="title">{movie.title}</div>
-          <div className="rating">{movie.vote_average}</div>
-        </div>
-
-        <div className="genre">
-          {movie.genres?.map((g) => (
-            <div key={g.id}>{g.name}</div>
-          ))}
-        </div>
-
-        <div className="summary">{movie.overview}</div>
-      </div>
+    <div style={{ padding: "40px", color: "white" }}>
+      <h1>{movie.title}</h1>
+      <img
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        alt={movie.title}
+        style={{ width: "300px", borderRadius: "10px" }}
+      />
+      <p style={{ marginTop: "20px" }}>{movie.overview}</p>
+      <p>평점: {movie.vote_average}</p>
     </div>
   );
-};
+}
 
 export default MovieDetail;

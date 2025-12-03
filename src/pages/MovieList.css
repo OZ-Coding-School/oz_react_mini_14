@@ -1,7 +1,31 @@
+/* 제목 */
+.page-header {
+  margin: 20px 0 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.section-title {
+  margin: 40px 0 15px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  padding-left: 40px;
+  text-align: left;
+}
+
+/* 전체 페이지 */
+.movie-list-page {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* All Movies 그리드 */
 .movie-list {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 16px;
-  padding: 30px;
-  background-color: #000;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 25px;
+  padding: 20px 40px;
 }
