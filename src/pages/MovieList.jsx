@@ -1,11 +1,11 @@
-// src/pages/MovieList.jsx
 import "./MovieList.css";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import MovieSwiper from "../components/MovieSwiper";
+import SkeletonCard from "../components/SkeletonCard";
 
-const MovieList = () => {
+export default function MovieList() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,8 +15,11 @@ const MovieList = () => {
   const API_TOKEN = import.meta.env.VITE_TMDB_API_TOKEN;
   const baseUrl = "https://image.tmdb.org/t/p/w500";
 
+  const delay = (ms) => new Promise((r) => setTimeout(r, ms));
+
   const fetchPopular = async () => {
     setLoading(true);
+    await delay(800);
     const res = await fetch(
       "https://api.themoviedb.org/3/movie/popular?language=ko-KR",
       {
@@ -26,7 +29,6 @@ const MovieList = () => {
         },
       }
     );
-
     const data = await res.json();
     setMovies(data.results.filter((m) => !m.adult));
     setLoading(false);
@@ -34,6 +36,7 @@ const MovieList = () => {
 
   const searchMovies = async () => {
     setLoading(true);
+    await delay(800);
     const res = await fetch(
       `https://api.themoviedb.org/3/search/movie?query=${query}&language=ko-KR`,
       {
@@ -43,7 +46,6 @@ const MovieList = () => {
         },
       }
     );
-
     const data = await res.json();
     setMovies((data.results || []).filter((m) => !m.adult));
     setLoading(false);
@@ -65,23 +67,19 @@ const MovieList = () => {
 
       <h2 className="section-title">🎬 All Movies</h2>
 
-      {loading ? (
-        <div className="loading">Loading...</div>
-      ) : (
-        <div className="movie-list">
-          {movies.map((movie) => (
-            <Link key={movie.id} to={`/detail/${movie.id}`}>
-              <MovieCard
-                poster={`${baseUrl}${movie.poster_path}`}
-                title={movie.title}
-                rating={movie.vote_average.toFixed(1)}
-              />
-            </Link>
-          ))}
-        </div>
-      )}
+      <div className="movie-list">
+        {loading
+          ? [...Array(12)].map((_, i) => <SkeletonCard key={i} />)
+          : movies.map((movie) => (
+              <Link key={movie.id} to={`/detail/${movie.id}`}>
+                <MovieCard
+                  poster={`${baseUrl}${movie.poster_path}`}
+                  title={movie.title}
+                  rating={movie.vote_average.toFixed(1)}
+                />
+              </Link>
+            ))}
+      </div>
     </div>
   );
-};
-
-export default MovieList;
+}

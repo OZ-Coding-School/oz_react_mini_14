@@ -1,12 +1,3 @@
-.movie-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
-  padding: 0 30px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
 .movie-card {
   width: 100%;
   max-width: 180px; /* 카드 전체 최대 크기 축소 */
