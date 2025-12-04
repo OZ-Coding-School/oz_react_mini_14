@@ -1,0 +1,63 @@
+/* 상단 프로필 박스를 가운데 한 줄로 */
+.mypage-profile-wrap {
+  display: flex;
+  justify-content: flex-start; /* 필요하면 center 로 변경 */
+  margin-bottom: 32px;
+}
+
+/* 마이페이지 정보 박스 */
+.mypage-profile-box {
+  max-width: 420px;
+  width: 100%;
+  padding: 20px 24px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #111827, #020617);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75);
+}
+
+/* 라벨/값 한 줄 정렬 */
+.mypage-profile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.mypage-profile-row:last-child {
+  margin-bottom: 0;
+}
+
+.mypage-label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.mypage-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* 아래 찜 섹션 여백 & 메시지 */
+.mypage-favorite-section {
+  margin-top: 32px;
+}
+
+.mypage-helper {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 24px 0;
+  font-size: 14px;
+}
+
+/* 모바일에서 살짝 넓게 */
+@media (max-width: 768px) {
+  .mypage-profile-wrap {
+    justify-content: center;
+  }
+
+  .mypage-profile-box {
+    max-width: 100%;
+  }
+}

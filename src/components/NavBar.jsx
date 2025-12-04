@@ -1,25 +1,21 @@
 // src/components/NavBar.jsx
-import { Link } from "react-router-dom"; // 링크(라우터)
+import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { searchMovies } from "../api"; // TMDB 검색 API - Barrel(배럴) 사용
-import { useDebounce } from "../hooks"; // 디바운스 훅 - Barrel(배럴) 사용
-import "./NavBar.css"; // 스타일 CSS
+import { searchMovies } from "../api";
+import { useDebounce } from "../hooks";
+import { useAuth } from "../contexts/AuthContext";
+import "./NavBar.css";
 
 function NavBar() {
-  // user(유저) 상태 자체 관리 (임시 예시: null)
-  const [user] = useState(null); // setUser 제거
+  const { user, logout } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
 
-  // 검색창 참조 useRef(유즈레프, 리액트 훅)
   const searchRef = useRef(null);
-
-  // 검색 디바운스(debounce, 디바운스)
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
-  // 외부 클릭 감지로 검색 결과 닫기
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -32,7 +28,6 @@ function NavBar() {
     };
   }, []);
 
-  // 검색 결과 fetch(패치)
   useEffect(() => {
     const fetchResults = async () => {
       if (debouncedSearchQuery.trim() === "") {
@@ -66,12 +61,11 @@ function NavBar() {
     <nav className="navbar" aria-label="메인 네비게이션">
       <h1 className="navbar-logo">
         <Link to="/" tabIndex={0} aria-label="홈으로 이동">
-          🎬 Movie App
+          Movie App
         </Link>
       </h1>
 
       <div className="navbar-right">
-        {/* 계정 메뉴 */}
         <div className="navbar-account">
           {!user ? (
             <>
@@ -88,11 +82,13 @@ function NavBar() {
                 마이페이지
               </Link>
               <span className="navbar-user-email">{user.email}</span>
+              <button onClick={logout} className="navbar-link">
+                로그아웃
+              </button>
             </>
           )}
         </div>
 
-        {/* 검색 영역 */}
         <form
           className="search-container"
           ref={searchRef}

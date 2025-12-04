@@ -52,16 +52,22 @@ function SignUpForm() {
     setErrors(v);
     if (Object.keys(v).length) return;
 
+    // Supabase Auth(수파베이스 오스) 회원가입 + user_metadata(유저 메타데이터)에 nickname 저장
     const { error } = await supabase.auth.signUp({
       email: form.email,
       password: form.password,
-      options: { data: { name: form.name } },
+      options: {
+        data: {
+          // 나중에 user.user_metadata.nickname 으로 읽을 값
+          nickname: form.name,
+        },
+      },
     });
 
     if (error) {
       setMsg(error.message);
     } else {
-      setMsg("회원가입 성공! 메일 인증을 확인하세요.");
+      setMsg("회원가입이 완료되었습니다.");
     }
   }
 
