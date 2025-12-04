@@ -1,10 +1,9 @@
 // src/components/LoginForm.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 페이지 이동 훅
-import { supabase } from "../api/supabase";
+import { useNavigate } from "react-router-dom";
 import { validate } from "@/utils/validate";
 import FormInput from "./FormInput";
-import { useAuth } from "../contexts/AuthContext"; // 인증 콘텍스트 훅
+import { useAuth } from "../contexts/AuthContext";
 import "./LoginForm.css";
 
 export default function LoginForm() {
@@ -14,8 +13,8 @@ export default function LoginForm() {
     error: "",
   });
 
-  const navigate = useNavigate(); // 페이지 이동용 훅
-  const { login } = useAuth(); // 전역 로그인 펑션
+  const navigate = useNavigate();
+  const { login } = useAuth(); // ✅ 이제 email/password를 넘겨줄 것
 
   const handleChange = (e) => {
     setState({
@@ -27,38 +26,28 @@ export default function LoginForm() {
   async function handleLogin(e) {
     e.preventDefault();
 
-    // 이메일 validation
     if (!validate.Email.validate(state.email)) {
       setState({ ...state, error: "올바른 이메일을 입력하세요." });
       return;
     }
 
-    // 패스워드 validation
     if (!validate.Password.validate(state.password)) {
       setState({ ...state, error: "패스워드는 최소 6자 이상이어야 합니다." });
       return;
     }
 
-    // ✅ Supabase 로그인: data.user 안에 user_metadata 포함
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: state.email,
-      password: state.password,
-    }); // data.user.user_metadata.name 에 "안지선" 이 들어 있음[web:114][web:83]
+    try {
+      // ✅ Context의 login에 이메일/패스워드 전달
+      await login(state.email, state.password);
 
-    if (error) {
-      setState({ ...state, error: error.message });
-      return;
+      setState({ ...state, error: "" });
+      navigate("/mypage");
+    } catch (error) {
+      setState({
+        ...state,
+        error: error.message || "로그인에 실패했습니다.",
+      });
     }
-
-    // ✅ Supabase user 객체 전체를 그대로 Context 에 저장
-    if (data?.user) {
-      login(data.user);
-    }
-
-    setState({ ...state, error: "" });
-
-    // 마이페이지로 이동
-    navigate("/mypage");
   }
 
   return (

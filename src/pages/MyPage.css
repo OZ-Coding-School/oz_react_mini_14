@@ -1,54 +1,63 @@
-/* src/pages/MyPage.css */
-
-.mypage-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 24px 32px;
-}
-
-.mypage-title {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #f9fafb;
+/* 상단 프로필 박스를 가운데 한 줄로 */
+.mypage-profile-wrap {
+  display: flex;
+  justify-content: flex-start; /* 필요하면 center 로 변경 */
   margin-bottom: 32px;
 }
 
-.mypage-content {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 32px;
-  align-items: flex-start;
-}
-
-.profile-card {
+/* 마이페이지 정보 박스 */
+.mypage-profile-box {
+  max-width: 420px;
+  width: 100%;
   padding: 20px 24px;
-  border-radius: 16px;
-  background: radial-gradient(circle at top left, #1f2937, #020617);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.7);
-  color: #e5e7eb;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #111827, #020617);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75);
 }
 
-.profile-card strong {
-  display: inline-block;
-  width: 64px;
-  color: #9ca3ff;
+/* 라벨/값 한 줄 정렬 */
+.mypage-profile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
+.mypage-profile-row:last-child {
+  margin-bottom: 0;
+}
+
+.mypage-label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.mypage-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* 아래 찜 섹션 여백 & 메시지 */
+.mypage-favorite-section {
+  margin-top: 32px;
+}
+
+.mypage-helper {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 24px 0;
+  font-size: 14px;
+}
+
+/* 모바일에서 살짝 넓게 */
 @media (max-width: 768px) {
-  .mypage-wrapper {
-    padding: 28px 16px 24px;
+  .mypage-profile-wrap {
+    justify-content: center;
   }
 
-  .mypage-title {
-    font-size: 1.6rem;
-    margin-bottom: 24px;
-  }
-
-  .mypage-content {
-    grid-template-columns: 1fr;
-    gap: 24px;
+  .mypage-profile-box {
+    max-width: 100%;
   }
 }
